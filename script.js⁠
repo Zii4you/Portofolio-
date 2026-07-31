@@ -1,277 +1,226 @@
-/**
- * ALEX VANCE // CYBER FUTURISTIC PORTFOLIO ENGINE (2026)
- * Core Tech: Three.js, GSAP, Lenis Smooth Scroll
- */
+/* ==============================================
+   SKRIP UTAMA & ANIMASI
+   ============================================== */
 
-'use strict';
+// Inisialisasi Dasar
+AOS.init({
+    duration: 800,
+    once: true,
+    offset: 100,
+    easing: 'ease-out-cubic'
+});
 
-document.addEventListener('DOMContentLoaded', () => {
+// Scroll Halus Lenis
+const lenis = new Lenis({
+    duration: 1.2,
+    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smooth: true,
+    smoothTouch: true
+});
 
-    /* ==========================================================================
-       1. SMOOTH SCROLL INITIALIZATION (LENIS)
-       ========================================================================== */
-    const lenis = new Lenis({
-        duration: 1.2,
-        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        orientation: 'vertical',
-        gestureOrientation: 'vertical',
-        smoothWheel: true,
-        wheelMultiplier: 1.0,
-        touchMultiplier: 2.0,
-    });
-
-    function raf(time) {
-        lenis.raf(time);
-        requestAnimationFrame(raf);
-    }
+function raf(time) {
+    lenis.raf(time);
     requestAnimationFrame(raf);
+}
+requestAnimationFrame(raf);
 
-    // Sync Lenis with GSAP ScrollTrigger
-    lenis.on('scroll', ScrollTrigger.update);
-    gsap.ticker.add((time) => {
-        lenis.raf(time * 1000);
-    });
-    gsap.ticker.lagSmoothing(0, 0);
+// Layar Loading Sinematik
+const pesanMuat = [
+    'Menginisialisasi Cyber Lab...',
+    'Memuat Aset Digital...',
+    'Menghubungkan Inti AI...',
+    'Mengaktifkan Keamanan...',
+    'Selamat Datang di Masa Depan ✨'
+];
+let indeksPesan = 0;
+let persenMuat = 0;
 
-    /* ==========================================================================
-       2. THREE.JS WEBGL BACKGROUND SYSTEM (QUANTUM GALAXY & CORE)
-       ========================================================================== */
-    const canvas = document.querySelector('#webgl-canvas');
-    if (!canvas) return;
-
-    // Scene, Camera, Renderer
-    const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x030712, 0.015);
-
-    const camera = new THREE.PerspectiveCamera(
-        60,
-        window.innerWidth / window.innerHeight,
-        0.1,
-        1000
-    );
-    camera.position.z = 30;
-
-    const renderer = new THREE.WebGLRenderer({
-        canvas: canvas,
-        antialias: true,
-        alpha: true,
-        powerPreference: 'high-performance'
-    });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-
-    // Particle Galaxy Generation
-    const particleCount = 2500;
-    const geometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
-    const colors = new Float32Array(particleCount * 3);
-
-    const colorCyan = new THREE.Color(0x38bdf8);
-    const colorPurple = new THREE.Color(0xa855f7);
-    const colorAurora = new THREE.Color(0x00ffcc);
-
-    for (let i = 0; i < particleCount * 3; i += 3) {
-        // Spiral / Spherical Distribution
-        const radius = Math.random() * 40 + 5;
-        const theta = Math.random() * Math.PI * 2;
-        const phi = Math.random() * Math.PI * 2;
-
-        positions[i] = radius * Math.sin(theta) * Math.cos(phi);
-        positions[i + 1] = radius * Math.sin(theta) * Math.sin(phi);
-        positions[i + 2] = radius * Math.cos(theta);
-
-        // Gradient Color Mixing
-        const mixedColor = colorCyan.clone();
-        if (Math.random() > 0.5) {
-            mixedColor.lerp(colorPurple, Math.random());
-        } else {
-            mixedColor.lerp(colorAurora, Math.random());
-        }
-
-        colors[i] = mixedColor.r;
-        colors[i + 1] = mixedColor.g;
-        colors[i + 2] = mixedColor.b;
+const prosesMuat = setInterval(() => {
+    persenMuat += Math.floor(Math.random() * 12) + 3;
+    if (persenMuat >= 100) {
+        persenMuat = 100;
+        clearInterval(prosesMuat);
+        setTimeout(() => {
+            document.getElementById('layarMuat').classList.add('selesai');
+        }, 800);
     }
-
-    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
-
-    // Particle Shader Material
-    const material = new THREE.PointsMaterial({
-        size: 0.12,
-        vertexColors: true,
-        transparent: true,
-        opacity: 0.8,
-        blending: THREE.AdditiveBlending
-    });
-
-    const particleSystem = new THREE.Points(geometry, material);
-    scene.add(particleSystem);
-
-    // Quantum Ring Object
-    const ringGeometry = new THREE.TorusGeometry(12, 0.05, 16, 100);
-    const ringMaterial = new THREE.MeshBasicMaterial({
-        color: 0x00f0ff,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.3
-    });
-    const quantumRing = new THREE.Mesh(ringGeometry, ringMaterial);
-    quantumRing.rotation.x = Math.PI / 3;
-    scene.add(quantumRing);
-
-    // Mouse Interaction Parallax State
-    let mouseX = 0;
-    let mouseY = 0;
-    let targetX = 0;
-    let targetY = 0;
-
-    window.addEventListener('mousemove', (e) => {
-        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
-        mouseY = -(e.clientY / window.innerHeight - 0.5) * 2;
-    }, { passive: true });
-
-    // Window Resize Handler
-    window.addEventListener('resize', () => {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        renderer.setSize(window.innerWidth, window.innerHeight);
-    });
-
-    // Frame Performance & Render Loop (60 FPS Target)
-    let lastTime = performance.now();
-    let frameCount = 0;
-    const fpsElement = document.querySelector('#fps-counter');
-
-    function animate(now) {
-        requestAnimationFrame(animate);
-
-        // FPS Calculation
-        frameCount++;
-        if (now - lastTime >= 1000) {
-            if (fpsElement) fpsElement.textContent = frameCount;
-            frameCount = 0;
-            lastTime = now;
-        }
-
-        // Smooth Interpolation
-        targetX += (mouseX - targetX) * 0.05;
-        targetY += (mouseY - targetY) * 0.05;
-
-        // Rotate WebGL Objects
-        particleSystem.rotation.y += 0.001;
-        particleSystem.rotation.x += 0.0005;
-
-        quantumRing.rotation.z += 0.002;
-        quantumRing.rotation.y += 0.001;
-
-        // Camera Parallax Motion
-        camera.position.x = targetX * 3;
-        camera.position.y = targetY * 3;
-        camera.lookAt(scene.position);
-
-        renderer.render(scene, camera);
+    if (persenMuat >= 20 && indeksPesan === 0) {
+        document.getElementById('teksMuat').textContent = pesanMuat[1];
+        indeksPesan++;
     }
+    if (persenMuat >= 40 && indeksPesan === 1) {
+        document.getElementById('teksMuat').textContent = pesanMuat[2];
+        indeksPesan++;
+    }
+    if (persenMuat >= 60 && indeksPesan === 2) {
+        document.getElementById('teksMuat').textContent = pesanMuat[3];
+        indeksPesan++;
+    }
+    if (persenMuat >= 85 && indeksPesan === 3) {
+        document.getElementById('teksMuat').textContent = pesanMuat[4];
+        indeksPesan++;
+    }
+    document.getElementById('barMuat').style.width = `${persenMuat}%`;
+}, 150);
 
-    animate(performance.now());
+// Efek Mengetik
+new Typed('#teksKetik', {
+    strings: ['Pengembang Web', 'Desainer UI/UX', 'Peneliti Keamanan Digital', 'Pelajar Teknologi'],
+    typeSpeed: 100,
+    backSpeed: 60,
+    backDelay: 2000,
+    loop: true
+});
 
-    /* ==========================================================================
-       3. CUSTOM CURSOR & MAGNETIC BUTTONS
-       ========================================================================== */
-    const cursorDot = document.querySelector('[data-cursor-dot]');
-    const cursorGlow = document.querySelector('[data-cursor-glow]');
+// Latar Belakang 3D Galaksi
+const kanvas3d = document.getElementById('latar3d');
+const pengatur = new THREE.WebGLRenderer({
+    canvas: kanvas3d,
+    alpha: true,
+    antialias: true,
+    powerPreference: 'high-performance'
+});
+pengatur.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+pengatur.setSize(window.innerWidth, window.innerHeight);
 
-    window.addEventListener('mousemove', (e) => {
-        const { clientX, clientY } = e;
+const adegan = new THREE.Scene();
+const kamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+kamera.position.z = 180;
+
+// Membuat Partikel Bintang
+const geometriBintang = new THREE.BufferGeometry();
+const jumlahBintang = 8000;
+const posisiBintang = new Float32Array(jumlahBintang * 3);
+
+for (let i = 0; i < jumlahBintang * 3; i++) {
+    posisiBintang[i] = (Math.random() - 0.5) * 1200;
+}
+
+geometriBintang.setAttribute('position', new THREE.BufferAttribute(posisiBintang, 3));
+const bahanBintang = new THREE.PointsMaterial({
+    color: 0x00E5FF,
+    size: 1.1,
+    transparent: true,
+    opacity: 0.6
+});
+const bintang = new THREE.Points(geometriBintang, bahanBintang);
+adegan.add(bintang);
+
+// Animasi Latar 3D
+function putarLatar() {
+    requestAnimationFrame(putarLatar);
+    bintang.rotation.y += 0.0003;
+    bintang.rotation.x += 0.0001;
+    pengatur.render(adegan, kamera);
+}
+putarLatar();
+
+// Sesuaikan Ukuran Saat Jendela Berubah
+window.addEventListener('resize', () => {
+    kamera.aspect = window.innerWidth / window.innerHeight;
+    kamera.updateProjectionMatrix();
+    pengatur.setSize(window.innerWidth, window.innerHeight);
+});
+
+// Kursor Khusus
+const kursorUtama = document.getElementById('kursorUtama');
+const kursorTrail = document.getElementById('kursorTrail');
+let xKursor = 0, yKursor = 0, xTrail = 0, yTrail = 0;
+
+window.addEventListener('mousemove', (e) => {
+    xKursor = e.clientX;
+    yKursor = e.clientY;
+});
+
+gsap.ticker.add(() => {
+    xTrail += (xKursor - xTrail) * 0.12;
+    yTrail += (yKursor - yTrail) * 0.12;
+    
+    kursorUtama.style.left = `${xKursor - 10}px`;
+    kursorUtama.style.top = `${yKursor - 10}px`;
+    kursorTrail.style.left = `${xTrail - 6}px`;
+    kursorTrail.style.top = `${yTrail - 6}px`;
+    kursorTrail.style.opacity = '0.4';
+});
+
+// Perbesar Kursor Saat Menyentuh Tombol
+document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+        kursorUtama.style.width = '30px';
+        kursorUtama.style.height = '30px';
+        kursorUtama.style.marginLeft = '-10px';
+        kursorUtama.style.marginTop = '-10px';
+    });
+    el.addEventListener('mouseleave', () => {
+        kursorUtama.style.width = '20px';
+        kursorUtama.style.height = '20px';
+        kursorUtama.style.marginLeft = '0';
+        kursorUtama.style.marginTop = '0';
+    });
+});
+
+// Animasi Bilah Kemajuan
+const pengamatKemajuan = new IntersectionObserver((entri) => {
+    entri.forEach(item => {
+        if (item.isIntersecting) {
+            const target = item.target;
+            const nilai = target.dataset.progress;
+            target.style.width = `${nilai}%`;
+            target.style.transition = 'width 1.5s ease-out';
+        }
+    });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('[data-progress]').forEach(el => {
+    pengamatKemajuan.observe(el);
+});
+
+// Tombol Kembali ke Atas
+const tombolAtas = document.getElementById('tombolAtas');
+window.addEventListener('scroll', () => {
+    if (window.scrollY > 500) {
+        tombolAtas.classList.remove('opacity-0', 'invisible');
+        tombolAtas.classList.add('opacity-100', 'visible');
+    } else {
+        tombolAtas.classList.add('opacity-0', 'invisible');
+        tombolAtas.classList.remove('opacity-100', 'visible');
+    }
+});
+
+tombolAtas.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// Navbar Aktif Saat Digulir
+const bagian = document.querySelectorAll('section');
+const tautanNav = document.querySelectorAll('.nav-link');
+
+window.addEventListener('scroll', () => {
+    let posisiSaatIni = window.scrollY + 100;
+    bagian.forEach(bag => {
+        const atasBagian = bag.offsetTop;
+        const tinggiBagian = bag.offsetHeight;
+        const idBagian = bag.getAttribute('id');
         
-        if (cursorDot) {
-            cursorDot.style.left = `${clientX}px`;
-            cursorDot.style.top = `${clientY}px`;
+        if (posisiSaatIni >= atasBagian && posisiSaatIni < atasBagian + tinggiBagian) {
+            tautanNav.forEach(taut => taut.classList.remove('active'));
+            document.querySelector(`.nav-link[href="#${idBagian}"]`).classList.add('active');
         }
-
-        if (cursorGlow) {
-            cursorGlow.animate({
-                left: `${clientX}px`,
-                top: `${clientY}px`
-            }, { duration: 500, fill: 'forwards' });
-        }
-    }, { passive: true });
-
-    // Magnetic Buttons Hover Effect
-    const magneticBtns = document.querySelectorAll('[data-magnetic]');
-    magneticBtns.forEach((btn) => {
-        btn.addEventListener('mousemove', (e) => {
-            const rect = btn.getBoundingClientRect();
-            const x = e.clientX - rect.left - rect.width / 2;
-            const y = e.clientY - rect.top - rect.height / 2;
-
-            gsap.to(btn, {
-                x: x * 0.3,
-                y: y * 0.3,
-                duration: 0.3,
-                ease: 'power2.out'
-            });
-        });
-
-        btn.addEventListener('mouseleave', () => {
-            gsap.to(btn, {
-                x: 0,
-                y: 0,
-                duration: 0.5,
-                ease: 'elastic.out(1, 0.3)'
-            });
-        });
     });
+});
 
-    /* ==========================================================================
-       4. GSAP SCROLLTRIGGER REVEAL ANIMATIONS
-       ========================================================================== */
-    gsap.registerPlugin(ScrollTrigger);
+// Inisialisasi Efek Miring Kartu
+VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
+    max: 8,
+    speed: 300,
+    glare: true,
+    "max-glare": 0.12,
+    scale: 1.02
+});
 
-    // Hero Section Reveal
-    gsap.from('[data-gsap="fade-up"]', {
-        y: 40,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: 'power3.out',
-        delay: 0.2
-    });
-
-    // Glass Cards Scroll Animations
-    gsap.utils.toArray('.glass-card').forEach((card) => {
-        gsap.from(card, {
-            scrollTrigger: {
-                trigger: card,
-                start: 'top 85%',
-                toggleActions: 'play none none reverse'
-            },
-            y: 50,
-            opacity: 0,
-            duration: 0.8,
-            ease: 'power2.out'
-        });
-    });
-
-    /* ==========================================================================
-       5. INTERACTIVE FORM HANDLER
-       ========================================================================== */
-    const contactForm = document.querySelector('#contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            const btn = contactForm.querySelector('button[type="submit"]');
-            const originalText = btn.innerHTML;
-
-            btn.innerHTML = `<span class="btn-text">TRANSMITTING...</span>`;
-            btn.style.opacity = '0.7';
-
-            setTimeout(() => {
-                alert('TRANSMISSION RECEIVED // Node encrypted successfully.');
-                contactForm.reset();
-                btn.innerHTML = originalText;
-                btn.style.opacity = '1';
-            }, 1500);
-        });
-    }
+// Kirim Form Kontak
+document.getElementById('formKontak').addEventListener('submit', (e) => {
+    e.preventDefault();
+    alert('Pesan berhasil dikirim! Terima kasih telah menghubungi saya.');
+    e.target.reset();
 });
