@@ -1,4 +1,86 @@
-// Render Interactive Canvas Background (Particles & Light Glow)
+// 1. CINEMATIC LOADING SCREEN SCRIPT
+window.addEventListener('load', () => {
+    const loadingBar = document.getElementById('loading-bar');
+    const loadingText = document.getElementById('loading-text');
+    const loadingScreen = document.getElementById('loading-screen');
+    
+    let progress = 0;
+    const interval = setInterval(() => {
+        progress += Math.floor(Math.random() * 15) + 5;
+        if (progress > 100) progress = 100;
+        
+        loadingBar.style.width = progress + '%';
+        loadingText.innerText = progress + '%';
+        
+        if (progress === 100) {
+            clearInterval(interval);
+            setTimeout(() => {
+                loadingScreen.style.opacity = '0';
+                setTimeout(() => {
+                    loadingScreen.style.display = 'none';
+                    initAIAssistant(); // Panggil AI Assistant setelah loading selesai
+                }, 1000);
+            }, 300);
+        }
+    }, 80);
+});
+
+// 2. NEON CURSOR TRAIL
+const cursorDot = document.getElementById('cursor-dot');
+const cursorOutline = document.getElementById('cursor-outline');
+
+window.addEventListener('mousemove', (e) => {
+    const posX = e.clientX;
+    const posY = e.clientY;
+
+    cursorDot.style.left = `${posX}px`;
+    cursorDot.style.top = `${posY}px`;
+
+    cursorOutline.animate({
+        left: `${posX}px`,
+        top: `${posY}px`
+    }, { duration: 200, fill: "forwards" });
+});
+
+// 3. AI HOLOGRAM ASSISTANT TYPING EFFECT
+const aiMessages = [
+    "Selamat datang di Command Center!",
+    "Semua sistem utama beroperasi dengan normal.",
+    "Silakan periksa live terminal & aset digital kamu.",
+    "Sistem AI Lab siap mendukung eksperimen."
+];
+
+function initAIAssistant() {
+    const aiTyping = document.getElementById('ai-typing');
+    let msgIndex = 0;
+    let charIndex = 0;
+
+    function typeNextChar() {
+        if (!aiTyping) return;
+        const currentMsg = aiMessages[msgIndex];
+        
+        if (charIndex < currentMsg.length) {
+            aiTyping.innerHTML += currentMsg.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeNextChar, 40);
+        } else {
+            setTimeout(() => {
+                aiTyping.innerHTML = '';
+                charIndex = 0;
+                msgIndex = (msgIndex + 1) % aiMessages.length;
+                typeNextChar();
+            }, 3500);
+        }
+    }
+    typeNextChar();
+}
+
+function toggleAI() {
+    const aiBox = document.getElementById('ai-assistant');
+    if (aiBox) aiBox.style.display = 'none';
+}
+
+// 4. MATRIX / PARTICLE CANVAS BACKGROUND
 const canvas = document.getElementById('bg-canvas');
 const ctx = canvas.getContext('2d');
 
@@ -21,9 +103,9 @@ class Particle {
     reset() {
         this.x = Math.random() * width;
         this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = (Math.random() - 0.5) * 0.5;
-        this.radius = Math.random() * 2;
+        this.vx = (Math.random() - 0.5) * 0.4;
+        this.vy = (Math.random() - 0.5) * 0.4;
+        this.radius = Math.random() * 1.5;
         this.alpha = Math.random() * 0.5 + 0.2;
     }
 
@@ -44,79 +126,79 @@ class Particle {
     }
 }
 
-// Generate Particles
-for (let i = 0; i < 70; i++) {
+for (let i = 0; i < 60; i++) {
     particles.push(new Particle());
 }
 
 function animate() {
     ctx.clearRect(0, 0, width, height);
-
     particles.forEach(p => {
         p.update();
         p.draw();
     });
-
     requestAnimationFrame(animate);
 }
-
 animate();
 
-// Mouse Spotlight Tracker
-const spotlight = document.getElementById('spotlight');
-if (spotlight) {
-    window.addEventListener('mousemove', (e) => {
-        const x = e.clientX;
-        const y = e.clientY;
-        spotlight.style.background = `radial-gradient(600px at ${x}px ${y}px, rgba(0, 240, 255, 0.05), transparent 80%)`;
-    });
+// 5. LIVE TERMINAL SIMULATOR
+const terminalStream = document.getElementById('terminal-code-stream');
+const codeSnippets = [
+    "function initCore() { return new NeuralNet({ status: 'ACTIVE' }); }",
+    "const btcValuation = await fetchCryptoData('BTC');",
+    "security.enforceProtocol('2FA_MANDATORY');",
+    "console.log('Command Center Ready v2026.0');"
+];
+
+if (terminalStream) {
+    let snippetIdx = 0;
+    setInterval(() => {
+        terminalStream.innerText = codeSnippets[snippetIdx];
+        snippetIdx = (snippetIdx + 1) % codeSnippets.length;
+    }, 2500);
 }
 
-// Animasi Saldo Berjalan (Counter Effect)
+// 6. ANIMASI SALDO & STATS COUNTER
 function animateCounters() {
-    const counters = document.querySelectorAll('.balance-counter');
-    const repoCounters = document.querySelectorAll('.repo-counter');
-    const speed = 60; // Semakin kecil nilainya, semakin cepat animasinya
+    const balanceCounters = document.querySelectorAll('.balance-counter');
+    const statCounters = document.querySelectorAll('.stat-counter');
 
-    // Animasi Saldo Rupiah
-    counters.forEach(counter => {
-        const updateCount = () => {
-            const target = +counter.getAttribute('data-target');
-            const currentText = counter.innerText.replace(/[^0-9]/g, '');
-            const count = +currentText;
-            const increment = Math.ceil(target / speed);
+    balanceCounters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        let current = 0;
+        const increment = Math.ceil(target / 40);
 
-            if (count < target) {
-                const nextVal = Math.min(count + increment, target);
-                counter.innerText = 'Rp ' + nextVal.toLocaleString('id-ID');
-                setTimeout(updateCount, 25);
+        const update = () => {
+            current += increment;
+            if (current < target) {
+                counter.innerText = 'Rp ' + current.toLocaleString('id-ID');
+                setTimeout(update, 25);
             } else {
                 counter.innerText = 'Rp ' + target.toLocaleString('id-ID');
             }
         };
-        updateCount();
+        update();
     });
 
-    // Animasi Repo
-    repoCounters.forEach(counter => {
-        const updateCount = () => {
-            const target = +counter.getAttribute('data-target');
-            const count = +counter.innerText.replace(/[^0-9]/g, '');
-            const increment = Math.ceil(target / 20);
+    statCounters.forEach(counter => {
+        const target = +counter.getAttribute('data-target');
+        let current = 0;
+        const increment = Math.ceil(target / 30);
 
-            if (count < target) {
-                counter.innerText = (count + increment) + ' Repo';
-                setTimeout(updateCount, 50);
+        const update = () => {
+            current += increment;
+            if (current < target) {
+                counter.innerText = current;
+                setTimeout(update, 30);
             } else {
-                counter.innerText = target + ' Repo';
+                counter.innerText = target;
             }
         };
-        updateCount();
+        update();
     });
 }
 
-// Menjalankan animasi saat elemen terlihat di layar (Intersection Observer)
-const observerOptions = { threshold: 0.3 };
+// Intersection Observer
+const observerOptions = { threshold: 0.2 };
 const assetsSection = document.getElementById('assets');
 
 if (assetsSection) {
@@ -124,7 +206,7 @@ if (assetsSection) {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 animateCounters();
-                obs.unobserve(entry.target); // Hanya jalankan animasi 1 kali
+                obs.unobserve(entry.target);
             }
         });
     }, observerOptions);
