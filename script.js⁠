@@ -1,228 +1,93 @@
-// 1. CINEMATIC LOADING SCREEN SCRIPT (Diperbaiki agar langsung jalan)
-function startLoading() {
-    const loadingBar = document.getElementById('loading-bar');
-    const loadingText = document.getElementById('loading-text');
+// Initialize Icons
+lucide.createIcons();
+
+// Hide Loading Screen with Transition
+window.addEventListener('load', () => {
+  setTimeout(() => {
     const loadingScreen = document.getElementById('loading-screen');
+    loadingScreen.style.opacity = '0';
+    setTimeout(() => loadingScreen.style.display = 'none', 1000);
     
-    if (!loadingBar || !loadingScreen) return;
+    // Trigger Counters
+    startCounters();
+  }, 3000);
+});
 
-    let progress = 0;
-    const interval = setInterval(() => {
-        progress += Math.floor(Math.random() * 12) + 6;
-        if (progress > 100) progress = 100;
-        
-        loadingBar.style.width = progress + '%';
-        if (loadingText) loadingText.innerText = progress + '%';
-        
-        if (progress === 100) {
-            clearInterval(interval);
-            setTimeout(() => {
-                loadingScreen.style.opacity = '0';
-                setTimeout(() => {
-                    loadingScreen.style.display = 'none';
-                    initAIAssistant(); // Panggil AI Assistant setelah loading selesai
-                }, 800);
-            }, 300);
-        }
-    }, 60);
+// Custom Neon Cursor Motion
+const cursor = document.querySelector('.neon-cursor');
+document.addEventListener('mousemove', (e) => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+});
+
+// Counter Animation
+function startCounters() {
+  const counters = document.querySelectorAll('.counter');
+  counters.forEach(counter => {
+    const target = +counter.getAttribute('data-target');
+    let count = 0;
+    const speed = target / 100;
+
+    const updateCount = () => {
+      count += speed;
+      if (count < target) {
+        counter.innerText = Math.ceil(count);
+        setTimeout(updateCount, 20);
+      } else {
+        counter.innerText = target;
+      }
+    };
+    updateCount();
+  });
 }
 
-// Jalankan loading langsung saat DOM siap (tidak perlu menunggu gambar eksternal)
-if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', startLoading);
-} else {
-    startLoading();
+// Live Typing Simulation for Terminal
+const codeSnippet = `> Initializing Cyber Security Protocols...
+> Connecting to Global Node Array... [SUCCESS]
+> Fetching Blockchain Asset Balances...
+> System Status: ALL SYSTEMS OPERATIONAL (60 FPS)`;
+
+let charIndex = 0;
+function typeCode() {
+  if (charIndex < codeSnippet.length) {
+    document.getElementById("typed-code").innerHTML += codeSnippet.charAt(charIndex);
+    charIndex++;
+    setTimeout(typeCode, 30);
+  }
 }
+setTimeout(typeCode, 3500);
 
-// 2. NEON CURSOR TRAIL (Hanya aktif di desktop/perangkat dengan mouse)
-const cursorDot = document.getElementById('cursor-dot');
-const cursorOutline = document.getElementById('cursor-outline');
+// Basic 3D Scene Setup (Three.js Earth / Particle Core)
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('cyber-bg'), alpha: true });
 
-if (cursorDot && cursorOutline) {
-    window.addEventListener('mousemove', (e) => {
-        const posX = e.clientX;
-        const posY = e.clientY;
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);
 
-        cursorDot.style.left = `${posX}px`;
-        cursorDot.style.top = `${posY}px`;
+// Sphere Object (Digital Earth Core)
+const geometry = new THREE.SphereGeometry(2, 32, 32);
+const material = new THREE.MeshBasicMaterial({ 
+  color: 0x00f3ff, 
+  wireframe: true 
+});
+const sphere = new THREE.Mesh(geometry, material);
+scene.add(sphere);
 
-        cursorOutline.animate({
-            left: `${posX}px`,
-            top: `${posY}px`
-        }, { duration: 200, fill: "forwards" });
-    });
+camera.position.z = 5;
+
+// Animation Loop for 60FPS Performance
+function animate() {
+  requestAnimationFrame(animate);
+  sphere.rotation.x += 0.003;
+  sphere.rotation.y += 0.005;
+  renderer.render(scene, camera);
 }
+animate();
 
-// 3. AI HOLOGRAM ASSISTANT TYPING EFFECT
-const aiMessages = [
-    "Selamat datang di Command Center!",
-    "Semua sistem utama beroperasi dengan normal.",
-    "Silakan periksa live terminal & aset digital kamu.",
-    "Sistem AI Lab siap mendukung eksperimen."
-];
-
-function initAIAssistant() {
-    const aiTyping = document.getElementById('ai-typing');
-    if (!aiTyping) return;
-
-    let msgIndex = 0;
-    let charIndex = 0;
-
-    function typeNextChar() {
-        const currentMsg = aiMessages[msgIndex];
-        
-        if (charIndex < currentMsg.length) {
-            aiTyping.innerHTML += currentMsg.charAt(charIndex);
-            charIndex++;
-            setTimeout(typeNextChar, 40);
-        } else {
-            setTimeout(() => {
-                aiTyping.innerHTML = '';
-                charIndex = 0;
-                msgIndex = (msgIndex + 1) % aiMessages.length;
-                typeNextChar();
-            }, 3500);
-        }
-    }
-    typeNextChar();
-}
-
-function toggleAI() {
-    const aiBox = document.getElementById('ai-assistant');
-    if (aiBox) aiBox.style.display = 'none';
-}
-
-// 4. MATRIX / PARTICLE CANVAS BACKGROUND
-const canvas = document.getElementById('bg-canvas');
-if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let width, height;
-    let particles = [];
-
-    function resize() {
-        width = canvas.width = window.innerWidth;
-        height = canvas.height = window.innerHeight;
-    }
-
-    window.addEventListener('resize', resize);
-    resize();
-
-    class Particle {
-        constructor() {
-            this.reset();
-        }
-
-        reset() {
-            this.x = Math.random() * width;
-            this.y = Math.random() * height;
-            this.vx = (Math.random() - 0.5) * 0.4;
-            this.vy = (Math.random() - 0.5) * 0.4;
-            this.radius = Math.random() * 1.5;
-            this.alpha = Math.random() * 0.5 + 0.2;
-        }
-
-        update() {
-            this.x += this.vx;
-            this.y += this.vy;
-
-            if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
-                this.reset();
-            }
-        }
-
-        draw() {
-            ctx.beginPath();
-            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-            ctx.fillStyle = `rgba(0, 240, 255, ${this.alpha})`;
-            ctx.fill();
-        }
-    }
-
-    for (let i = 0; i < 40; i++) {
-        particles.push(new Particle());
-    }
-
-    function animate() {
-        ctx.clearRect(0, 0, width, height);
-        particles.forEach(p => {
-            p.update();
-            p.draw();
-        });
-        requestAnimationFrame(animate);
-    }
-    animate();
-}
-
-// 5. LIVE TERMINAL SIMULATOR
-const terminalStream = document.getElementById('terminal-code-stream');
-const codeSnippets = [
-    "function initCore() { return new NeuralNet({ status: 'ACTIVE' }); }",
-    "const btcValuation = await fetchCryptoData('BTC');",
-    "security.enforceProtocol('2FA_MANDATORY');",
-    "console.log('Command Center Ready v2026.0');"
-];
-
-if (terminalStream) {
-    let snippetIdx = 0;
-    setInterval(() => {
-        terminalStream.innerText = codeSnippets[snippetIdx];
-        snippetIdx = (snippetIdx + 1) % codeSnippets.length;
-    }, 2500);
-}
-
-// 6. ANIMASI SALDO & STATS COUNTER
-function animateCounters() {
-    const balanceCounters = document.querySelectorAll('.balance-counter');
-    const statCounters = document.querySelectorAll('.stat-counter');
-
-    balanceCounters.forEach(counter => {
-        const target = +counter.getAttribute('data-target');
-        let current = 0;
-        const increment = Math.ceil(target / 40);
-
-        const update = () => {
-            current += increment;
-            if (current < target) {
-                counter.innerText = 'Rp ' + current.toLocaleString('id-ID');
-                setTimeout(update, 25);
-            } else {
-                counter.innerText = 'Rp ' + target.toLocaleString('id-ID');
-            }
-        };
-        update();
-    });
-
-    statCounters.forEach(counter => {
-        const target = +counter.getAttribute('data-target');
-        let current = 0;
-        const increment = Math.ceil(target / 30);
-
-        const update = () => {
-            current += increment;
-            if (current < target) {
-                counter.innerText = current;
-                setTimeout(update, 30);
-            } else {
-                counter.innerText = target;
-            }
-        };
-        update();
-    });
-}
-
-// Intersection Observer untuk animasi counter
-const observerOptions = { threshold: 0.2 };
-const assetsSection = document.getElementById('assets');
-
-if (assetsSection) {
-    const observer = new IntersectionObserver((entries, obs) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                animateCounters();
-                obs.unobserve(entry.target);
-            }
-        });
-    }, observerOptions);
-
-    observer.observe(assetsSection);
-}
+// Window Resize Handling
+window.addEventListener('resize', () => {
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix();
+  renderer.setSize(window.innerWidth, window.innerHeight);
+});
