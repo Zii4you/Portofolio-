@@ -1,68 +1,23 @@
-// --- 1. LOADING SCREEN (SAFE & AUTO FALLBACK) ---
-let isLoaderHidden = false;
+/**
+ * ALEX VANCE // CYBER FUTURISTIC PORTFOLIO ENGINE (2026)
+ * Core Tech: Three.js, GSAP, Lenis Smooth Scroll
+ */
 
-function hideLoader() {
-    if (isLoaderHidden) return;
-    isLoaderHidden = true;
+'use strict';
 
-    const loaderBar = document.getElementById('loader-bar');
-    const loaderText = document.getElementById('loader-text');
-    const loader = document.getElementById('loader');
-
-    if (loaderBar) loaderBar.style.width = '100%';
-    if (loaderText) loaderText.innerText = 'Welcome to the Future.';
-
-    setTimeout(() => {
-        if (!loader) return;
-        if (typeof gsap !== 'undefined') {
-            gsap.to(loader, {
-                opacity: 0,
-                duration: 0.6,
-                onComplete: () => { loader.style.display = 'none'; }
-            });
-        } else {
-            loader.style.opacity = '0';
-            setTimeout(() => { loader.style.display = 'none'; }, 600);
-        }
-    }, 400);
-}
-
-// Jalankan ketika resource selesai
-window.addEventListener('load', hideLoader);
-
-// Fallback: Paksa hilangkan loader setelah 2.5 detik jika halaman/browser HP lambat
-setTimeout(hideLoader, 2500);
-
-
-// --- 2. POPULATE TECH STACK ---
 document.addEventListener('DOMContentLoaded', () => {
-    const techContainer = document.getElementById('tech-stack-container');
-    if (techContainer) {
-        const techStack = [
-            'HTML5', 'CSS3', 'JavaScript', 'Tailwind CSS', 'Git & GitHub', 
-            'Responsive Design', 'UI/UX Design', 'Basic API', 'Cloud Basics', 
-            'Linux', 'Networking', 'Database SQL', 'AI Basics', 'Cyber Security'
-        ];
-        
-        techStack.forEach(item => {
-            const card = document.createElement('div');
-            card.className = "p-4 rounded-xl border border-slate-800/80 bg-slate-900/30 backdrop-blur-md hover:border-electric/40 hover:bg-slate-800/50 transition group cursor-default";
-            card.innerHTML = `
-                <div class="text-xs font-mono text-slate-500 mb-1 group-hover:text-electric">MODULE</div>
-                <div class="text-sm font-semibold text-slate-200">${item}</div>
-            `;
-            techContainer.appendChild(card);
-        });
-    }
-});
 
-
-// --- 3. LENIS SMOOTH SCROLL ---
-if (typeof Lenis !== 'undefined') {
+    /* ==========================================================================
+       1. SMOOTH SCROLL INITIALIZATION (LENIS)
+       ========================================================================== */
     const lenis = new Lenis({
         duration: 1.2,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-        smoothWheel: true
+        orientation: 'vertical',
+        gestureOrientation: 'vertical',
+        smoothWheel: true,
+        wheelMultiplier: 1.0,
+        touchMultiplier: 2.0,
     });
 
     function raf(time) {
@@ -70,83 +25,253 @@ if (typeof Lenis !== 'undefined') {
         requestAnimationFrame(raf);
     }
     requestAnimationFrame(raf);
-}
 
+    // Sync Lenis with GSAP ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
+    gsap.ticker.add((time) => {
+        lenis.raf(time * 1000);
+    });
+    gsap.ticker.lagSmoothing(0, 0);
 
-// --- 4. THREE.JS CYBER BACKGROUND ---
-if (typeof THREE !== 'undefined') {
-    const canvas = document.getElementById('bg-3d');
-    if (canvas) {
-        const scene = new THREE.Scene();
+    /* ==========================================================================
+       2. THREE.JS WEBGL BACKGROUND SYSTEM (QUANTUM GALAXY & CORE)
+       ========================================================================== */
+    const canvas = document.querySelector('#webgl-canvas');
+    if (!canvas) return;
 
-        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-        camera.position.z = 5;
+    // Scene, Camera, Renderer
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x030712, 0.015);
 
-        const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+    const camera = new THREE.PerspectiveCamera(
+        60,
+        window.innerWidth / window.innerHeight,
+        0.1,
+        1000
+    );
+    camera.position.z = 30;
+
+    const renderer = new THREE.WebGLRenderer({
+        canvas: canvas,
+        antialias: true,
+        alpha: true,
+        powerPreference: 'high-performance'
+    });
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+    // Particle Galaxy Generation
+    const particleCount = 2500;
+    const geometry = new THREE.BufferGeometry();
+    const positions = new Float32Array(particleCount * 3);
+    const colors = new Float32Array(particleCount * 3);
+
+    const colorCyan = new THREE.Color(0x38bdf8);
+    const colorPurple = new THREE.Color(0xa855f7);
+    const colorAurora = new THREE.Color(0x00ffcc);
+
+    for (let i = 0; i < particleCount * 3; i += 3) {
+        // Spiral / Spherical Distribution
+        const radius = Math.random() * 40 + 5;
+        const theta = Math.random() * Math.PI * 2;
+        const phi = Math.random() * Math.PI * 2;
+
+        positions[i] = radius * Math.sin(theta) * Math.cos(phi);
+        positions[i + 1] = radius * Math.sin(theta) * Math.sin(phi);
+        positions[i + 2] = radius * Math.cos(theta);
+
+        // Gradient Color Mixing
+        const mixedColor = colorCyan.clone();
+        if (Math.random() > 0.5) {
+            mixedColor.lerp(colorPurple, Math.random());
+        } else {
+            mixedColor.lerp(colorAurora, Math.random());
+        }
+
+        colors[i] = mixedColor.r;
+        colors[i + 1] = mixedColor.g;
+        colors[i + 2] = mixedColor.b;
+    }
+
+    geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+    geometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+
+    // Particle Shader Material
+    const material = new THREE.PointsMaterial({
+        size: 0.12,
+        vertexColors: true,
+        transparent: true,
+        opacity: 0.8,
+        blending: THREE.AdditiveBlending
+    });
+
+    const particleSystem = new THREE.Points(geometry, material);
+    scene.add(particleSystem);
+
+    // Quantum Ring Object
+    const ringGeometry = new THREE.TorusGeometry(12, 0.05, 16, 100);
+    const ringMaterial = new THREE.MeshBasicMaterial({
+        color: 0x00f0ff,
+        wireframe: true,
+        transparent: true,
+        opacity: 0.3
+    });
+    const quantumRing = new THREE.Mesh(ringGeometry, ringMaterial);
+    quantumRing.rotation.x = Math.PI / 3;
+    scene.add(quantumRing);
+
+    // Mouse Interaction Parallax State
+    let mouseX = 0;
+    let mouseY = 0;
+    let targetX = 0;
+    let targetY = 0;
+
+    window.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+        mouseY = -(e.clientY / window.innerHeight - 0.5) * 2;
+    }, { passive: true });
+
+    // Window Resize Handler
+    window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    });
 
-        // Partikel Field
-        const particlesCount = 1200;
-        const posArray = new Float32Array(particlesCount * 3);
+    // Frame Performance & Render Loop (60 FPS Target)
+    let lastTime = performance.now();
+    let frameCount = 0;
+    const fpsElement = document.querySelector('#fps-counter');
 
-        for (let i = 0; i < particlesCount * 3; i++) {
-            posArray[i] = (Math.random() - 0.5) * 15;
+    function animate(now) {
+        requestAnimationFrame(animate);
+
+        // FPS Calculation
+        frameCount++;
+        if (now - lastTime >= 1000) {
+            if (fpsElement) fpsElement.textContent = frameCount;
+            frameCount = 0;
+            lastTime = now;
         }
 
-        const particlesGeometry = new THREE.BufferGeometry();
-        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        // Smooth Interpolation
+        targetX += (mouseX - targetX) * 0.05;
+        targetY += (mouseY - targetY) * 0.05;
 
-        const particlesMaterial = new THREE.PointsMaterial({
-            size: 0.02,
-            color: 0x00f0ff,
-            transparent: true,
-            opacity: 0.8
-        });
+        // Rotate WebGL Objects
+        particleSystem.rotation.y += 0.001;
+        particleSystem.rotation.x += 0.0005;
 
-        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
-        scene.add(particlesMesh);
+        quantumRing.rotation.z += 0.002;
+        quantumRing.rotation.y += 0.001;
 
-        // Interactive Mouse Movement
-        let mouseX = 0;
-        let mouseY = 0;
+        // Camera Parallax Motion
+        camera.position.x = targetX * 3;
+        camera.position.y = targetY * 3;
+        camera.lookAt(scene.position);
 
-        window.addEventListener('mousemove', (e) => {
-            mouseX = (e.clientX / window.innerWidth) - 0.5;
-            mouseY = (e.clientY / window.innerHeight) - 0.5;
-        });
+        renderer.render(scene, camera);
+    }
 
-        // Animation Loop
-        const clock = new THREE.Clock();
+    animate(performance.now());
 
-        function animate3D() {
-            const elapsedTime = clock.getElapsedTime();
+    /* ==========================================================================
+       3. CUSTOM CURSOR & MAGNETIC BUTTONS
+       ========================================================================== */
+    const cursorDot = document.querySelector('[data-cursor-dot]');
+    const cursorGlow = document.querySelector('[data-cursor-glow]');
 
-            particlesMesh.rotation.y = elapsedTime * 0.05;
-            particlesMesh.rotation.x = -mouseY * 0.2;
-            particlesMesh.rotation.y += mouseX * 0.2;
-
-            renderer.render(scene, camera);
-            requestAnimationFrame(animate3D);
+    window.addEventListener('mousemove', (e) => {
+        const { clientX, clientY } = e;
+        
+        if (cursorDot) {
+            cursorDot.style.left = `${clientX}px`;
+            cursorDot.style.top = `${clientY}px`;
         }
-        animate3D();
 
-        // Responsive Resizing
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
+        if (cursorGlow) {
+            cursorGlow.animate({
+                left: `${clientX}px`,
+                top: `${clientY}px`
+            }, { duration: 500, fill: 'forwards' });
+        }
+    }, { passive: true });
+
+    // Magnetic Buttons Hover Effect
+    const magneticBtns = document.querySelectorAll('[data-magnetic]');
+    magneticBtns.forEach((btn) => {
+        btn.addEventListener('mousemove', (e) => {
+            const rect = btn.getBoundingClientRect();
+            const x = e.clientX - rect.left - rect.width / 2;
+            const y = e.clientY - rect.top - rect.height / 2;
+
+            gsap.to(btn, {
+                x: x * 0.3,
+                y: y * 0.3,
+                duration: 0.3,
+                ease: 'power2.out'
+            });
+        });
+
+        btn.addEventListener('mouseleave', () => {
+            gsap.to(btn, {
+                x: 0,
+                y: 0,
+                duration: 0.5,
+                ease: 'elastic.out(1, 0.3)'
+            });
+        });
+    });
+
+    /* ==========================================================================
+       4. GSAP SCROLLTRIGGER REVEAL ANIMATIONS
+       ========================================================================== */
+    gsap.registerPlugin(ScrollTrigger);
+
+    // Hero Section Reveal
+    gsap.from('[data-gsap="fade-up"]', {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.2,
+        ease: 'power3.out',
+        delay: 0.2
+    });
+
+    // Glass Cards Scroll Animations
+    gsap.utils.toArray('.glass-card').forEach((card) => {
+        gsap.from(card, {
+            scrollTrigger: {
+                trigger: card,
+                start: 'top 85%',
+                toggleActions: 'play none none reverse'
+            },
+            y: 50,
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power2.out'
+        });
+    });
+
+    /* ==========================================================================
+       5. INTERACTIVE FORM HANDLER
+       ========================================================================== */
+    const contactForm = document.querySelector('#contact-form');
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = contactForm.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+
+            btn.innerHTML = `<span class="btn-text">TRANSMITTING...</span>`;
+            btn.style.opacity = '0.7';
+
+            setTimeout(() => {
+                alert('TRANSMISSION RECEIVED // Node encrypted successfully.');
+                contactForm.reset();
+                btn.innerHTML = originalText;
+                btn.style.opacity = '1';
+            }, 1500);
         });
     }
-}
-
-
-// --- 5. FORM INTERACTION ---
-const form = document.getElementById('contact-form');
-if (form) {
-    form.addEventListener('submit', (e) => {
-        e.preventDefault();
-        alert('Signal Received. Transmission Confirmed!');
-        form.reset();
-    });
-}
+});
