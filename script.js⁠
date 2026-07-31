@@ -1,1 +1,230 @@
+// JavaScript Engine - Cyber Futuristic Portfolio 2026
+// Optimized with Auto-Fallback Safety
+
+document.addEventListener('DOMContentLoaded', () => {
+  // 1. Jalankan Loading Screen dengan Safety Catch
+  initLoadingScreen();
+
+  // 2. Inisialisasi Fitur Visual Lainnya
+  try {
+    initCanvasBackground();
+    initTypingEffect();
+    initMouseSpotlight();
+    initCounters();
+  } catch (err) {
+    console.warn("Peringatan Fitur Visual:", err);
+  }
+});
+
+/* ================= 1. LOADING SCREEN (SAFE VERSION) ================= */
+function initLoadingScreen() {
+  const loadingBar = document.getElementById('loading-bar');
+  const loadingText = document.getElementById('loading-text');
+  const loadingScreen = document.getElementById('loading-screen');
+
+  // Pengecekan Keberadaan Elemen DOM
+  if (!loadingBar || !loadingText || !loadingScreen) {
+    console.error("Elemen Loading Screen tidak ditemukan!");
+    if (loadingScreen) loadingScreen.style.display = 'none';
+    return;
+  }
+
+  let progress = 0;
+
+  // Fungsi internal untuk menutup loading screen dengan animasi halus
+  function dismissLoading() {
+    loadingScreen.style.opacity = '0';
+    setTimeout(() => {
+      loadingScreen.style.display = 'none';
+    }, 700);
+  }
+
+  // Animasi Progress Bar
+  const interval = setInterval(() => {
+    progress += Math.floor(Math.random() * 15) + 5;
+
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(interval);
+      setTimeout(dismissLoading, 300);
+    }
+
+    loadingBar.style.width = `${progress}%`;
+    loadingText.textContent = `${progress}%`;
+  }, 100);
+
+  // FALLBACK SAFETY: Paksa hilangkan loading screen jika melebihi 3.5 detik
+  // Ini mencegah website tersangkut jika koneksi internet/CDN lambat.
+  setTimeout(() => {
+    if (loadingScreen.style.display !== 'none') {
+      clearInterval(interval);
+      loadingBar.style.width = '100%';
+      loadingText.textContent = '100%';
+      setTimeout(dismissLoading, 200);
+    }
+  }, 3500);
+}
+
+/* ================= 2. CANVAS PARTICLE SYSTEM (60 FPS) ================= */
+function initCanvasBackground() {
+  const canvas = document.getElementById('bg-canvas');
+  if (!canvas) return;
+
+  const ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const particles = [];
+  const particleCount = Math.min(Math.floor(window.innerWidth / 15), 60);
+
+  for (let i = 0; i < particleCount; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 2 + 0.5,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
+      alpha: Math.random() * 0.5 + 0.2
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) p.y = canvas.height;
+      if (p.y > canvas.height) p.y = 0;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(0, 240, 255, ${p.alpha})`;
+      ctx.fill();
+    });
+
+    requestAnimationFrame(animate);
+  }
+  animate();
+}
+
+/* ================= 3. TYPING EFFECT ================= */
+function initTypingEffect() {
+  const target = document.getElementById('typing-text');
+  if (!target) return;
+
+  const roles = [
+    'Pelajar & Tech Enthusiast',
+    'Web Developer',
+    'UI/UX Designer',
+    'Cyber Security Learner'
+  ];
+  let roleIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
+
+  function type() {
+    const current = roles[roleIndex];
+    if (isDeleting) {
+      target.textContent = current.substring(0, charIndex - 1);
+      charIndex--;
+    } else {
+      target.textContent = current.substring(0, charIndex + 1);
+      charIndex++;
+    }
+
+    let delay = isDeleting ? 40 : 80;
+
+    if (!isDeleting && charIndex === current.length) {
+      delay = 2000;
+      isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      roleIndex = (roleIndex + 1) % roles.length;
+      delay = 400;
+    }
+
+    setTimeout(type, delay);
+  }
+  type();
+}
+
+/* ================= 4. MOUSE SPOTLIGHT ================= */
+function initMouseSpotlight() {
+  const spotlight = document.querySelector('.mouse-spotlight');
+  if (!spotlight) return;
+
+  window.addEventListener('mousemove', (e) => {
+    spotlight.style.left = `${e.clientX}px`;
+    spotlight.style.top = `${e.clientY}px`;
+  });
+}
+
+/* ================= 5. ANIMATED COUNTERS ================= */
+function initCounters() {
+  const counters = document.querySelectorAll('.counter');
+  if (!counters.length) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const counter = entry.target;
+        const target = +counter.getAttribute('data-target');
+        let count = 0;
+        const speed = Math.max(1, target / 40);
+
+        const update = () => {
+          count += speed;
+          if (count < target) {
+            counter.innerText = Math.ceil(count).toLocaleString();
+            setTimeout(update, 30);
+          } else {
+            counter.innerText = target.toLocaleString();
+          }
+        };
+        update();
+        observer.unobserve(counter);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  counters.forEach(c => observer.observe(c));
+}
+
+/* ================= 6. RIPSTORY MODAL ================= */
+function openStory(title, content) {
+  const titleEl = document.getElementById('story-title');
+  const bodyEl = document.getElementById('story-body');
+  const modal = document.getElementById('story-modal');
+
+  if (titleEl && bodyEl && modal) {
+    titleEl.innerText = title;
+    bodyEl.innerText = content;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
+}
+
+function closeStory() {
+  const modal = document.getElementById('story-modal');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
+}
+
+/* ================= 7. FORM HANDLER ================= */
+function handleForm(e) {
+  e.preventDefault();
+  alert('Pesan Anda berhasil terkirim! Terima kasih.');
+  e.target.reset();
+}
 
