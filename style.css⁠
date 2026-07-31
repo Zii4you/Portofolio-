@@ -1,80 +1,85 @@
-/* ==============================================
-   GAYA UTAMA PORTOFOLIO ULTRA PREMIUM
-   ============================================== */
+/* Custom FX CSS Cyber Futuristic */
+@import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;600;800&display=swap');
 
-/* Reset & Dasar */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Glassmorphism Standard */
+.glass-card {
+  background: rgba(10, 20, 35, 0.55);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
-html, body {
-    min-height: 100vh;
-    scroll-behavior: smooth;
+/* Mouse Spotlight FX */
+.mouse-spotlight {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(circle, rgba(0, 240, 255, 0.08) 0%, rgba(168, 85, 247, 0.03) 40%, transparent 70%);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  z-index: 1;
 }
 
-::-webkit-scrollbar {
-    width: 6px;
+/* Aurora background */
+.aurora-bg {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(125deg, rgba(0, 102, 255, 0.15), rgba(168, 85, 247, 0.15), rgba(0, 240, 255, 0.1));
+  filter: blur(80px);
+  animation: auroraAnim 12s ease-in-out infinite alternate;
 }
 
-::-webkit-scrollbar-track {
-    background: #050A18;
+@keyframes auroraAnim {
+  0% { transform: scale(1) translateY(0); }
+  100% { transform: scale(1.1) translateY(-20px); }
 }
 
-::-webkit-scrollbar-thumb {
-    background: linear-gradient(#00E5FF, #6C63FF);
-    border-radius: 3px;
+/* Futuristic Grid Background */
+.grid-pattern {
+  position: absolute;
+  inset: 0;
+  background-image: 
+    linear-gradient(to right, rgba(255,255,255,0.03) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255,255,255,0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
 }
 
-/* Kelas Khusus */
-.teks-hologram {
-    background: linear-gradient(90deg, #00E5FF, #6C63FF, #FFB800, #00E5FF);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-    animation: teksHologram 4s linear infinite;
+/* Nav Links Styling */
+.nav-link {
+  color: rgba(255, 255, 255, 0.7);
+  position: relative;
+  transition: color 0.3s ease;
 }
 
-@keyframes teksHologram {
-    to {
-        background-position: 200% center;
-    }
+.nav-link:hover {
+  color: #00F0FF;
 }
 
-.kaca-premium {
-    background: rgba(255,255,255,0.04);
-    backdrop-filter: blur(20px);
-    border: 1px solid rgba(255,255,255,0.08);
-    transition: all 0.3s ease;
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: #00F0FF;
+  box-shadow: 0 0 10px #00F0FF;
+  transition: width 0.3s ease;
 }
 
-.kaca-premium:hover {
-    border-color: rgba(0,229,255,0.3);
-    box-shadow: 0 0 30px rgba(0,229,255,0.15);
+.nav-link:hover::after {
+  width: 100%;
 }
 
-.tombol-magnet {
-    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+/* Custom Keyframe Animations */
+@keyframes scaleUp {
+  from { transform: scale(0.9); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
 }
 
-.layar-muat.selesai {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
-
-.kursor-glow {
-    background: radial-gradient(circle, rgba(0,229,255,0.7), transparent 70%);
-    border: 1px solid rgba(108,99,255,0.5);
-}
-
-.kursor-trail {
-    background: rgba(0,229,255,0.3);
-}
-
-.nav-link.active {
-    color: #00E5FF;
-    border-bottom: 2px solid #00E5FF;
+.animate-scaleUp {
+  animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
