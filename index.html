@@ -1,261 +1,380 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="id" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-
-    <title>ALEX VANCE // QUANTUM LABS & CYBER ARCHITECT 2026</title>
-    <meta name="title" content="ALEX VANCE // QUANTUM LABS & CYBER ARCHITECT 2026">
-    <meta name="description" content="Ultra-premium cyber futuristic portfolio showcasing AI, Quantum Computing, and Next-Gen Web Technologies. Built with Three.js, GSAP, and WebGL.">
-    <meta name="keywords" content="Frontend Engineer, Three.js Developer, Creative Technologist, WebGL, AI Core, Cyberpunk UI">
-    <meta name="author" content="Alex Vance">
-    <meta name="theme-color" content="#030712">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    
+    <!-- Meta SEO & Sosial -->
+    <title>Muzi Adriyan • Cyber Future Lab | Pengembang Web & Keamanan Digital</title>
+    <meta name="description" content="Portofolio premium Muzi Adriyan - Membangun pengalaman digital masa depan dengan teknologi mutakhir, desain futuristik, dan keamanan digital yang terpercaya.">
+    <meta name="keywords" content="pengembang web, desainer ui ux, keamanan digital, cyber security, portofolio web, github indonesia">
+    <meta name="author" content="Muzi Adriyan">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://zii4you.github.io/Portfolio/">
+    
+    <!-- Open Graph -->
     <meta property="og:type" content="website">
-    <meta property="og:url" content="https://alexvance.cyber/">
-    <meta property="og:title" content="ALEX VANCE // QUANTUM LABS & CYBER ARCHITECT 2026">
-    <meta property="og:description" content="Ultra-premium cyber futuristic portfolio showcasing AI, Quantum Computing, and Next-Gen Web Technologies.">
-    <meta property="og:image" content="https://alexvance.cyber/assets/images/og-cover.png">
-
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://alexvance.cyber/">
-    <meta property="twitter:title" content="ALEX VANCE // QUANTUM LABS & CYBER ARCHITECT 2026">
-    <meta property="twitter:description" content="Ultra-premium cyber futuristic portfolio showcasing AI, Quantum Computing, and Next-Gen Web Technologies.">
-    <meta property="twitter:image" content="https://alexvance.cyber/assets/images/og-cover.png">
-
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "Person",
-      "name": "Alex Vance",
-      "jobTitle": "Senior Cyber Architect & WebGL Engineer",
-      "url": "https://alexvance.cyber",
-      "sameAs": [
-        "https://github.com/",
-        "https://linkedin.com/",
-        "https://twitter.com/"
-      ],
-      "knowsAbout": ["Three.js", "WebGL", "Artificial Intelligence", "Frontend Engineering", "Cybersecurity"]
-    }
+    <meta property="og:title" content="Muzi Adriyan • Cyber Future Lab">
+    <meta property="og:description" content="Membangun pengalaman digital masa depan dengan teknologi mutakhir.">
+    <meta property="og:image" content="assets/images/opengraph.jpg">
+    <meta property="og:url" content="https://zii4you.github.io/Portfolio/">
+    <meta property="og:site_name" content="Digital ZYY">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Muzi Adriyan • Cyber Future Lab">
+    <meta name="twitter:description" content="Membangun pengalaman digital masa depan dengan teknologi mutakhir.">
+    <meta name="twitter:image" content="assets/images/opengraph.jpg">
+    
+    <!-- Aksesibilitas & Tema -->
+    <meta name="theme-color" content="#00E5FF">
+    <meta name="msapplication-TileColor" content="#050A18">
+    <link rel="icon" type="image/png" href="assets/images/favicon.png">
+    
+    <!-- CDN Perpustakaan -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@next/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/lenis@1.1.1/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.158.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-tilt@1.7.0/lib/vanilla-tilt.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    
+    <!-- Konfigurasi Tailwind -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        gelapUtama: '#050A18',
+                        gelapSekunder: '#0A142F',
+                        gelapPanel: '#0F1A3A',
+                        biruListrik: '#00E5FF',
+                        biruCerah: '#3B82F6',
+                        unguNeon: '#6C63FF',
+                        unguDalam: '#8A2BE2',
+                        hijauSistem: '#10B981',
+                        emasPremium: '#FFB800',
+                        kacaMurni: 'rgba(255,255,255,0.05)',
+                    },
+                    fontFamily: {
+                        utama: ['Plus Jakarta Sans', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    },
+                    animation: {
+                        'rgb-putar': 'rgbPutar 4s linear infinite',
+                        'denyut-cahaya': 'denyutCahaya 3s ease-in-out infinite',
+                        'melayang-lembut': 'melayangLembut 6s ease-in-out infinite',
+                        'pindai-hologram': 'pindaiHologram 3s linear infinite',
+                        'kedip-sistem': 'kedipSistem 2s infinite',
+                    },
+                    keyframes: {
+                        rgbPutar: {
+                            '0%': { borderColor: '#00E5FF' },
+                            '33%': { borderColor: '#6C63FF' },
+                            '66%': { borderColor: '#FFB800' },
+                            '100%': { borderColor: '#00E5FF' },
+                        },
+                        denyutCahaya: {
+                            '0%,100%': { boxShadow: '0 0 20px rgba(0,229,255,0.25)' },
+                            '50%': { boxShadow: '0 0 50px rgba(108,99,255,0.4)' },
+                        },
+                        melayangLembut: {
+                            '0%,100%': { transform: 'translateY(0px) rotate(0.3deg)' },
+                            '50%': { transform: 'translateY(-12px) rotate(-0.3deg)' },
+                        },
+                        pindaiHologram: {
+                            '0%': { transform: 'translateY(-100%)' },
+                            '100%': { transform: 'translateY(100%)' },
+                        },
+                        kedipSistem: {
+                            '0%,100%': { opacity: 1 },
+                            '50%': { opacity: 0.3 },
+                        }
+                    }
+                }
+            }
+        }
     </script>
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@300;500;600;700&family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    
+    <!-- Gaya Khusus -->
     <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="font-utama text-slate-100">
 
-    <canvas id="webgl-canvas" aria-hidden="true"></canvas>
-
-    <div class="cursor-dot" data-cursor-dot aria-hidden="true"></div>
-    <div class="cursor-glow" data-cursor-glow aria-hidden="true"></div>
-
-    <div class="cyber-hud-overlay" aria-hidden="true">
-        <div class="hud-corner top-left">SYSTEM_ONLINE // V4.0.2</div>
-        <div class="hud-corner top-right">LOC: 0x88F_QUANTUM_CORE</div>
-        <div class="hud-corner bottom-left">FPS: <span id="fps-counter">60</span></div>
-        <div class="hud-corner bottom-right">SEC_LEVEL: MAXIMUM</div>
-        <div class="hud-line-horizontal"></div>
+    <!-- Layar Loading Sinematik -->
+    <div class="layar-muat fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-gelapUtama" id="layarMuat">
+        <div class="w-20 h-20 rounded-full border-4 border-slate-700 border-t-biruListrik animate-spin mb-6"></div>
+        <p class="text-lg text-slate-300 mb-3" id="teksMuat">Menginisialisasi Cyber Lab...</p>
+        <div class="w-72 h-1.5 bg-slate-800 rounded-full overflow-hidden">
+            <div class="h-full w-0 bg-gradient-to-r from-biruListrik via-unguNeon to-emasPremium" id="barMuat"></div>
+        </div>
     </div>
 
-    <header class="cyber-navbar" role="banner">
-        <div class="nav-container">
-            <a href="#hero" class="nav-logo" aria-label="Alex Vance Home">
-                <span class="logo-glitch" data-text="AV_CORE">AV_CORE</span>
-                <span class="logo-sub">2026.LABS</span>
+    <!-- Latar Belakang 3D & Efek Khusus -->
+    <canvas id="latar3d" class="fixed inset-0 z-[-3]"></canvas>
+    <div class="fixed inset-0 z-[-2] bg-gradient-to-b from-gelapUtama/70 via-transparent to-gelapUtama/90"></div>
+    <div class="kursor-glow fixed w-5 h-5 rounded-full pointer-events-none z-[9998] transition-all duration-150" id="kursorUtama"></div>
+    <div class="kursor-trail fixed w-3 h-3 rounded-full pointer-events-none z-[9997] opacity-0" id="kursorTrail"></div>
+
+    <!-- Navbar Stik Kaca -->
+    <nav class="fixed w-full top-0 z-50 py-4 transition-all duration-500" id="navUtama" data-aos="fade-down">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="#beranda" class="flex items-center gap-2">
+                <i class="fa fa-bolt text-2xl text-biruListrik"></i>
+                <span class="text-xl font-bold">Digital <span class="text-hijauSistem">ZYY</span></span>
             </a>
-
-            <nav class="nav-menu" role="navigation" aria-label="Main Navigation">
-                <ul class="nav-list">
-                    <li><a href="#hero" class="nav-link active" data-magnetic><span class="nav-num">01.</span>CORE</a></li>
-                    <li><a href="#about" class="nav-link" data-magnetic><span class="nav-num">02.</span>SPECIFICATION</a></li>
-                    <li><a href="#projects" class="nav-link" data-magnetic><span class="nav-num">03.</span>LAB_PROJECTS</a></li>
-                    <li><a href="#skills" class="nav-link" data-magnetic><span class="nav-num">04.</span>SYSTEMS</a></li>
-                    <li><a href="#contact" class="nav-link" data-magnetic><span class="nav-num">05.</span>TRANSMIT</a></li>
-                </ul>
-            </nav>
-
-            <button class="menu-toggle" aria-label="Toggle Menu" aria-expanded="false">
-                <span class="bar"></span>
-                <span class="bar"></span>
+            <div class="hidden md:flex items-center gap-6 text-sm font-medium">
+                <a href="#beranda" class="nav-link py-2 px-2 hover:text-biruListrik transition-colors">Beranda</a>
+                <a href="#tentang" class="nav-link py-2 px-2 hover:text-biruListrik transition-colors">Tentang</a>
+                <a href="#karya" class="nav-link py-2 px-2 hover:text-biruListrik transition-colors">Karya</a>
+                <a href="#keahlian" class="nav-link py-2 px-2 hover:text-biruListrik transition-colors">Keahlian</a>
+                <a href="#kontak" class="nav-link py-2 px-2 hover:text-biruListrik transition-colors">Kontak</a>
+            </div>
+            <button class="md:hidden text-2xl text-biruListrik" id="tombolMenu">
+                <i class="fa fa-bars"></i>
             </button>
         </div>
-    </header>
+    </nav>
 
-    <main id="main-content" role="main">
-
-        <section id="hero" class="hero-section" aria-label="Hero Section">
-            <div class="hero-content">
-                <div class="cyber-badge" data-gsap="fade-up">
-                    <span class="badge-dot"></span>
-                    <span class="badge-text">QUANTUM COMPUTING & AI LABS</span>
-                </div>
-                
-                <h1 class="hero-title" data-gsap="split-text">
-                    CYBER ARCHITECT <br>
-                    <span class="text-gradient-aurora">&amp; WEBGL ENGINEER</span>
-                </h1>
-
-                <p class="hero-description" data-gsap="fade-up">
-                    Membangun antarmuka generasi berikutnya dengan performa sinematik, integrasi kecerdasan buatan, dan simulasi grafis 3D ruang angkasa tingkat tinggi.
-                </p>
-
-                <div class="hero-actions" data-gsap="fade-up">
-                    <a href="#projects" class="btn-primary-neon" data-magnetic>
-                        <span class="btn-text">EXPLORE LABS</span>
-                        <span class="btn-icon"><i class="fa-solid fa-arrow-right-long"></i></span>
-                    </a>
-                    <a href="#contact" class="btn-secondary-glass" data-magnetic>
-                        <span class="btn-text">INITIALIZE LINK</span>
-                    </a>
-                </div>
-            </div>
-
-            <div class="hero-scroll-indicator" aria-hidden="true">
-                <div class="mouse-icon">
-                    <div class="wheel"></div>
-                </div>
-                <span>SCROLL TO SYSTEM</span>
-            </div>
-        </section>
-
-        <section id="about" class="section-padding" aria-label="About Section">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">[ SYSTEM_SPECIFICATION ]</span>
-                    <h2 class="section-title">ENGINEERING THE UNSEEN</h2>
-                </div>
-
-                <div class="grid-2col gap-lg">
-                    <div class="glass-card neo-glass" data-tilt>
-                        <div class="card-glow"></div>
-                        <h3 class="card-title"><i class="fa-solid fa-microchip text-neon"></i> Architecture</h3>
-                        <p class="card-text">
-                            Berfokus pada pengembangan antarmuka tingkat tinggi dengan optimasi 60 FPS. Menghubungkan algoritma kecerdasan buatan, rendering shader kustom, dan komposisi 3D modern.
-                        </p>
-                        <ul class="spec-list">
-                            <li><span class="spec-key">Performance:</span> <span class="spec-val">100 Lighthouse Benchmark</span></li>
-                            <li><span class="spec-key">Rendering:</span> <span class="spec-val">Three.js / WebGL / Shaders</span></li>
-                            <li><span class="spec-key">Animation:</span> <span class="spec-val">GSAP ScrollTrigger / Lenis</span></li>
-                        </ul>
+    <!-- Bagian Beranda / Hero -->
+    <section id="beranda" class="min-h-screen flex flex-col justify-center pt-28 pb-16 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <div class="flex flex-col lg:flex-row items-center gap-16">
+                <!-- Foto Profil Premium -->
+                <div class="relative flex justify-center animate-melayang-lembut" data-aos="zoom-in">
+                    <div class="absolute -inset-6 rounded-full bg-gradient-to-r from-biruListrik via-unguNeon to-hijauSistem opacity-20 blur-xl animate-denyut-cahaya"></div>
+                    <div class="absolute -inset-3 rounded-full border-2 border-dashed border-biruListrik/40 animate-rgb-putar"></div>
+                    <div class="w-[260px] h-[260px] rounded-full overflow-hidden border-4 border-gelapUtama shadow-[0_0_50px_rgba(0,229,255,0.4)]">
+                        <img src="assets/images/profile-photo.png" alt="Muzi Adriyan" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-biruListrik/15 to-transparent animate-pindai-hologram"></div>
+                        <div class="absolute top-6 right-6 w-5 h-5 rounded-full bg-hijauSistem border-2 border-gelapUtama animate-kedip-sistem"></div>
                     </div>
+                </div>
 
-                    <div class="glass-card neo-glass" data-tilt>
-                        <div class="card-glow"></div>
-                        <h3 class="card-title"><i class="fa-solid fa-shield-halved text-neon"></i> Cyber Protocols</h3>
-                        <p class="card-text">
-                            Menjamin keamanan data, aksesibilitas tingkat tinggi (WCAG AAA), dan optimasi modular yang memungkinkan skalabilitas aplikasi skala global.
-                        </p>
-                        <ul class="spec-list">
-                            <li><span class="spec-key">Security:</span> <span class="spec-val">Zero-Trust Frontend Stack</span></li>
-                            <li><span class="spec-key">Accessibility:</span> <span class="spec-val">ARIA / Full Keyboard Nav</span></li>
-                            <li><span class="spec-key">SEO:</span> <span class="spec-val">Semantic Schema / Open Graph</span></li>
-                        </ul>
+                <!-- Teks Pengenalan -->
+                <div class="text-center lg:text-left flex-1" data-aos="fade-up" data-aos-delay="200">
+                    <p class="text-biruListrik text-lg mb-3">✨ Selamat Datang di Dunia Digital yang Hidup!</p>
+                    <h1 class="text-[clamp(2.5rem,10vw,4rem)] font-extrabold mb-4">
+                        Saya <span class="teks-hologram">Muzi Adriyan</span>
+                    </h1>
+                    <h2 class="text-xl md:text-2xl font-semibold mb-6">
+                        <span id="teksKetik"></span>
+                    </h2>
+                    <p class="text-slate-300 text-lg leading-relaxed mb-8 max-w-xl mx-auto lg:mx-0">
+                        Membangun situs yang tidak hanya diam, tapi bergerak, menyala, dan memukau. Menggabungkan desain futuristik dengan keamanan digital yang andal. Dari Bekasi untuk dunia!
+                    </p>
+                    <div class="flex flex-wrap justify-center lg:justify-start gap-4">
+                        <a href="#karya" class="tombol-magnet px-8 py-4 rounded-xl bg-gradient-to-r from-biruListrik to-unguNeon font-semibold text-lg shadow-[0_0_30px_rgba(0,229,255,0.4)] hover:scale-105 transition-all">
+                            Lihat Karya <i class="fa fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="#kontak" class="tombol-magnet px-8 py-4 rounded-xl bg-kacaMurni border border-biruListrik/50 font-semibold text-lg hover:scale-105 transition-all">
+                            Hubungi Saya
+                        </a>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="projects" class="section-padding" aria-label="Projects Section">
-            <div class="container">
-                <div class="section-header">
-                    <span class="section-tag">[ DEPLOYED_PROJECTS ]</span>
-                    <h2 class="section-title">QUANTUM LAB ARCHIVES</h2>
+    <!-- Bagian Tentang -->
+    <section id="tentang" class="py-20 px-4 bg-gelapSekunder/30">
+        <div class="container mx-auto max-w-6xl">
+            <h2 class="text-3xl font-bold text-center mb-12 teks-hologram" data-aos="fade-up">Tentang Saya</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="kaca-premium p-7 rounded-xl" data-aos="fade-right">
+                    <h3 class="text-xl font-semibold mb-4 text-biruListrik">Siapa Saya?</h3>
+                    <p class="text-slate-300 leading-relaxed">
+                        Saya adalah pelajar yang antusias di bidang teknologi digital. Fokus utama saya adalah pengembangan situs web modern, desain antarmuka yang menarik, serta dasar-dasar keamanan siber untuk melindungi data dan privasi pengguna.
+                    </p>
+                    <p class="text-slate-300 leading-relaxed mt-4">
+                        Saya terus belajar hal baru setiap hari, dari kode dasar HTML hingga teknologi terbaru seperti kecerdasan buatan dan komputasi awan. Tujuan saya adalah menciptakan solusi digital yang bermanfaat, aman, dan mudah digunakan oleh semua orang.
+                    </p>
                 </div>
-
-                <div class="projects-grid">
-                    <article class="project-card glass-card">
-                        <div class="project-image-container">
-                            <div class="project-overlay"></div>
-                            <div class="project-tag-floating">AI / WEBGL</div>
-                            <div class="project-placeholder-visual art-1"></div>
-                        </div>
-                        <div class="project-details">
-                            <h3 class="project-title">NEURAL_CORE v2.0</h3>
-                            <p class="project-desc">Simulasi visualisasi jaringan saraf tiruan berbasis shader fragmen dengan respon interaksi real-time.</p>
-                            <div class="tech-stack">
-                                <span>Three.js</span>
-                                <span>GLSL</span>
-                                <span>GSAP</span>
-                            </div>
-                            <a href="#" class="project-link" aria-label="View NEURAL_CORE v2.0">LAUNCHNODE <i class="fa-solid fa-up-right-from-square"></i></a>
-                        </div>
-                    </article>
-
-                    <article class="project-card glass-card">
-                        <div class="project-image-container">
-                            <div class="project-overlay"></div>
-                            <div class="project-tag-floating">AEROSPACE</div>
-                            <div class="project-placeholder-visual art-2"></div>
-                        </div>
-                        <div class="project-details">
-                            <h3 class="project-title">ORBITAL_HUD_SYSTEM</h3>
-                            <p class="project-desc">Dashboard perintah stasiun ruang angkasa dengan visualisasi telemetry satelit real-time.</p>
-                            <div class="tech-stack">
-                                <span>TypeScript</span>
-                                <span>Canvas2D</span>
-                                <span>WebSockets</span>
-                            </div>
-                            <a href="#" class="project-link" aria-label="View ORBITAL_HUD_SYSTEM">LAUNCHNODE <i class="fa-solid fa-up-right-from-square"></i></a>
-                        </div>
-                    </article>
+                <div class="kaca-premium p-7 rounded-xl" data-aos="fade-left" data-tilt>
+                    <h3 class="text-xl font-semibold mb-4 text-unguNeon">Fokus Utama</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-center gap-3"><i class="fa fa-check-circle text-hijauSistem"></i> Pengembangan Web Responsif</li>
+                        <li class="flex items-center gap-3"><i class="fa fa-check-circle text-hijauSistem"></i> Desain UI/UX Modern</li>
+                        <li class="flex items-center gap-3"><i class="fa fa-check-circle text-hijauSistem"></i> Keamanan Digital Dasar</li>
+                        <li class="flex items-center gap-3"><i class="fa fa-check-circle text-hijauSistem"></i> Manajemen Proyek GitHub</li>
+                        <li class="flex items-center gap-3"><i class="fa fa-check-circle text-hijauSistem"></i> Inovasi Teknologi Sederhana</li>
+                    </ul>
                 </div>
             </div>
-        </section>
+        </div>
+    </section>
 
-        <section id="contact" class="section-padding" aria-label="Contact Section">
-            <div class="container">
-                <div class="contact-box glass-card neo-glass">
-                    <div class="section-header center">
-                        <span class="section-tag">[ SECURE_TRANSMISSION ]</span>
-                        <h2 class="section-title">INITIALIZE FREQUENCY</h2>
-                        <p>Siap untuk membangun proyek teknologi masa depan? Transmisikan pesan Anda melalui enkripsi langsung di bawah ini.</p>
+    <!-- Bagian Karya -->
+    <section id="karya" class="py-20 px-4">
+        <div class="container mx-auto max-w-6xl">
+            <h2 class="text-3xl font-bold text-center mb-12 teks-hologram" data-aos="fade-up">Karya Terbaru</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="kaca-premium rounded-xl overflow-hidden hover:scale-105 transition-all" data-aos="fade-up" data-tilt>
+                    <div class="h-44 bg-gradient-to-br from-biruListrik/20 to-unguNeon/20 flex items-center justify-center">
+                        <i class="fa fa-code text-5xl text-biruListrik"></i>
                     </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Situs Portofolio Pribadi</h3>
+                        <p class="text-slate-400 text-sm mb-4">Situs portofolio dengan desain futuristik, animasi halus, dan tampilan yang responsif di semua perangkat.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs px-2 py-1 rounded bg-biruListrik/10 text-biruListrik">HTML</span>
+                            <span class="text-xs px-2 py-1 rounded bg-unguNeon/10 text-unguNeon">Tailwind</span>
+                            <span class="text-xs px-2 py-1 rounded bg-hijauSistem/10 text-hijauSistem">JavaScript</span>
+                        </div>
+                        <a href="#" class="text-biruListrik hover:underline">Lihat Proyek <i class="fa fa-external-link ml-1"></i></a>
+                    </div>
+                </div>
+                <div class="kaca-premium rounded-xl overflow-hidden hover:scale-105 transition-all" data-aos="fade-up" data-aos-delay="100" data-tilt>
+                    <div class="h-44 bg-gradient-to-br from-hijauSistem/20 to-emasPremium/20 flex items-center justify-center">
+                        <i class="fa fa-shield text-5xl text-hijauSistem"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Panduan Keamanan Digital</h3>
+                        <p class="text-slate-400 text-sm mb-4">Situs edukasi tentang cara melindungi data pribadi, mengenali penipuan daring, dan penggunaan kata sandi yang aman.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs px-2 py-1 rounded bg-biruListrik/10 text-biruListrik">Situs Statis</span>
+                            <span class="text-xs px-2 py-1 rounded bg-unguNeon/10 text-unguNeon">Markdown</span>
+                            <span class="text-xs px-2 py-1 rounded bg-hijauSistem/10 text-hijauSistem">Edukasi</span>
+                        </div>
+                        <a href="#" class="text-biruListrik hover:underline">Lihat Proyek <i class="fa fa-external-link ml-1"></i></a>
+                    </div>
+                </div>
+                <div class="kaca-premium rounded-xl overflow-hidden hover:scale-105 transition-all" data-aos="fade-up" data-aos-delay="200" data-tilt>
+                    <div class="h-44 bg-gradient-to-br from-unguNeon/20 to-emasPremium/20 flex items-center justify-center">
+                        <i class="fa fa-github text-5xl text-unguNeon"></i>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold mb-2">Repositori Belajar Teknologi</h3>
+                        <p class="text-slate-400 text-sm mb-4">Kumpulan catatan, panduan, dan contoh kode untuk mempelajari teknologi digital dari tingkat dasar hingga menengah.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs px-2 py-1 rounded bg-biruListrik/10 text-biruListrik">Git</span>
+                            <span class="text-xs px-2 py-1 rounded bg-unguNeon/10 text-unguNeon">Panduan</span>
+                            <span class="text-xs px-2 py-1 rounded bg-hijauSistem/10 text-hijauSistem">Buka Sumber</span>
+                        </div>
+                        <a href="https://github.com/zii4you" target="_blank" class="text-biruListrik hover:underline">Lihat Proyek <i class="fa fa-external-link ml-1"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-                    <form id="contact-form" class="cyber-form" novalidate>
-                        <div class="form-group">
-                            <label for="name">IDENTIFIER / NAME</label>
-                            <input type="text" id="name" name="name" required placeholder="e.g. Commander Shepard">
+    <!-- Bagian Keahlian -->
+    <section id="keahlian" class="py-20 px-4 bg-gelapSekunder/30">
+        <div class="container mx-auto max-w-6xl">
+            <h2 class="text-3xl font-bold text-center mb-12 teks-hologram" data-aos="fade-up">Keahlian Saya</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-5" data-aos="fade-right">
+                    <div class="kaca-premium p-4 rounded-xl">
+                        <div class="flex justify-between mb-2">
+                            <span class="font-medium">HTML & CSS</span>
+                            <span class="text-biruListrik">90%</span>
                         </div>
-                        <div class="form-group">
-                            <label for="email">FREQUENCY / EMAIL</label>
-                            <input type="email" id="email" name="email" required placeholder="e.g. user@quantum.labs">
+                        <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                            <div class="h-full w-0 bg-gradient-to-r from-biruListrik to-unguNeon rounded-full" data-progress="90"></div>
                         </div>
-                        <div class="form-group">
-                            <label for="message">TRANSMISSION DATA</label>
-                            <textarea id="message" name="message" rows="5" required placeholder="Tuliskan detail proyek atau pesan Anda..."></textarea>
+                    </div>
+                    <div class="kaca-premium p-4 rounded-xl">
+                        <div class="flex justify-between mb-2">
+                            <span class="font-medium">Tailwind CSS</span>
+                            <span class="text-biruListrik">85%</span>
                         </div>
-                        <button type="submit" class="btn-primary-neon full-width" data-magnetic>
-                            <span class="btn-text">TRANSMIT DATA</span>
-                            <span class="btn-icon"><i class="fa-solid fa-paper-plane"></i></span>
-                        </button>
+                        <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                            <div class="h-full w-0 bg-gradient-to-r from-biruListrik to-unguNeon rounded-full" data-progress="85"></div>
+                        </div>
+                    </div>
+                    <div class="kaca-premium p-4 rounded-xl">
+                        <div class="flex justify-between mb-2">
+                            <span class="font-medium">JavaScript Dasar</span>
+                            <span class="text-biruListrik">70%</span>
+                        </div>
+                        <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                            <div class="h-full w-0 bg-gradient-to-r from-biruListrik to-unguNeon rounded-full" data-progress="70"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-5" data-aos="fade-left">
+                    <div class="kaca-premium p-4 rounded-xl">
+                        <div class="flex justify-between mb-2">
+                            <span class="font-medium">Git & GitHub</span>
+                            <span class="text-hijauSistem">80%</span>
+                        </div>
+                        <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                            <div class="h-full w-0 bg-gradient-to-r from-hijauSistem to-emasPremium rounded-full" data-progress="80"></div>
+                        </div>
+                    </div>
+                    <div class="kaca-premium p-4 rounded-xl">
+                        <div class="flex justify-between mb-2">
+                            <span class="font-medium">Desain UI/UX</span>
+                            <span class="text-hijauSistem">75%</span>
+                        </div>
+                        <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                            <div class="h-full w-0 bg-gradient-to-r from-hijauSistem to-emasPremium rounded-full" data-progress="75"></div>
+                        </div>
+                    </div>
+                    <div class="kaca-premium p-4 rounded-xl">
+                        <div class="flex justify-between mb-2">
+                            <span class="font-medium">Keamanan Digital Dasar</span>
+                            <span class="text-hijauSistem">65%</span>
+                        </div>
+                        <div class="h-2 bg-slate-700 rounded-full overflow-hidden">
+                            <div class="h-full w-0 bg-gradient-to-r from-hijauSistem to-emasPremium rounded-full" data-progress="65"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bagian Kontak -->
+    <section id="kontak" class="py-20 px-4">
+        <div class="container mx-auto max-w-4xl">
+            <h2 class="text-3xl font-bold text-center mb-12 teks-hologram" data-aos="fade-up">Hubungi Saya</h2>
+            <div class="kaca-premium p-8 rounded-xl" data-aos="fade-up">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="space-y-4">
+                        <h3 class="text-xl font-semibold mb-2">Informasi Kontak</h3>
+                        <p class="text-slate-300">Jika kamu ingin bekerja sama, bertanya, atau sekadar menyapa, silakan hubungi saya melalui saluran berikut:</p>
+                        <div class="space-y-3 mt-6">
+                            <div class="flex items-center gap-3"><i class="fa fa-envelope text-biruListrik"></i> muzi.adriyan@contoh.com</div>
+                            <div class="flex items-center gap-3"><i class="fa fa-github text-unguNeon"></i> github.com/zii4you</div>
+                            <div class="flex items-center gap-3"><i class="fa fa-map-marker text-hijauSistem"></i> Bekasi, Jawa Barat</div>
+                        </div>
+                    </div>
+                    <form class="space-y-4" id="formKontak">
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Nama Lengkap</label>
+                            <input type="text" class="w-full px-4 py-3 rounded-lg bg-gelapUtama border border-slate-600 focus:border-biruListrik focus:outline-none transition-colors" placeholder="Masukkan nama kamu" required>
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium mb-1">Pesan</label>
+                            <textarea rows="4" class="w-full px-4 py-3 rounded-lg bg-gelapUtama border border-slate-600 focus:border-biruListrik focus:outline-none transition-colors resize-none" placeholder="Tulis pesan kamu..." required></textarea>
+                        </div>
+                        <button type="submit" class="w-full py-3 rounded-lg bg-gradient-to-r from-biruListrik to-unguNeon font-semibold hover:scale-105 transition-all">Kirim Pesan</button>
                     </form>
                 </div>
             </div>
-        </section>
-    </main>
+        </div>
+    </section>
 
-    <footer class="cyber-footer" role="contentinfo">
-        <div class="container footer-content">
-            <p>&copy; 2026 ALEX VANCE. ALL RIGHTS RESERVED // QUANTUM LABS ARCHITECTURE.</p>
-            <div class="social-links">
-                <a href="#" aria-label="Github Profile"><i class="fa-brands fa-github"></i></a>
-                <a href="#" aria-label="LinkedIn Profile"><i class="fa-brands fa-linkedin"></i></a>
-                <a href="#" aria-label="X/Twitter Profile"><i class="fa-brands fa-x-twitter"></i></a>
-            </div>
+    <!-- Footer -->
+    <footer class="py-8 px-4 border-t border-slate-700/50">
+        <div class="container mx-auto text-center">
+            <p class="text-slate-400 text-sm">© 2026 Muzi Adriyan • Digital ZYY • Dibangun dengan teknologi masa depan</p>
+            <p class="text-slate-500 text-xs mt-2">Tidak ada bagian dari situs ini yang boleh disalin tanpa izin tertulis</p>
         </div>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    <!-- Tombol Kembali ke Atas -->
+    <button class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-biruListrik text-white shadow-lg hover:scale-110 transition-all opacity-0 invisible z-40" id="tombolAtas">
+        <i class="fa fa-arrow-up"></i>
+    </button>
 
+    <!-- Skrip Utama -->
     <script src="script.js"></script>
 </body>
 </html>
