@@ -31,9 +31,13 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
     
-    <link rel="stylesheet" href="style.css">
-    
     <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css">
+    
+    <link rel="stylesheet" href="style.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 </head>
 <body class="bg-navy-deep text-slate-100 font-sans antialiased overflow-x-hidden selection:bg-electric selection:text-black">
 
@@ -99,8 +103,10 @@
 
             <div class="relative flex items-center justify-center">
                 <div class="relative w-64 h-64 sm:w-80 sm:h-80 rounded-full p-1 bg-gradient-to-tr from-electric via-neonPurple to-goldAccent animate-spin-slow">
-                    <div class="w-full h-full bg-navy-deep rounded-full overflow-hidden p-2">
-                        <img src="https://picsum.photos/400/400" alt="Profile" class="w-full h-full object-cover rounded-full filter brightness-90 hover:scale-105 transition duration-500">
+                    <div class="w-full h-full bg-navy-deep rounded-full overflow-hidden p-2 flex items-center justify-center">
+                        <div class="w-full h-full bg-slate-800 rounded-full flex items-center justify-center text-4xl font-mono text-electric font-bold border border-electric/30">
+                            ZII
+                        </div>
                     </div>
                 </div>
                 <div class="absolute -inset-4 rounded-full border border-electric/20 animate-pulse pointer-events-none"></div>
@@ -113,194 +119,4 @@
                 <p class="text-xs font-mono text-slate-400">Integrated Financial & Developer Gateways</p>
             </div>
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="glass-card p-6 rounded-2xl border border-slate-800 bg-slate-900/40 backdrop-blur-xl hover:border-electric/50 transition-all duration-300">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="text-xs font-mono text-slate-400">BANKING</span>
-                        <span class="text-xs px-2 py-0.5 rounded bg-blue-500/10 text-blue-400 border border-blue-500/20">Verified</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-1">SeaBank / BCA / DANA</h3>
-                    <p class="text-xs text-slate-400 font-mono mb-4">**** **** **** 2026</p>
-                    <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                        <div class="bg-electric h-full w-[85%]"></div>
-                    </div>
-                </div>
-
-                <div class="glass-card p-6 rounded-2xl border border-slate-800 bg-slate-900/40 backdrop-blur-xl hover:border-neonPurple/50 transition-all duration-300">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="text-xs font-mono text-slate-400">CRYPTO NODE</span>
-                        <span class="text-xs px-2 py-0.5 rounded bg-purple-500/10 text-purple-400 border border-purple-500/20">Active</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-1">Web3 Wallet</h3>
-                    <p class="text-xs text-slate-400 font-mono mb-4">0x71C...92F</p>
-                    <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                        <div class="bg-neonPurple h-full w-[60%]"></div>
-                    </div>
-                </div>
-
-                <div class="glass-card p-6 rounded-2xl border border-slate-800 bg-slate-900/40 backdrop-blur-xl hover:border-goldAccent/50 transition-all duration-300">
-                    <div class="flex justify-between items-center mb-4">
-                        <span class="text-xs font-mono text-slate-400">DEVELOPER</span>
-                        <span class="text-xs px-2 py-0.5 rounded bg-amber-500/10 text-amber-400 border border-amber-500/20">Synced</span>
-                    </div>
-                    <h3 class="text-xl font-bold mb-1">GitHub Enterprise</h3>
-                    <p class="text-xs text-slate-400 font-mono mb-4">500+ Commits this year</p>
-                    <div class="w-full bg-slate-800 h-1.5 rounded-full overflow-hidden">
-                        <div class="bg-goldAccent h-full w-[92%]"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="learning" class="space-y-8">
-            <div>
-                <h2 class="text-2xl font-bold font-mono text-neonPurple tracking-wide">&gt; TECH_LEARNING_CENTER</h2>
-                <p class="text-xs font-mono text-slate-400">Continuous Knowledge Acquisition Stack</p>
-            </div>
-            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-                <script>
-                    const techStack = [
-                        'HTML5', 'CSS3', 'JavaScript', 'Tailwind CSS', 'Git & GitHub', 
-                        'Responsive Design', 'UI/UX Design', 'Basic API', 'Cloud Basics', 
-                        'Linux', 'Networking', 'Database SQL', 'AI Basics', 'Cyber Security'
-                    ];
-                    techStack.forEach(item => {
-                        document.write(`
-                            <div class="p-4 rounded-xl border border-slate-800/80 bg-slate-900/30 backdrop-blur-md hover:border-electric/40 hover:bg-slate-800/50 transition group cursor-default">
-                                <div class="text-xs font-mono text-slate-500 mb-1 group-hover:text-electric">MODULE</div>
-                                <div class="text-sm font-semibold text-slate-200">${item}</div>
-                            </div>
-                        `);
-                    });
-                </script>
-            </div>
-        </section>
-
-        <section id="security" class="space-y-8">
-            <div>
-                <h2 class="text-2xl font-bold font-mono text-goldAccent tracking-wide">&gt; DIGITAL_SECURITY_CORE</h2>
-                <p class="text-xs font-mono text-slate-400">Fundamental Defense & Cyber Hygiene Standards</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 backdrop-blur-md">
-                    <h3 class="text-lg font-bold text-slate-100 mb-2">🔒 Password & Authentication</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">
-                        Implementasi kata sandi kompleks yang dikombinasikan dengan Two-Factor Authentication (2FA/TOTP) untuk mencegah akses yang tidak sah secara efektif.
-                    </p>
-                </div>
-                <div class="p-6 rounded-2xl border border-slate-800 bg-slate-900/40 backdrop-blur-md">
-                    <h3 class="text-lg font-bold text-slate-100 mb-2">🛡️ Threat Awareness</h3>
-                    <p class="text-sm text-slate-400 leading-relaxed">
-                        Pemahaman mendalam tentang vektor serangan Phishing, Keamanan Email, serta pentingnya enkripsi saat menggunakan jaringan Wi-Fi Publik.
-                    </p>
-                </div>
-            </div>
-        </section>
-
-        <section id="skills" class="space-y-8">
-            <div>
-                <h2 class="text-2xl font-bold font-mono text-electric tracking-wide">&gt; SKILL_MATRIX</h2>
-                <p class="text-xs font-mono text-slate-400">Measured Competency & Readiness Level</p>
-            </div>
-            <div class="space-y-4 max-w-2xl">
-                <div>
-                    <div class="flex justify-between text-sm font-mono mb-1">
-                        <span>Frontend Web Development (HTML, Tailwind, JS)</span>
-                        <span class="text-electric">90%</span>
-                    </div>
-                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                        <div class="bg-electric h-full w-[90%]"></div>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex justify-between text-sm font-mono mb-1">
-                        <span>UI/UX & Prototyping</span>
-                        <span class="text-neonPurple">82%</span>
-                    </div>
-                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                        <div class="bg-neonPurple h-full w-[82%]"></div>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex justify-between text-sm font-mono mb-1">
-                        <span>Cyber Security Fundamentals</span>
-                        <span class="text-goldAccent">75%</span>
-                    </div>
-                    <div class="w-full bg-slate-800 h-2 rounded-full overflow-hidden">
-                        <div class="bg-goldAccent h-full w-[75%]"></div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="portfolio" class="space-y-8">
-            <div>
-                <h2 class="text-2xl font-bold font-mono text-electric tracking-wide">&gt; PROJECT_PORTFOLIO</h2>
-                <p class="text-xs font-mono text-slate-400">Executed Initiatives & Deployments</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="rounded-2xl border border-slate-800 bg-slate-900/50 backdrop-blur-md overflow-hidden hover:border-slate-600 transition group">
-                    <div class="h-48 bg-slate-800 overflow-hidden relative">
-                        <img src="https://picsum.photos/600/300?random=1" alt="Project" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    </div>
-                    <div class="p-6 space-y-3">
-                        <h3 class="text-xl font-bold text-white">AI Cyber Dashboard 2026</h3>
-                        <p class="text-slate-400 text-sm">Sistem pemantauan data interaktif berbasis 3D WebGL dan integrasi API real-time.</p>
-                        <div class="flex gap-2">
-                            <span class="text-xs font-mono px-2 py-1 rounded bg-slate-800 text-electric">Three.js</span>
-                            <span class="text-xs font-mono px-2 py-1 rounded bg-slate-800 text-electric">Tailwind</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="rounded-2xl border border-slate-800 bg-slate-900/50 backdrop-blur-md overflow-hidden hover:border-slate-600 transition group">
-                    <div class="h-48 bg-slate-800 overflow-hidden relative">
-                        <img src="https://picsum.photos/600/300?random=2" alt="Project" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">
-                    </div>
-                    <div class="p-6 space-y-3">
-                        <h3 class="text-xl font-bold text-white">Secured Vault Interface</h3>
-                        <p class="text-slate-400 text-sm">Aplikasi web keamanan internal untuk proteksi dan otentikasi data sensitif.</p>
-                        <div class="flex gap-2">
-                            <span class="text-xs font-mono px-2 py-1 rounded bg-slate-800 text-neonPurple">Security</span>
-                            <span class="text-xs font-mono px-2 py-1 rounded bg-slate-800 text-neonPurple">Vanilla JS</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="contact" class="space-y-8">
-            <div>
-                <h2 class="text-2xl font-bold font-mono text-neonPurple tracking-wide">&gt; ESTABLISH_COMMUNICATION</h2>
-                <p class="text-xs font-mono text-slate-400">Direct Signal Route</p>
-            </div>
-            <form id="contact-form" class="max-w-xl space-y-4 p-8 rounded-2xl border border-slate-800 bg-slate-900/40 backdrop-blur-xl">
-                <div>
-                    <label class="block font-mono text-xs text-slate-400 mb-2">IDENTIFIER / NAME</label>
-                    <input type="text" required class="w-full px-4 py-3 rounded-lg bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-electric transition">
-                </div>
-                <div>
-                    <label class="block font-mono text-xs text-slate-400 mb-2">EMAIL ADDRESS</label>
-                    <input type="email" required class="w-full px-4 py-3 rounded-lg bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-electric transition">
-                </div>
-                <div>
-                    <label class="block font-mono text-xs text-slate-400 mb-2">MESSAGE</label>
-                    <textarea rows="4" required class="w-full px-4 py-3 rounded-lg bg-slate-950 border border-slate-800 text-white focus:outline-none focus:border-electric transition"></textarea>
-                </div>
-                <button type="submit" class="w-full py-3.5 rounded-lg bg-gradient-to-r from-electric to-neonPurple font-bold text-black hover:shadow-[0_0_20px_rgba(168,85,247,0.4)] transition">
-                    TRANSMIT MESSAGE
-                </button>
-            </form>
-        </section>
-
-    </main>
-
-    <footer class="border-t border-slate-800/80 py-8 text-center text-xs font-mono text-slate-500">
-        <p>Built with HTML5 • Tailwind CSS • Vanilla JS • Three.js</p>
-        <p class="mt-2 text-slate-600">© 2026 Cyber Lab Portfolio. All rights reserved.</p>
-    </footer>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
-    <script src="script.js"></script>
-</body>
-</html>
+                <div class="glass-card p-6 rounded-2
