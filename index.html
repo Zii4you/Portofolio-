@@ -3,431 +3,331 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Digital ZYY – Portofolio Muzi Adriyan</title>
+    <title>Portofolio Ultra Premium | Cyber Futuristic</title>
+    <meta name="description" content="Portofolio Cyber Futuristic interaktif dengan tampilan modern dan edukasi teknologi.">
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script>
         tailwind.config = {
             theme: {
                 extend: {
                     colors: {
-                        utama: '#2563eb',
-                        biru-tua: '#0f172a',
-                        biru-muda: '#60a5fa',
-                        biru-terang: '#bfdbfe',
-                        gelap: '#020617',
-                        laut: '#0070f3',
-                        naik: '#10b981',
-                        turun: '#ef4444',
-                        btc: '#f7931a', /* Warna Bitcoin Asli */
-                        eth: '#627eea', /* Warna Ethereum Asli */
+                        cyber: {
+                            black: '#030712',
+                            dark: '#0b0f19',
+                            blue: '#00f0ff',
+                            purple: '#7000ff',
+                            gold: '#ffd700',
+                        }
                     }
                 }
             }
         }
     </script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
-        * {
-            margin: 0; padding: 0; box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            transform-style: preserve-3d;
-        }
-        body {
-            perspective: 1500px; overflow-x: hidden;
-            background: radial-gradient(circle at top, #1e293b 0%, #020617 50%, #020617 100%);
-            color: #f8fafc;
-        }
-
-        /* === ANIMASI GARIS DI KEEMPAT SUDUT === */
-        .garis-sudut {
-            position: fixed; z-index: 0;
-            background: linear-gradient(90deg, transparent, rgba(96,165,250,0.6), transparent);
-            animation: garisPutar 12s linear infinite;
-        }
-        .garis-sudut:nth-child(1) { top: 0; left: 0; width: 300px; height: 2px; transform-origin: left; }
-        .garis-sudut:nth-child(2) { top: 0; right: 0; width: 2px; height: 300px; transform-origin: top; animation-delay: 3s; }
-        .garis-sudut:nth-child(3) { bottom: 0; right: 0; width: 300px; height: 2px; transform-origin: right; animation-delay: 6s; }
-        .garis-sudut:nth-child(4) { bottom: 0; left: 0; width: 2px; height: 300px; transform-origin: bottom; animation-delay: 9s; }
-        @keyframes garisPutar {
-            0% { transform: rotate(0deg); opacity: 0; }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { transform: rotate(360deg); opacity: 0; }
-        }
-
-        /* === KARTU 3D IKUTI GERAKAN === */
-        .kartu-3d {
-            transition: all 0.4s ease;
-            transform: rotateX(0deg) rotateY(0deg) translateZ(10px);
-        }
-        .kartu-3d:hover {
-            transform: rotateX(-5deg) rotateY(5deg) translateZ(25px) scale(1.03);
-            box-shadow: 0 25px 50px rgba(37,99,235,0.3);
-        }
-
-        /* === TEKS GRADASI BERJALAN === */
-        .teks-hidup {
-            background: linear-gradient(90deg, #10b981, #f59e0b, #2563eb, #10b981);
-            background-size: 300% auto;
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            animation: warnaJalan 6s linear infinite;
-        }
-        @keyframes warnaJalan { to { background-position: 300% center; } }
-
-        /* === BINGKAI BERCAHAYA === */
-        .bingkai-cahaya {
-            position: relative; border-radius: 20px; overflow: hidden; border: 1px solid rgba(37,99,235,0.2);
-            background: rgba(15,23,42,0.7); backdrop-filter: blur(10px);
-        }
-        .bingkai-cahaya::before {
-            content: ''; position: absolute; inset: -50%;
-            background: conic-gradient(#2563eb, #60a5fa, #a855f7, transparent 70deg);
-            animation: bingkaiPutar 4s linear infinite; z-index: -1;
-        }
-        .bingkai-cahaya::after {
-            content: ''; position: absolute; inset: 2px; background: #0f172a; border-radius: 18px; z-index: -1;
-        }
-        @keyframes bingkaiPutar { to { transform: rotate(360deg); } }
-
-        /* === MUNCUL PERLAHAN === */
-        .muncul {
-            opacity: 0; transform: translateY(60px) translateZ(-40px);
-            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .muncul.tampil { opacity: 1; transform: translateY(0) translateZ(0); }
-
-        /* === LOGO KODE BESAR === */
-        .logo-kode {
-            width: 260px; height: 260px;
-            border-radius: 20px;
-            background: linear-gradient(145deg, #162542, #0b1424);
-            border: 2px solid rgba(96,165,250,0.4);
-            display: flex; align-items: center; justify-content: center;
-            margin: 40px auto;
-            position: relative; overflow: hidden;
-            animation: denyutCahaya 3s ease-in-out infinite;
-        }
-        .logo-kode i {
-            font-size: 5.5rem; color: rgba(191,219,254,0.9);
-            text-shadow: 0 0 30px rgba(96,165,250,0.5);
-        }
-        @keyframes denyutCahaya {
-            0%,100% { box-shadow: 0 0 25px rgba(37,99,235,0.2); }
-            50% { box-shadow: 0 0 45px rgba(96,165,250,0.4); }
-        }
-
-        /* === KOTAK STATISTIK ANGKA BERJALAN === */
-        .kotak-stat {
-            border-radius: 20px;
-            background: rgba(15,23,42,0.8);
-            border: 1px solid rgba(37,99,235,0.3);
-            padding: 30px 20px;
-            text-align: center;
-            position: relative; overflow: hidden;
-        }
-        .kotak-stat::before {
-            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
-            background: linear-gradient(90deg, #60a5fa, #a855f7, #2563eb);
-            animation: garisBawah 4s linear infinite;
-        }
-        @keyframes garisBawah {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-        .kotak-stat h3 {
-            font-size: 3rem; font-weight: 800; margin-bottom: 8px;
-            font-variant-numeric: tabular-nums;
-        }
-        .kotak-stat p {
-            font-size: 1.1rem; color: #94a3b8;
-        }
-
-        /* === TOMBOL ANIMASI === */
-        .tombol-utama {
-            background: linear-gradient(135deg, #2563eb, #1d4ed8);
-            box-shadow: 0 10px 30px rgba(37,99,235,0.4);
-            transition: all 0.3s ease;
-        }
-        .tombol-utama:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 15px 40px rgba(37,99,235,0.5); }
-        .tombol-kedua { border: 2px solid #2563eb; transition: all 0.3s ease; }
-        .tombol-kedua:hover { background: #2563eb; transform: translateY(-3px); }
-
-        /* === IKON CRYPTO ASLI === */
-        .ikon-btc { color: #f7931a; text-shadow: 0 0 12px rgba(247,147,26,0.5); }
-        .ikon-eth { color: #627eea; text-shadow: 0 0 12px rgba(98,126,234,0.5); }
-    </style>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body>
+<body class="bg-cyber-black text-white font-sans overflow-x-hidden relative">
 
-    <!-- GARIS ANIMASI DI KEEMPAT SUDUT -->
-    <div class="garis-sudut"></div>
-    <div class="garis-sudut"></div>
-    <div class="garis-sudut"></div>
-    <div class="garis-sudut"></div>
+    <canvas id="bg-canvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"></canvas>
+    
+    <div id="spotlight" class="pointer-events-none fixed inset-0 z-30 transition-duration-300"></div>
 
-    <!-- NAVIGASI -->
-    <nav class="fixed w-full top-0 z-50 bg-gelap/70 backdrop-blur-2xl border-b border-utama/20">
-        <div class="container mx-auto px-5 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold flex items-center gap-2">
-                <span class="text-utama"><i class="fa fa-bolt"></i></span>
-                Digital <span class="teks-hidup">ZYY</span>
+    <header class="fixed top-0 w-full z-50 backdrop-blur-md bg-cyber-dark/40 border-b border-white/10">
+        <div class="max-w-7xl mx-mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-cyber-purple glow-text">
+                NEXUS<span class="text-cyber-gold">.IO</span>
             </a>
-            <button class="text-2xl text-utama"><i class="fa fa-bars"></i></button>
-        </div>
-    </nav>
+            
+            <nav class="hidden md:flex space-x-8 text-sm font-medium">
+                <a href="#home" class="hover:text-cyber-blue transition">Home</a>
+                <a href="#about" class="hover:text-cyber-blue transition">About</a>
+                <a href="#assets" class="hover:text-cyber-blue transition">Assets</a>
+                <a href="#learning" class="hover:text-cyber-blue transition">Tech Center</a>
+                <a href="#security" class="hover:text-cyber-blue transition">Digital Security</a>
+                <a href="#skills" class="hover:text-cyber-blue transition">Skills</a>
+                <a href="#github" class="hover:text-cyber-blue transition">GitHub</a>
+            </nav>
 
-    <!-- BAGIAN UTAMA -->
-    <section class="min-h-screen flex flex-col justify-center pt-32 pb-10 px-5">
-        <div class="container mx-auto max-w-4xl text-center">
-            <p class="text-biru-muda text-lg mb-4 muncul">✨ Selamat Datang di Dunia Digital yang Hidup!</p>
-            <h1 class="text-[clamp(2.5rem,8vw,4.5rem)] font-extrabold mb-3 muncul" style="animation-delay:0.1s">Saya Muzi Adriyan</h1>
-            <h2 class="text-[clamp(1.5rem,4vw,2.2rem)] font-semibold mb-6 teks-hidup muncul" style="animation-delay:0.2s">
-                Pengembang Web • Desainer • Peneliti Keamanan
+            <a href="#contact" class="px-5 py-2 rounded-full border border-cyber-blue text-cyber-blue hover:bg-cyber-blue/10 transition duration-300 shadow-[0_0_15px_rgba(0,240,255,0.3)]">
+                Contact
+            </a>
+        </div>
+    </header>
+
+    <section id="home" class="min-h-screen flex items-center justify-center pt-24 pb-12 px-6">
+        <div class="max-w-6xl w-full grid md:grid-cols-2 gap-12 items-center">
+            
+            <div class="flex justify-center relative">
+                <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full p-1 rgb-ring flex items-center justify-center shadow-[0_0_50px_rgba(112,0,255,0.4)]">
+                    <div class="w-full h-full rounded-full overflow-hidden bg-cyber-dark p-2 relative z-10">
+                        <img src="assets/images/profile.jpg" alt="Profile" class="w-full h-full object-cover rounded-full filter contrast-125" onerror="this.src='https://via.placeholder.com/300/0b0f19/00f0ff?text=Cyber+Avatar'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-cyber-purple/40 to-transparent pointer-events-none"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="space-y-6 text-center md:text-left">
+                <span class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest bg-cyber-blue/10 text-cyber-blue border border-cyber-blue/30 inline-block">
+                    Pelajar • Technology Enthusiast • Web Developer
+                </span>
+                <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
+                    Eksplorasi Masa Depan <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue via-cyber-purple to-cyber-gold">
+                        Teknologi & Keamanan
+                    </span>
+                </h1>
+                <p class="text-gray-400 text-base leading-relaxed">
+                    Berfokus pada pengembangan web modern, pemahaman keamanan digital dasar, serta konsisten mempelajari inovasi teknologi masa depan.
+                </p>
+
+                <div class="flex flex-wrap gap-4 justify-center md:justify-start pt-2">
+                    <a href="#learning" class="px-6 py-3 rounded-xl bg-gradient-to-r from-cyber-blue to-cyber-purple font-semibold hover:opacity-90 transition duration-300 shadow-[0_0_20px_rgba(0,240,255,0.4)]">
+                        Lihat Portofolio
+                    </a>
+                    <a href="https://github.com" target="_blank" class="px-6 py-3 rounded-xl glass-card border border-white/20 font-semibold hover:bg-white/10 transition duration-300 flex items-center gap-2">
+                        <i data-lucide="github" class="w-5 h-5"></i> GitHub
+                    </a>
+                    <a href="#contact" class="px-6 py-3 rounded-xl border border-cyber-gold/50 text-cyber-gold font-semibold hover:bg-cyber-gold/10 transition duration-300">
+                        Hubungi Saya
+                    </a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="py-10 border-y border-white/5 bg-cyber-dark/30">
+        <div class="max-w-6xl mx-auto px-6">
+            <h3 class="text-xs uppercase tracking-widest text-gray-500 mb-6 text-center">Ripstory Highlights</h3>
+            <div class="flex justify-center items-center gap-6 overflow-x-auto py-2">
+                <div class="flex flex-col items-center gap-2 cursor-pointer group">
+                    <div class="w-16 h-16 rounded-full p-[2px] bg-gradient-to-tr from-cyber-blue to-cyber-purple animate-pulse group-hover:scale-110 transition duration-300">
+                        <div class="w-full h-full bg-cyber-black rounded-full p-1">
+                            <div class="w-full h-full bg-cyber-blue/20 rounded-full flex items-center justify-center">
+                                <i data-lucide="code" class="w-6 h-6 text-cyber-blue"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="text-xs text-gray-400">Coding</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 cursor-pointer group">
+                    <div class="w-16 h-16 rounded-full p-[2px] bg-gradient-to-tr from-cyber-purple to-cyber-gold animate-pulse group-hover:scale-110 transition duration-300">
+                        <div class="w-full h-full bg-cyber-black rounded-full p-1">
+                            <div class="w-full h-full bg-cyber-purple/20 rounded-full flex items-center justify-center">
+                                <i data-lucide="shield-check" class="w-6 h-6 text-cyber-purple"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="text-xs text-gray-400">Security</span>
+                </div>
+                <div class="flex flex-col items-center gap-2 cursor-pointer group">
+                    <div class="w-16 h-16 rounded-full p-[2px] bg-gradient-to-tr from-cyber-gold to-cyber-blue animate-pulse group-hover:scale-110 transition duration-300">
+                        <div class="w-full h-full bg-cyber-black rounded-full p-1">
+                            <div class="w-full h-full bg-cyber-gold/20 rounded-full flex items-center justify-center">
+                                <i data-lucide="cpu" class="w-6 h-6 text-cyber-gold"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <span class="text-xs text-gray-400">Hardware</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="assets" class="py-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-white">
+                Dashboard Aset Digital
             </h2>
-            <p class="text-slate-400 text-lg max-w-2xl mx-auto mb-10 muncul" style="animation-delay:0.3s">
-                Membangun situs yang tidak hanya diam, tapi bergerak, menyala, dan memukau. Dari Bekasi untuk dunia!
-            </p>
-            <div class="flex flex-wrap justify-center gap-5 muncul" style="animation-delay:0.4s">
-                <a href="#statistik" class="tombol-utama px-8 py-4 rounded-xl text-white font-semibold text-lg">
-                    Lihat Karya <i class="fa fa-arrow-right ml-2"></i>
-                </a>
-                <a href="#kontak" class="tombol-kedua px-8 py-4 rounded-xl text-utama font-semibold text-lg">
-                    Hubungi Saya
-                </a>
-            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-blue/50 transition duration-500 hover:-translate-y-2 relative overflow-hidden group">
+                    <div class="flex justify-between items-center mb-4">
+                        <i data-lucide="wallet" class="w-8 h-8 text-cyber-blue"></i>
+                        <span class="text-xs text-cyber-blue font-mono">ACTIVE</span>
+                    </div>
+                    <h3 class="font-semibold text-lg">SeaBank</h3>
+                    <p class="text-xs text-gray-400 mt-1">Digital Banking</p>
+                    <div class="w-full bg-gray-800 h-1.5 rounded-full mt-6 overflow-hidden">
+                        <div class="bg-cyber-blue h-full w-[85%] rounded-full shadow-[0_0_10px_#00f0ff]"></div>
+                    </div>
+                </div>
 
-            <!-- LOGO KODE BESAR -->
-            <div class="logo-kode muncul" style="animation-delay:0.5s">
-                <i class="fa fa-code"></i>
-            </div>
+                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-blue/50 transition duration-500 hover:-translate-y-2 relative overflow-hidden group">
+                    <div class="flex justify-between items-center mb-4">
+                        <i data-lucide="smartphone" class="w-8 h-8 text-cyber-blue"></i>
+                        <span class="text-xs text-cyber-blue font-mono">ACTIVE</span>
+                    </div>
+                    <h3 class="font-semibold text-lg">DANA</h3>
+                    <p class="text-xs text-gray-400 mt-1">E-Wallet</p>
+                    <div class="w-full bg-gray-800 h-1.5 rounded-full mt-6 overflow-hidden">
+                        <div class="bg-cyber-blue h-full w-[90%] rounded-full shadow-[0_0_10px_#00f0ff]"></div>
+                    </div>
+                </div>
 
-            <!-- 4 KOTAK ANGKA STATISTIK BERJALAN -->
-            <div id="statistik" class="grid grid-cols-2 gap-5 mt-6">
-                <div class="kotak-stat kartu-3d muncul" style="animation-delay:0.6s">
-                    <h3 data-hitung="836">0+</h3>
-                    <p>Proyek Selesai</p>
+                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-blue/50 transition duration-500 hover:-translate-y-2 relative overflow-hidden group">
+                    <div class="flex justify-between items-center mb-4">
+                        <i data-lucide="credit-card" class="w-8 h-8 text-cyber-blue"></i>
+                        <span class="text-xs text-cyber-blue font-mono">ACTIVE</span>
+                    </div>
+                    <h3 class="font-semibold text-lg">Bank BCA</h3>
+                    <p class="text-xs text-gray-400 mt-1">Conventional Bank</p>
+                    <div class="w-full bg-gray-800 h-1.5 rounded-full mt-6 overflow-hidden">
+                        <div class="bg-cyber-blue h-full w-[75%] rounded-full shadow-[0_0_10px_#00f0ff]"></div>
+                    </div>
                 </div>
-                <div class="kotak-stat kartu-3d muncul" style="animation-delay:0.7s">
-                    <h3 data-hitung="250">0+</h3>
-                    <p>Keahlian Teknis</p>
+
+                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-purple/50 transition duration-500 hover:-translate-y-2 relative overflow-hidden group">
+                    <div class="flex justify-between items-center mb-4">
+                        <i data-lucide="coins" class="w-8 h-8 text-cyber-purple"></i>
+                        <span class="text-xs text-cyber-purple font-mono">WEB3</span>
+                    </div>
+                    <h3 class="font-semibold text-lg">Crypto</h3>
+                    <p class="text-xs text-gray-400 mt-1">Digital Currency</p>
+                    <div class="w-full bg-gray-800 h-1.5 rounded-full mt-6 overflow-hidden">
+                        <div class="bg-cyber-purple h-full w-[60%] rounded-full shadow-[0_0_10px_#7000ff]"></div>
+                    </div>
                 </div>
-                <div class="kotak-stat kartu-3d muncul" style="animation-delay:0.8s">
-                    <h3 data-hitung="193">0+</h3>
-                    <p>Apresiasi Resmi</p>
-                </div>
-                <div class="kotak-stat kartu-3d muncul" style="animation-delay:0.9s">
-                    <h3 data-hitung="430">0+</h3>
-                    <p>Jam Belajar</p>
+
+                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-gold/50 transition duration-500 hover:-translate-y-2 relative overflow-hidden group">
+                    <div class="flex justify-between items-center mb-4">
+                        <i data-lucide="github" class="w-8 h-8 text-cyber-gold"></i>
+                        <span class="text-xs text-cyber-gold font-mono">CODE</span>
+                    </div>
+                    <h3 class="font-semibold text-lg">GitHub</h3>
+                    <p class="text-xs text-gray-400 mt-1">Repositories</p>
+                    <div class="w-full bg-gray-800 h-1.5 rounded-full mt-6 overflow-hidden">
+                        <div class="bg-cyber-gold h-full w-[95%] rounded-full shadow-[0_0_10px_#ffd700]"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- BAGIAN SALDO & DOMPET -->
-    <section id="aset" class="py-20 px-5">
-        <div class="container mx-auto max-w-5xl">
-            <h2 class="text-[clamp(1.8rem,5vw,2.5rem)] font-bold text-center mb-14 muncul">
-                <span class="teks-hidup">Dompet & Aset</span> Saya
+    <section id="learning" class="py-20 px-6 bg-cyber-dark/40">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue via-cyber-purple to-cyber-gold">
+                Pusat Belajar Teknologi
             </h2>
-
-            <!-- SALDO SEABANK & DANA BERJALAN -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
-                <div class="bingkai-cahaya kartu-3d p-6 muncul">
-                    <div class="flex justify-between items-center mb-4">
-                        <div class="flex items-center gap-3">
-                            <span class="text-2xl text-laut"><i class="fa fa-university"></i></span>
-                            <h3 class="text-xl font-semibold">SeaBank</h3>
+            <p class="text-center text-gray-400 mb-12 max-w-xl mx-auto">Materi dasar yang dipelajari dan dikembangkan secara berkelanjutan.</p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <script>
+                    const topics = [
+                        'Dasar HTML', 'Dasar CSS', 'JavaScript', 'Tailwind CSS',
+                        'GitHub', 'Git Version Control', 'UI/UX Design', 'Responsive Web',
+                        'API Dasar', 'Dasar Pemrograman', 'Cloud Computing', 'Digital Literacy'
+                    ];
+                    document.write(topics.map(topic => `
+                        <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-cyber-blue transition duration-300 flex items-center gap-4 hover:scale-105 cursor-pointer">
+                            <div class="p-3 rounded-lg bg-cyber-blue/10 text-cyber-blue">
+                                <i data-lucide="terminal" class="w-6 h-6"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-sm">${topic}</h4>
+                                <span class="text-[10px] text-gray-500">Learning Path</span>
+                            </div>
                         </div>
-                        <span class="text-sm bg-laut/20 text-laut px-3 py-1 rounded-full">Utama</span>
-                    </div>
-                    <p class="text-sm text-slate-400 mb-2">Saldo Tersedia</p>
-                    <h2 class="text-3xl font-bold text-laut">Rp <span data-saldo="12587500">0</span></h2>
-                    <p class="text-xs text-slate-500 mt-3">Terakhir diperbarui: Hari ini</p>
-                </div>
-
-                <div class="bingkai-cahaya kartu-3d p-6 muncul" style="animation-delay:0.1s">
-                    <div class="flex justify-between items-center mb-4">
-                        <div class="flex items-center gap-3">
-                            <span class="text-2xl text-utama"><i class="fa fa-wallet"></i></span>
-                            <h3 class="text-xl font-semibold">DANA</h3>
-                        </div>
-                        <span class="text-sm bg-utama/20 text-utama px-3 py-1 rounded-full">Digital</span>
-                    </div>
-                    <p class="text-sm text-slate-400 mb-2">Saldo Tersedia</p>
-                    <h2 class="text-3xl font-bold text-utama">Rp <span data-saldo="3425000">0</span></h2>
-                    <p class="text-xs text-slate-500 mt-3">Terakhir diperbarui: Hari ini</p>
-                </div>
+                    `).join(''));
+                </script>
             </div>
+        </div>
+    </section>
 
-            <!-- ASET SAHAM -->
-            <h3 class="text-xl font-semibold mb-6 text-biru-muda">📈 Aset Saham</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
-                <div class="bingkai-cahaya kartu-3d p-5 muncul" style="animation-delay:0.2s">
-                    <div class="flex items-center gap-3 mb-3">
-                        <span class="text-xl text-biru-muda"><i class="fa fa-building"></i></span>
-                        <div>
-                            <h4 class="font-semibold">BBCA</h4>
-                            <p class="text-xs text-slate-400">Bank Central Asia</p>
-                        </div>
-                    </div>
-                    <p class="text-lg font-bold">Rp 9.875</p>
-                    <p class="text-sm text-naik flex items-center gap-1"><i class="fa fa-arrow-up"></i> +1,25%</p>
-                    <p class="text-xs text-slate-500 mt-2">Jumlah: 120 Lembar</p>
+    <section id="security" class="py-20 px-6">
+        <div class="max-w-6xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-cyber-purple">
+                Digital Security Basic
+            </h2>
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-blue transition">
+                    <i data-lucide="key" class="w-10 h-10 text-cyber-blue mb-4"></i>
+                    <h3 class="text-xl font-bold mb-2">Password Kuat & 2FA</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Gunakan kombinasi karakter acak dan aktifkan Authentication Dua-Faktor (2FA) di setiap platform untuk perlindungan ekstra.
+                    </p>
                 </div>
-
-                <div class="bingkai-cahaya kartu-3d p-5 muncul" style="animation-delay:0.3s">
-                    <div class="flex items-center gap-3 mb-3">
-                        <span class="text-xl text-biru-muda"><i class="fa fa-shopping-bag"></i></span>
-                        <div>
-                            <h4 class="font-semibold">MTRA</h4>
-                            <p class="text-xs text-slate-400">Mitra Adiperkasa</p>
-                        </div>
-                    </div>
-                    <p class="text-lg font-bold">Rp 1.420</p>
-                    <p class="text-sm text-turun flex items-center gap-1"><i class="fa fa-arrow-down"></i> -0,84%</p>
-                    <p class="text-xs text-slate-500 mt-2">Jumlah: 500 Lembar</p>
+                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-blue transition">
+                    <i data-lucide="shield-alert" class="w-10 h-10 text-cyber-purple mb-4"></i>
+                    <h3 class="text-xl font-bold mb-2">Waspada Phishing</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Selalu periksa URL situs web dan pengirim email. Jangan pernah memberikan kredensial login pada tautan yang mencurigakan.
+                    </p>
                 </div>
-
-                <div class="bingkai-cahaya kartu-3d p-5 muncul" style="animation-delay:0.4s">
-                    <div class="flex items-center gap-3 mb-3">
-                        <span class="text-xl text-biru-muda"><i class="fa fa-store"></i></span>
-                        <div>
-                            <h4 class="font-semibold">BUKA</h4>
-                            <p class="text-xs text-slate-400">Bukalapak</p>
-                        </div>
-                    </div>
-                    <p class="text-lg font-bold">Rp 418</p>
-                    <p class="text-sm text-naik flex items-center gap-1"><i class="fa fa-arrow-up"></i> +2,45%</p>
-                    <p class="text-xs text-slate-500 mt-2">Jumlah: 1.200 Lembar</p>
-                </div>
-            </div>
-
-            <!-- ASET CRYPTO DENGAN IKON ASLI -->
-            <h3 class="text-xl font-semibold mb-6 text-biru-muda">🪙 Aset Kripto</h3>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-                <div class="bingkai-cahaya kartu-3d p-5 muncul" style="animation-delay:0.5s">
-                    <div class="flex items-center gap-3 mb-3">
-                        <span class="text-xl ikon-btc"><i class="fa fa-btc"></i></span>
-                        <div>
-                            <h4 class="font-semibold">Bitcoin</h4>
-                            <p class="text-xs text-slate-400">BTC / IDR</p>
-                        </div>
-                    </div>
-                    <p class="text-lg font-bold">Rp 1.025.000.000</p>
-                    <p class="text-sm text-naik flex items-center gap-1"><i class="fa fa-arrow-up"></i> +3,12%</p>
-                    <p class="text-xs text-slate-500 mt-2">Memiliki: 0,05 BTC</p>
-                </div>
-
-                <div class="bingkai-cahaya kartu-3d p-5 muncul" style="animation-delay:0.6s">
-                    <div class="flex items-center gap-3 mb-3">
-                        <span class="text-xl ikon-eth"><i class="fa fa-ethereum"></i></span>
-                        <div>
-                            <h4 class="font-semibold">Ethereum</h4>
-                            <p class="text-xs text-slate-400">ETH / IDR</p>
-                        </div>
-                    </div>
-                    <p class="text-lg font-bold">Rp 41.500.000</p>
-                    <p class="text-sm text-turun flex items-center gap-1"><i class="fa fa-arrow-down"></i> -1,05%</p>
-                    <p class="text-xs text-slate-500 mt-2">Memiliki: 0,25 ETH</p>
+                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-blue transition">
+                    <i data-lucide="wifi-off" class="w-10 h-10 text-cyber-gold mb-4"></i>
+                    <h3 class="text-xl font-bold mb-2">Keamanan Wi-Fi & Privasi</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        Hindari bertransaksi di Wi-Fi publik tanpa VPN. Lakukan backup data secara berkala dan atur privasi di media sosial.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- KONTAK -->
-    <section id="kontak" class="py-20 px-5 bg-biru-tua/30">
-        <div class="container mx-auto max-w-2xl text-center">
-            <h2 class="text-2xl font-bold mb-6 muncul">Ingin Bekerja Sama?</h2>
-            <p class="text-slate-400 mb-8 muncul" style="animation-delay:0.1s">Siap membangun proyek hebat bersama Anda!</p>
-            <div class="bingkai-cahaya kartu-3d p-6 muncul" style="animation-delay:0.2s">
-                <div class="space-y-4 text-left">
-                    <div class="flex items-center gap-4">
-                        <span class="text-xl text-green-500"><i class="fa fa-whatsapp"></i></span>
-                        <span>0856-9217-4059</span>
+    <section id="skills" class="py-20 px-6 bg-cyber-dark/30">
+        <div class="max-w-4xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-12">Kemampuan Teknis</h2>
+            <div class="space-y-6">
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold text-sm">HTML & CSS</span>
+                        <span class="text-cyber-blue text-sm">90%</span>
                     </div>
-                    <div class="flex items-center gap-4">
-                        <span class="text-xl text-utama"><i class="fa fa-github"></i></span>
-                        <a href="https://github.com/zii4you" target="_blank" class="hover:underline">github.com/zii4you</a>
+                    <div class="w-full bg-gray-800 h-2 rounded-full">
+                        <div class="bg-cyber-blue h-full rounded-full w-[90%] shadow-[0_0_10px_#00f0ff]"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold text-sm">JavaScript</span>
+                        <span class="text-cyber-purple text-sm">75%</span>
+                    </div>
+                    <div class="w-full bg-gray-800 h-2 rounded-full">
+                        <div class="bg-cyber-purple h-full rounded-full w-[75%] shadow-[0_0_10px_#7000ff]"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold text-sm">Tailwind CSS</span>
+                        <span class="text-cyber-blue text-sm">85%</span>
+                    </div>
+                    <div class="w-full bg-gray-800 h-2 rounded-full">
+                        <div class="bg-cyber-blue h-full rounded-full w-[85%] shadow-[0_0_10px_#00f0ff]"></div>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex justify-between mb-2">
+                        <span class="font-semibold text-sm">Cyber Security Basic</span>
+                        <span class="text-cyber-gold text-sm">70%</span>
+                    </div>
+                    <div class="w-full bg-gray-800 h-2 rounded-full">
+                        <div class="bg-cyber-gold h-full rounded-full w-[70%] shadow-[0_0_10px_#ffd700]"></div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- HAK CIPTA -->
-    <footer class="py-6 text-center text-slate-500 text-sm">
-        © 2026 Digital ZYY • Muzi Adriyan. Semua Dilindungi.
+    <footer id="contact" class="border-t border-white/10 py-12 px-6 bg-cyber-black">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+            <div>
+                <a href="#" class="text-xl font-bold text-cyber-blue">NEXUS.IO</a>
+                <p class="text-xs text-gray-500 mt-1">Built with HTML, Tailwind CSS & JavaScript</p>
+            </div>
+            <div class="flex gap-6 text-gray-400">
+                <a href="https://github.com" class="hover:text-cyber-blue"><i data-lucide="github"></i></a>
+                <a href="mailto:example@email.com" class="hover:text-cyber-blue"><i data-lucide="mail"></i></a>
+                <a href="https://instagram.com" class="hover:text-cyber-blue"><i data-lucide="instagram"></i></a>
+            </div>
+            <p class="text-xs text-gray-600">&copy; 2026 Portofolio Ultra Premium. All rights reserved.</p>
+        </div>
     </footer>
 
-    <!-- SCRIPT ANIMASI LENGKAP -->
+    <script src="script.js"></script>
     <script>
-        // MUNCUL SAAT DIGULIR
-        const amati = new IntersectionObserver((el) => {
-            el.forEach(e => { if(e.isIntersecting) e.target.classList.add('tampil'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.muncul').forEach(el => amati.observe(el));
-
-        // ANGKA STATISTIK BERJALAN
-        const angkaHitung = (el) => {
-            const akhir = parseInt(el.dataset.hitung);
-            const durasi = 2000;
-            const langkah = akhir / (durasi / 16);
-            let sekarang = 0;
-            const jalan = () => {
-                sekarang += langkah;
-                if(sekarang < akhir) {
-                    el.innerText = Math.floor(sekarang) + '+';
-                    requestAnimationFrame(jalan);
-                } else {
-                    el.innerText = akhir + '+';
-                }
-            };
-            jalan();
-        };
-        const pengamatAngka = new IntersectionObserver((e) => {
-            e.forEach(item => { if(item.isIntersecting) angkaHitung(item.target); });
-        }, { threshold: 0.5 });
-        document.querySelectorAll('[data-hitung]').forEach(el => pengamatAngka.observe(el));
-
-        // ANGKA SALDO BERJALAN
-        const saldoHitung = (el) => {
-            const akhir = parseInt(el.dataset.saldo);
-            const durasi = 2500;
-            const langkah = akhir / (durasi / 16);
-            let sekarang = 0;
-            const jalan = () => {
-                sekarang += langkah;
-                if(sekarang < akhir) {
-                    el.innerText = Math.floor(sekarang).toLocaleString('id-ID');
-                    requestAnimationFrame(jalan);
-                } else {
-                    el.innerText = akhir.toLocaleString('id-ID');
-                }
-            };
-            jalan();
-        };
-        const pengamatSaldo = new IntersectionObserver((e) => {
-            e.forEach(item => { if(item.isIntersecting) saldoHitung(item.target); });
-        }, { threshold: 0.5 });
-        document.querySelectorAll('[data-saldo]').forEach(el => pengamatSaldo.observe(el));
-
-        // KARTU 3D IKUTI GERAKAN MOUSE
-        document.querySelectorAll('.kartu-3d').forEach(kartu => {
-            kartu.addEventListener('mousemove', (e) => {
-                const rect = kartu.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                const tengahX = rect.width / 2;
-                const tengahY = rect.height / 2;
-                const putarX = ((y - tengahY) / tengahY) * -5;
-                const putarY = ((x - tengahX) / tengahX) * 5;
-                kartu.style.transform = `rotateX(${putarX}deg) rotateY(${putarY}deg) translateZ(25px)`;
-            });
-            kartu.addEventListener('mouseleave', () => {
-                kartu.style.transform = 'rotateX(0deg) rotateY(0deg) translateZ(10px)';
-            });
-        });
+        lucide.createIcons();
     </script>
 </body>
 </html>
