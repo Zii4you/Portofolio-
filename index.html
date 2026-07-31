@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofolio Hidup – Digital ZYY</title>
+    <title>Digital ZYY – Portofolio Muzi Adriyan</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <script>
@@ -12,643 +12,342 @@
                 extend: {
                     colors: {
                         utama: '#2563eb',
-                        sekunder: '#7c3aed',
-                        aksen: '#10b981',
-                        gelap: '#020617',
-                        'gelap-2': '#111827',
-                        terang: '#f8fafc',
-                    },
-                }
-            }
-        }
-    </script>
-    <style>
-        * { transform-style: preserve-3d; margin:0; padding:0; box-sizing:border-box; }
-        body { perspective: 1500px; overflow-x: hidden; background: #020617; }
-
-        /* Latar Garis Cahaya Berjalan */
-        .latar-garis {
-            position: fixed; inset:0; overflow:hidden; pointer-events:none;
-        }
-        .garis-cahaya {
-            position:absolute; width:1px; height:100%; left:calc(var(--pos) * 1%);
-            background:linear-gradient(to bottom, transparent, rgba(59,130,246,0.5), transparent);
-            animation: gerakGaris 8s linear infinite;
-            animation-delay: calc(var(--pos) * 0.1s);
-        }
-        @keyframes gerakGaris {
-            0% { transform: translateY(-100%); }
-            100% { transform: translateY(100%); }
-        }
-
-        /* Partikel Berjalan */
-        .partikel {
-            position:absolute; border-radius:50%; background:rgba(124,58,237,0.4);
-            animation: gerakPartikel 20s infinite ease-in-out;
-        }
-        @keyframes gerakPartikel {
-            0% { transform: translate(0,0) scale(1); opacity:0; }
-            25% { transform: translate(50px,-80px) scale(1.2); opacity:0.7; }
-            50% { transform: translate(-30px,-150px) scale(0.8); opacity:0.5; }
-            75% { transform: translate(70px,-220px) scale(1.1); opacity:0.8; }
-            100% { transform: translate(0,-300px) scale(1); opacity:0; }
-        }
-
-        /* Teks Berjalan & Berubah Warna */
-        .teks-dinamis {
-            background: linear-gradient(90deg, #2563eb, #7c3aed, #10b981, #f59e0b, #2563eb);
-            background-size: 400% auto; -webkit-background-clip:text; background-clip:text; color:transparent;
-            animation: warnaJalan 4s linear infinite;
-            text-shadow: 0 0 40px rgba(37,99,235,0.4);
-        }
-        @keyframes warnaJalan {
-            to { background-position: 400% center; }
-        }
-
-        /* Efek Bingkai Menala Berjalan */
-        .bingkai-nyala { position:relative; border:1px solid rgba(37,99,235,0.2); border-radius:16px; overflow:hidden; }
-        .bingkai-nyala::before {
-            content:''; position:absolute; width:200%; height:200%; top:-50%; left:-50%;
-            background:conic-gradient(#2563eb, #7c3aed, transparent 60deg);
-            animation: putarBingkai 3s linear infinite;
-            z-index:-1;
-        }
-        @keyframes putarBingkai { to { transform:rotate(360deg); } }
-        .bingkai-nyala::after {
-            content:''; position:absolute; inset:2px; background:#111827; border-radius:14px; z-index:-1;
-        }
-
-        /* Kartu 3D Bergerak */
-        .kartu-hidup { transition:all 0.5s ease; transform:translateZ(10px); }
-        .kartu-hidup:hover {
-            transform:translateZ(30px) rotateX(-8deg) rotateY(8deg) scale(1.03);
-            box-shadow:0 0 30px rgba(37,99,235,0.3), 0 20px 40px rgba(0,0,0,0.4);
-        }
-
-        /* Gambar Melayang Terus */
-        .layang-terus { animation: layang 5s ease-in-out infinite; }
-        @keyframes layang {
-            0%,100% { transform:translateY(0) rotate(-1deg); }
-            50% { transform:translateY(-15px) rotate(1deg); }
-        }
-
-        /* Ikon Berdenyut */
-        .ikon-denyut { animation: denyut 2s ease-in-out infinite; }
-        @keyframes denyut {
-            0%,100% { transform:scale(1); filter:drop-shadow(0 0 5px rgba(37,99,235,0.5)); }
-            50% { transform:scale(1.15); filter:drop-shadow(0 0 20px rgba(124,58,237,0.7)); }
-        }
-
-        /* Muncul Berjalan */
-        .muncul-jalan { opacity:0; transform:translateY(50px) translateZ(-50px); transition:all 0.8s ease-out; }
-        .muncul-jalan.tampil { opacity:1; transform:translateY(0) translateZ(0); }
-    </style>
-</head>
-<body class="text-slate-300">
-
-    <!-- Latar Garis Cahaya -->
-    <div class="latar-garis">
-        <div class="garis-cahaya" style="--pos: 5"></div>
-        <div class="garis-cahaya" style="--pos: 15"></div>
-        <div class="garis-cahaya" style="--pos: 30"></div>
-        <div class="garis-cahaya" style="--pos: 50"></div>
-        <div class="garis-cahaya" style="--pos: 70"></div>
-        <div class="garis-cahaya" style="--pos: 85"></div>
-        <div class="garis-cahaya" style="--pos: 95"></div>
-    </div>
-
-    <!-- Partikel Bergerak -->
-    <div class="fixed inset-0 overflow-hidden pointer-events-none">
-        <div class="partikel w-3 h-3 top-20 left-10" style="animation-delay:0s"></div>
-        <div class="partikel w-2 h-2 top-60 right-20" style="animation-delay:1s"></div>
-        <div class="partikel w-4 h-4 bottom-40 left-1/3" style="animation-delay:2s"></div>
-        <div class="partikel w-2 h-2 top-1/2 right-1/4" style="animation-delay:3s"></div>
-        <div class="partikel w-3 h-3 bottom-20 right-10" style="animation-delay:4s"></div>
-        <div class="partikel w-2 h-2 top-40 left-1/2" style="animation-delay:5s"></div>
-    </div>
-
-    <!-- Akhir Latar -->
-
-    <!-- Navigasi -->
-    <nav class="fixed w-full top-0 z-50 bg-gelap/80 backdrop-blur-2xl border-b border-utama/30">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="#" class="text-xl font-bold text-terang flex items-center gap-2">
-                <i class="fa fa-bolt text-utama ikon-denyut"></i>
-                Digital<span class="teks-dinamis">ZYY</span>
-            </a>
-            <div class="hidden md:flex gap-6">
-                <a href="#beranda" class="hover:text-utama transition-all hover:scale-105">Beranda</a>
-                <a href="#tentang" class="hover:text-utama transition-all hover:scale-105">Tentang</a>
-                <a href="#angka" class="hover:text-utama transition-all hover:scale-105">Pencapaian</a>
-                <a href="#proyek" class="hover:text-utama transition-all hover:scale-105">Proyek</a>
-                <a href="#kontak" class="hover:text-utama transition-all hover:scale-105">Kontak</a>
-            </div>
-            <button class="md:hidden text-2xl ikon-denyut" id="tombolMenu"><i class="fa fa-bars"></i></button>
-        </div>
-        <div class="hidden md:hidden bg-gelap/95 backdrop-blur-xl border-b border-utama/30" id="menuHp">
-            <div class="container mx-auto px-4 py-3 flex flex-col gap-3">
-                <a href="#beranda" class="py-2 hover:text-utama">Beranda</a>
-                <a href="#tentang" class="py-2 hover:text-utama">Tentang</a>
-                <a href="#angka" class="py-2 hover:text-utama">Pencapaian</a>
-                <a href="#proyek" class="py-2 hover:text-utama">Proyek</a>
-                <a href="#kontak" class="py-2 hover:text-utama">Kontak</a>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Beranda -->
-    <section id="beranda" class="min-h-screen flex items-center pt-28 pb-10">
-        <div class="container mx-auto px-4">
-            <div class="flex flex-col md:flex-row items-center gap-12">
-                <div class="flex-1 text-center md:text-left muncul-jalan">
-                    <h4 class="text-utama font-medium mb-3 animate-pulse">✨ Selamat Datang di Dunia Digital yang Hidup!</h4>
-                    <h1 class="text-[clamp(2.8rem,6vw,4.5rem)] font-bold text-terang mb-4">Saya Muzi Adriyan</h1>
-                    <h2 class="text-[clamp(1.4rem,3.5vw,2.2rem)] font-semibold mb-6 teks-dinamis">Pengembang Web • Desainer • Peneliti Keamanan</h2>
-                    <p class="text-slate-400 mb-8 max-w-xl text-lg">Membangun situs yang tidak hanya diam, tapi bergerak, menyala, dan memukau. Dari Bekasi untuk dunia!</p>
-                    <div class="flex flex-wrap justify-center md:justify-start gap-4">
-                        <a href="#proyek" class="px-7 py-3.5 rounded-xl bg-gradient-to-r from-utama ke-sekunder text-white font-semibold hover:scale-105 transition-transform shadow-lg shadow-utama/30">Lihat Karya <i class="fa fa-arrow-right ml-2"></i></a>
-                        <a href="#kontak" class="px-7 py-3.5 rounded-xl border-2 border-utama text-utama font-semibold hover:bg-utama hover:text-white transition-all hover:scale-105">Hubungi Saya</a>
-                    </div>
-                </div>
-                <div class="flex-1 flex justify-center muncul-jalan layang-terus" style="animation-delay:0.2s">
-                    <div class="w-72 h-72 md:w-96 md:h-96 bingkai-nyala flex items-center justify-center">
-                        <div class="w-64 h-64 md:w-80 md:h-80 rounded-2xl bg-gradient-to-br from-utama/20 ke-sekunder/20 flex items-center justify-center text-8xl ikon-denyut">
-                            <i class="fa fa-code"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Angka Berjalan -->
-    <section id="angka" class="py-18">
-        <div class="container mx-auto px-4">
-            <h2 class="text-[clamp(1.6rem,3vw,2.2rem)] font-bold text-terang text-center mb-14 muncul-jalan">Pencapaian <span class="teks-dinamis">Berjalan</span></h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="kartu-hidup bingkai-nyala p-6 text-center muncul-jalan" style="animation-delay:0.1s">
-                    <h3 class="text-4xl font-bold text-terang mb-2" data-hitung="836">0</h3>
-                    <p class="text-slate-400">Proyek Selesai</p>
-                </div>
-                <div class="kartu-hidup bingkai-nyala p-6 text-center muncul-jalan" style="animation-delay:0.2s">
-                    <h3 class="text-4xl font-bold text-terang mb-2" data-hitung="250">0</h3>
-                    <p class="text-slate-400">Keahlian Teknis</p>
-                </div>
-                <div class="kartu-hidup bingkai-nyala p-6 text-center muncul-jalan" style="animation-delay:0.3s">
-                    <h3 class="text-4xl font-bold text-terang mb-2" data-hitung="193">0</h3>
-                    <p class="text-slate-400">Apresiasi Resmi</p>
-                </div>
-                <div class="kartu-hidup bingkai-nyala p-6 text-center muncul-jalan" style="animation-delay:0.4s">
-                    <h3 class="text-4xl font-bold text-terang mb-2" data-hitung="430">0</h3>
-                    <p class="text-slate-400">Jam Belajar</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Tentang -->
-    <section id="tentang" class="py-20 bg-gelap-2/40">
-        <div class="container mx-auto px-4">
-            <h2 class="text-[clamp(1.6rem,3vw,2.2rem)] font-bold text-terang text-center mb-12 muncul-jalan">Tentang <span class="teks-dinamis">Saya</span></h2>
-            <div class="max-w-4xl mx-auto kartu-hidup bingkai-nyala p-8 muncul-jalan">
-                <div class="space-y-4 text-center md:text-left">
-                    <p class="text-lg">Saya berusia 17 tahun, seorang pelajar sekaligus pengembang web yang memiliki minat besar di dunia teknologi. Saya senang mempelajari hal baru dan terus mengembangkan kemampuan di bidang pemrograman, desain web, dan teknologi digital.</p>
-                    <p class="text-lg">Saya berasal Desa Pantai Bakti, Kecamatan Muara Gembong, Kabupaten Bekasi,Jawa Barat, Indonesia, sebuah kota yang terus berkembang dan menjadi tempat saya tumbuh, belajar, serta membangun berbagai proyek digital. </p>
-                    <p class="text-lg">Saat ini saya fokus membangun website modern, mempelajari teknologi terbaru, dan menciptakan karya yang bermanfaat. Bagi saya, setiap proyek adalah kesempatan untuk belajar, berkembang, dan menghasilkan sesuatu yang dapat dibanggakan. </p>
-                    <p class="text-lg">Saya selalu terbuka terhadap tantangan baru, senang bekerja sama, dan memiliki semangat untuk terus meningkatkan kemampuan agar dapat memberikan hasil terbaik di setiap kesempatan. </p> 
-                </div>
-    </section>
-
-    <!-- Proyek -->
-    <section id="proyek" class="py-20">
-        <div class="container mx-auto px-4">
-            <h2 class="text-[clamp(1.6rem,3vw,2.2rem)] font-bold text-terang text-center mb-14 muncul-jalan">Karya <span class="teks-dinamis">Ramai</span></h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
-                <div class="kartu-hidup bingkai-nyala overflow-hidden muncul-jalan" style="animation-delay:0.1s">
-                    <div class="h-48 bg-gradient-to-br from-utama/30 ke-sekunder/30 flex items-center justify-center text-6xl ikon-denyut"><i class="fa fa-globe"></i></div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Layanan Digital ZYY</h3>
-                        <p class="text-slate-400 mb-4">Situs beranimasi penuh untuk layanan pembuatan web</p>
-                        <a href="#" class="text-utama hover:underline flex items-center gap-2">Buka <i class="fa fa-external-link"></i></a>
-                    </div>
-                </div>
-                <div class="kartu-hidup bingkai-nyala overflow-hidden muncul-jalan" style="animation-delay:0.2s">
-                    <div class="h-48 bg-gradient-to-br from-sekunder/30 ke-aksen/30 flex items-center justify-center text-6xl ikon-denyut"><i class="fa fa-book"></i></div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Pusat Belajar Teknologi</h3>
-                        <p class="text-slate-400 mb-4">Panduan bergerak dan mudah dipahami pemula</p>
-                        <a href="#" class="text-sekunder hover:underline flex items-center gap-2">Buka <i class="<!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pusat Belajar Teknologi – Digital ZYY</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        utama: '#2563eb',
-                        biru-tua: '#1e40af',
+                        biru-tua: '#0f172a',
                         biru-muda: '#60a5fa',
                         biru-terang: '#bfdbfe',
                         gelap: '#020617',
-                        gelap-biru: '#0c1a2f',
+                        laut: '#0070f3',
+                        naik: '#10b981',
+                        turun: '#ef4444',
+                        btc: '#f7931a', /* Warna Bitcoin Asli */
+                        eth: '#627eea', /* Warna Ethereum Asli */
                     }
                 }
             }
         }
     </script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
         * {
             margin: 0; padding: 0; box-sizing: border-box;
             font-family: 'Plus Jakarta Sans', sans-serif;
             transform-style: preserve-3d;
         }
         body {
-            background: linear-gradient(180deg, #020617 0%, #0c1a2f 50%, #020617 100%);
-            color: #e0f2fe;
-            overflow-x: hidden;
+            perspective: 1500px; overflow-x: hidden;
+            background: radial-gradient(circle at top, #1e293b 0%, #020617 50%, #020617 100%);
+            color: #f8fafc;
         }
 
-        /* === ANIMASI GARIS CAHAYA DI LATAR === */
-        .latar-garis {
-            position: fixed; inset: 0; z-index: -1; overflow: hidden;
+        /* === ANIMASI GARIS DI KEEMPAT SUDUT === */
+        .garis-sudut {
+            position: fixed; z-index: 0;
+            background: linear-gradient(90deg, transparent, rgba(96,165,250,0.6), transparent);
+            animation: garisPutar 12s linear infinite;
         }
-        .garis {
-            position: absolute; width: 1px; height: 100%;
-            background: linear-gradient(to bottom, transparent, rgba(96,165,250,0.35), transparent);
-            animation: turunGaris 14s linear infinite;
-        }
-        @keyframes turunGaris {
-            0% { transform: translateY(-100%); opacity: 0; }
+        .garis-sudut:nth-child(1) { top: 0; left: 0; width: 300px; height: 2px; transform-origin: left; }
+        .garis-sudut:nth-child(2) { top: 0; right: 0; width: 2px; height: 300px; transform-origin: top; animation-delay: 3s; }
+        .garis-sudut:nth-child(3) { bottom: 0; right: 0; width: 300px; height: 2px; transform-origin: right; animation-delay: 6s; }
+        .garis-sudut:nth-child(4) { bottom: 0; left: 0; width: 2px; height: 300px; transform-origin: bottom; animation-delay: 9s; }
+        @keyframes garisPutar {
+            0% { transform: rotate(0deg); opacity: 0; }
             20% { opacity: 1; }
             80% { opacity: 1; }
-            100% { transform: translateY(100%); opacity: 0; }
+            100% { transform: rotate(360deg); opacity: 0; }
         }
 
-        /* === ANIMASI TEKS GRADASI BIRU === */
-        .teks-animasi {
-            background: linear-gradient(90deg, #60a5fa, #2563eb, #1e40af, #60a5fa);
-            background-size: 250% auto;
+        /* === KARTU 3D IKUTI GERAKAN === */
+        .kartu-3d {
+            transition: all 0.4s ease;
+            transform: rotateX(0deg) rotateY(0deg) translateZ(10px);
+        }
+        .kartu-3d:hover {
+            transform: rotateX(-5deg) rotateY(5deg) translateZ(25px) scale(1.03);
+            box-shadow: 0 25px 50px rgba(37,99,235,0.3);
+        }
+
+        /* === TEKS GRADASI BERJALAN === */
+        .teks-hidup {
+            background: linear-gradient(90deg, #10b981, #f59e0b, #2563eb, #10b981);
+            background-size: 300% auto;
             -webkit-background-clip: text; background-clip: text; color: transparent;
-            animation: warnaBiru 9s linear infinite;
+            animation: warnaJalan 6s linear infinite;
         }
-        @keyframes warnaBiru {
-            to { background-position: 250% center; }
-        }
+        @keyframes warnaJalan { to { background-position: 300% center; } }
 
-        /* === ANIMASI KARTU & BINGKAI === */
-        .bingkai {
-            position: relative; border-radius: 18px; overflow: hidden;
-            background: rgba(12,26,47,0.75);
-            border: 1px solid rgba(37,99,235,0.2);
-            backdrop-filter: blur(8px);
-            transition: all 0.5s ease;
+        /* === BINGKAI BERCAHAYA === */
+        .bingkai-cahaya {
+            position: relative; border-radius: 20px; overflow: hidden; border: 1px solid rgba(37,99,235,0.2);
+            background: rgba(15,23,42,0.7); backdrop-filter: blur(10px);
         }
-        .bingkai::before {
-            content: ''; position: absolute; left: 0; bottom: 0; width: 100%; height: 3px;
-            background: linear-gradient(90deg, #60a5fa, #a855f7, #2563eb);
-            animation: garisBawah 4s linear infinite;
+        .bingkai-cahaya::before {
+            content: ''; position: absolute; inset: -50%;
+            background: conic-gradient(#2563eb, #60a5fa, #a855f7, transparent 70deg);
+            animation: bingkaiPutar 4s linear infinite; z-index: -1;
         }
-        @keyframes garisBawah {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
+        .bingkai-cahaya::after {
+            content: ''; position: absolute; inset: 2px; background: #0f172a; border-radius: 18px; z-index: -1;
         }
-        .bingkai:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(37,99,235,0.25);
-            border-color: rgba(96,165,250,0.5);
-        }
-
-        /* === ANIMASI MUNCUL SAAT DIGULIR === */
-        .muncul {
-            opacity: 0; transform: translateY(50px) scale(0.95);
-            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-        }
-        .muncul.tampil { opacity: 1; transform: translateY(0) scale(1); }
-
-        /* === TOMBOL BISA DIKLIK === */
-        .tombol-buka {
-            display: inline-flex; align-items: center; gap: 6px;
-            color: #60a5fa; font-weight: 500; text-decoration: none;
-            transition: all 0.3s ease;
-        }
-        .tombol-buka:hover {
-            color: #bfdbfe; gap: 10px;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- LATAR BELAKANG DENGAN ANIMASI GARIS -->
-    <div class="latar-garis">
-        <div class="garis left-[10%]"></div>
-        <div class="garis left-[25%]" style="animation-delay:2s"></div>
-        <div class="garis left-[40%]" style="animation-delay:4s"></div>
-        <div class="garis left-[58%]" style="animation-delay:6s"></div>
-        <div class="garis left-[75%]" style="animation-delay:8s"></div>
-        <div class="garis left-[90%]" style="animation-delay:10s"></div>
-    </div>
-
-    <!-- NAVIGASI HANYA JUDUL -->
-    <nav class="fixed w-full top-0 z-50 bg-gelap/70 backdrop-blur-xl border-b border-utama/15">
-        <div class="container mx-auto px-5 py-4">
-            <a href="#" class="text-xl font-bold flex items-center gap-2">
-                <span class="text-biru-muda"><i class="fa fa-book"></i></span>
-                <span>Pusat <span class="teks-animasi">Belajar</span></span>
-            </a>
-        </div>
-    </nav>
-
-    <!-- ISI UTAMA -->
-    <section class="min-h-screen pt-28 pb-16 px-5">
-        <div class="container mx-auto max-w-4xl">
-            <div class="text-center mb-12 muncul">
-                <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold mb-4">Pusat Belajar <span class="teks-animasi">Teknologi</span></h1>
-                <p class="text-biru-terang/70 text-lg">Panduan langkah demi langkah, mudah dipahami untuk pemula sampai mahir</p>
-            </div>
-
-            <!-- DAFTAR MATERI BELAJAR -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <!-- 1. Dasar Pembuatan Web -->
-                <div class="bingkai p-6 muncul" style="animation-delay:0.1s">
-                    <h3 class="text-xl font-semibold mb-2">🌐 Dasar Pembuatan Web</h3>
-                    <p class="text-biru-terang/60 text-sm mb-4">Belajar HTML, CSS, tata letak, dan desain tampilan yang rapi</p>
-                    <a href="#" class="tombol-buka">Buka Materi <i class="fa fa-external-link"></i></a>
-                </div>
-
-                <!-- 2. GitHub & Repositori -->
-                <div class="bingkai p-6 muncul" style="animation-delay:0.2s">
-                    <h3 class="text-xl font-semibold mb-2">📂 GitHub & Repositori</h3>
-                    <p class="text-biru-terang/60 text-sm mb-4">Cara menyimpan kode, membagikan proyek, dan hosting situs gratis</p>
-                    <a href="#" class="tombol-buka">Buka Materi <i class="fa fa-external-link"></i></a>
-                </div>
-
-                <!-- 3. Keamanan Digital Dasar -->
-                <div class="bingkai p-6 muncul" style="animation-delay:0.3s">
-                    <h3 class="text-xl font-semibold mb-2">🛡️ Keamanan Digital Dasar</h3>
-                    <p class="text-biru-terang/60 text-sm mb-4">Melindungi akun, data pribadi, dan mengenali bahaya di internet</p>
-                    <a href="#" class="tombol-buka">Buka Materi <i class="fa fa-external-link"></i></a>
-                </div>
-
-                <!-- 4. Termux & Perintah Dasar -->
-                <div class="bingkai p-6 muncul" style="animation-delay:0.4s">
-                    <h3 class="text-xl font-semibold mb-2">⚙️ Termux & Perintah Dasar</h3>
-                    <p class="text-biru-terang/60 text-sm mb-4">Menggunakan perintah teks di HP, mengelola file, dan alat bantu</p>
-                    <a href="#" class="tombol-buka">Buka Materi <i class="fa fa-external-link"></i></a>
-                </div>
-
-                <!-- 5. Desain Tampilan Web -->
-                <div class="bingkai p-6 muncul" style="animation-delay:0.5s">
-                    <h3 class="text-xl font-semibold mb-2">🎨 Desain Tampilan Web</h3>
-                    <p class="text-biru-terang/60 text-sm mb-4">Membuat tampilan enak dilihat, mudah dipakai di HP dan komputer</p>
-                    <a href="#" class="tombol-buka">Buka Materi <i class="fa fa-external-link"></i></a>
-                </div>
-
-                <!-- 6. Cara Belajar Efektif -->
-                <div class="bingkai p-6 muncul" style="animation-delay:0.6s">
-                    <h3 class="text-xl font-semibold mb-2">💡 Cara Belajar Efektif</h3>
-                    <p class="text-biru-terang/60 text-sm mb-4">Trik cepat paham, menghafal, dan mempraktikkan ilmu teknologi</p>
-                    <a href="#" class="tombol-buka">Buka Materi <i class="fa fa-external-link"></i></a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- SCRIPT AKTIFKAN SEMUA ANIMASI -->
-    <script>
-        // Muncul otomatis saat digulir
-        const amati = new IntersectionObserver((elemen) => {
-            elemen.forEach(e => { if(e.isIntersecting) e.target.classList.add('tampil'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.muncul').forEach(el => amati.observe(el));
-    </script>
-</body>
-</html>></i></a>
-                    </div>
-                </div>
-                <div class="kartu-hidup bingkai-nyala overflow-hidden muncul-jalan" style="animation-delay:0.3s">
-                    <div class="h-48 bg-gradient-to-br from-aksen/30 ke-utama/30 flex items-center justify-center text-6xl ikon-denyut"><i class="fa fa-shield"></i></div>
-                    <div class="p-6">
-                        <h3 class="text-xl font-semibold mb-2">Keamanan Digital</h3>
-                        <p class="text-slate-400 mb-4">Pengujian dan penguatan sistem berstandar dunia</p>
-                        <a href="#" class="text-aksen hover:underline flex items-center gap-2">Buka <i class="<!DOCTYPE html>
-<html lang="id" class="scroll-smooth">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keamanan Digital – Digital ZYY</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        utama: '#2563eb', /* Tetap Biru Utama */
-                        biru-tua: '#1e40af',
-                        biru-muda: '#60a5fa',
-                        biru-terang: '#bfdbfe',
-                        gelap: '#020617',
-                        gelap-biru: '#0c1a2f',
-                    }
-                }
-            }
-        }
-    </script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap');
-        * {
-            margin: 0; padding: 0; box-sizing: border-box;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            transform-style: preserve-3d;
-        }
-        body {
-            background: linear-gradient(180deg, #020617 0%, #0c1a2f 50%, #020617 100%);
-            color: #e0f2fe;
-            overflow-x: hidden;
-        }
-
-        /* === ANIMASI GARIS CAHAYA BIRU === */
-        .latar-garis {
-            position: fixed; inset: 0; z-index: -1; overflow: hidden;
-        }
-        .garis {
-            position: absolute; width: 1px; height: 100%;
-            background: linear-gradient(to bottom, transparent, rgba(96,165,250,0.35), transparent);
-            animation: turunGaris 14s linear infinite;
-        }
-        @keyframes turunGaris {
-            0% { transform: translateY(-100%); opacity: 0; }
-            20% { opacity: 1; }
-            80% { opacity: 1; }
-            100% { transform: translateY(100%); opacity: 0; }
-        }
-
-        /* === TEKS GRADASI BIRU === */
-        .teks-animasi {
-            background: linear-gradient(90deg, #60a5fa, #2563eb, #1e40af, #60a5fa);
-            background-size: 250% auto;
-            -webkit-background-clip: text; background-clip: text; color: transparent;
-            animation: warnaBiru 9s linear infinite;
-        }
-        @keyframes warnaBiru {
-            to { background-position: 250% center; }
-        }
-
-        /* === BINGKAI & KARTU BIRU === */
-        .bingkai {
-            position: relative; border-radius: 18px; overflow: hidden;
-            background: rgba(12,26,47,0.75);
-            border: 1px solid rgba(37,99,235,0.2);
-            backdrop-filter: blur(8px);
-            transition: all 0.5s ease;
-        }
-        .bingkai::before {
-            content: ''; position: absolute; left: 0; bottom: 0; width: 100%; height: 3px;
-            background: linear-gradient(90deg, #60a5fa, #a855f7, #2563eb);
-            animation: garisBawah 4s linear infinite;
-        }
-        @keyframes garisBawah {
-            0% { transform: translateX(-100%); }
-            100% { transform: translateX(100%); }
-        }
-        .bingkai:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 20px 40px rgba(37,99,235,0.25);
-            border-color: rgba(96,165,250,0.5);
-        }
+        @keyframes bingkaiPutar { to { transform: rotate(360deg); } }
 
         /* === MUNCUL PERLAHAN === */
         .muncul {
-            opacity: 0; transform: translateY(50px) scale(0.95);
-            transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0; transform: translateY(60px) translateZ(-40px);
+            transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
         }
-        .muncul.tampil { opacity: 1; transform: translateY(0) scale(1); }
+        .muncul.tampil { opacity: 1; transform: translateY(0) translateZ(0); }
 
-        /* === TOMBOL WARNA BIRU === */
-        .tombol-buka {
-            display: inline-flex; align-items: center; gap: 6px;
-            color: #60a5fa; font-weight: 500; text-decoration: none;
+        /* === LOGO KODE BESAR === */
+        .logo-kode {
+            width: 260px; height: 260px;
+            border-radius: 20px;
+            background: linear-gradient(145deg, #162542, #0b1424);
+            border: 2px solid rgba(96,165,250,0.4);
+            display: flex; align-items: center; justify-content: center;
+            margin: 40px auto;
+            position: relative; overflow: hidden;
+            animation: denyutCahaya 3s ease-in-out infinite;
+        }
+        .logo-kode i {
+            font-size: 5.5rem; color: rgba(191,219,254,0.9);
+            text-shadow: 0 0 30px rgba(96,165,250,0.5);
+        }
+        @keyframes denyutCahaya {
+            0%,100% { box-shadow: 0 0 25px rgba(37,99,235,0.2); }
+            50% { box-shadow: 0 0 45px rgba(96,165,250,0.4); }
+        }
+
+        /* === KOTAK STATISTIK ANGKA BERJALAN === */
+        .kotak-stat {
+            border-radius: 20px;
+            background: rgba(15,23,42,0.8);
+            border: 1px solid rgba(37,99,235,0.3);
+            padding: 30px 20px;
+            text-align: center;
+            position: relative; overflow: hidden;
+        }
+        .kotak-stat::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
+            background: linear-gradient(90deg, #60a5fa, #a855f7, #2563eb);
+            animation: garisBawah 4s linear infinite;
+        }
+        @keyframes garisBawah {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+        .kotak-stat h3 {
+            font-size: 3rem; font-weight: 800; margin-bottom: 8px;
+            font-variant-numeric: tabular-nums;
+        }
+        .kotak-stat p {
+            font-size: 1.1rem; color: #94a3b8;
+        }
+
+        /* === TOMBOL ANIMASI === */
+        .tombol-utama {
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            box-shadow: 0 10px 30px rgba(37,99,235,0.4);
             transition: all 0.3s ease;
         }
-        .tombol-buka:hover {
-            color: #bfdbfe; gap: 10px;
-        }
+        .tombol-utama:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 15px 40px rgba(37,99,235,0.5); }
+        .tombol-kedua { border: 2px solid #2563eb; transition: all 0.3s ease; }
+        .tombol-kedua:hover { background: #2563eb; transform: translateY(-3px); }
 
-        /* === IKON BERDENYUT === */
-        .ikon-denyut {
-            animation: denyut 2.5s ease-in-out infinite;
-        }
-        @keyframes denyut {
-            0%,100% { opacity: 1; transform: scale(1); filter:drop-shadow(0 0 8px rgba(37,99,235,0.4)); }
-            50% { opacity: 0.8; transform: scale(1.08); filter:drop-shadow(0 0 20px rgba(96,165,250,0.6)); }
-        }
+        /* === IKON CRYPTO ASLI === */
+        .ikon-btc { color: #f7931a; text-shadow: 0 0 12px rgba(247,147,26,0.5); }
+        .ikon-eth { color: #627eea; text-shadow: 0 0 12px rgba(98,126,234,0.5); }
     </style>
 </head>
 <body>
 
-    <!-- LATAR BELAKANG GARIS BIRU -->
-    <div class="latar-garis">
-        <div class="garis left-[10%]"></div>
-        <div class="garis left-[25%]" style="animation-delay:2s"></div>
-        <div class="garis left-[40%]" style="animation-delay:4s"></div>
-        <div class="garis left-[58%]" style="animation-delay:6s"></div>
-        <div class="garis left-[75%]" style="animation-delay:8s"></div>
-        <div class="garis left-[90%]" style="animation-delay:10s"></div>
-    </div>
+    <!-- GARIS ANIMASI DI KEEMPAT SUDUT -->
+    <div class="garis-sudut"></div>
+    <div class="garis-sudut"></div>
+    <div class="garis-sudut"></div>
+    <div class="garis-sudut"></div>
 
-    <!-- JUDUL SAJA TANPA KEMBALI -->
-    <nav class="fixed w-full top-0 z-50 bg-gelap/70 backdrop-blur-xl border-b border-utama/15">
-        <div class="container mx-auto px-5 py-4">
-            <a href="#" class="text-xl font-bold flex items-center gap-2">
-                <span class="text-utama ikon-denyut"><i class="fa fa-shield"></i></span>
-                <span>Keamanan <span class="teks-animasi">Digital</span></span>
+    <!-- NAVIGASI -->
+    <nav class="fixed w-full top-0 z-50 bg-gelap/70 backdrop-blur-2xl border-b border-utama/20">
+        <div class="container mx-auto px-5 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold flex items-center gap-2">
+                <span class="text-utama"><i class="fa fa-bolt"></i></span>
+                Digital <span class="teks-hidup">ZYY</span>
             </a>
+            <button class="text-2xl text-utama"><i class="fa fa-bars"></i></button>
         </div>
     </nav>
 
-    <!-- ISI UTAMA -->
-    <section class="min-h-screen pt-28 pb-16 px-5">
-        <div class="container mx-auto max-w-4xl">
-            <div class="text-center mb-12 muncul">
-                <h1 class="text-[clamp(2rem,5vw,3rem)] font-bold mb-4">Keamanan <span class="teks-animasi">Digital</span></h1>
-                <p class="text-slate-400 text-lg">Pengujian dan penguatan sistem berstandar dunia</p>
+    <!-- BAGIAN UTAMA -->
+    <section class="min-h-screen flex flex-col justify-center pt-32 pb-10 px-5">
+        <div class="container mx-auto max-w-4xl text-center">
+            <p class="text-biru-muda text-lg mb-4 muncul">✨ Selamat Datang di Dunia Digital yang Hidup!</p>
+            <h1 class="text-[clamp(2.5rem,8vw,4.5rem)] font-extrabold mb-3 muncul" style="animation-delay:0.1s">Saya Muzi Adriyan</h1>
+            <h2 class="text-[clamp(1.5rem,4vw,2.2rem)] font-semibold mb-6 teks-hidup muncul" style="animation-delay:0.2s">
+                Pengembang Web • Desainer • Peneliti Keamanan
+            </h2>
+            <p class="text-slate-400 text-lg max-w-2xl mx-auto mb-10 muncul" style="animation-delay:0.3s">
+                Membangun situs yang tidak hanya diam, tapi bergerak, menyala, dan memukau. Dari Bekasi untuk dunia!
+            </p>
+            <div class="flex flex-wrap justify-center gap-5 muncul" style="animation-delay:0.4s">
+                <a href="#statistik" class="tombol-utama px-8 py-4 rounded-xl text-white font-semibold text-lg">
+                    Lihat Karya <i class="fa fa-arrow-right ml-2"></i>
+                </a>
+                <a href="#kontak" class="tombol-kedua px-8 py-4 rounded-xl text-utama font-semibold text-lg">
+                    Hubungi Saya
+                </a>
             </div>
 
-            <!-- DAFTAR MATERI -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div class="bingkai p-6 muncul" style="animation-delay:0.1s">
-                    <h3 class="text-xl font-semibold mb-2">🔒 Dasar Keamanan Data</h3>
-                    <p class="text-slate-400 mb-4">Melindungi informasi pribadi, akun, dan data penting dari ancaman</p>
-                    <a href="#" class="tombol-buka">Buka Materi <i class="fa fa-external-link"></i></a>
-                </div>
+            <!-- LOGO KODE BESAR -->
+            <div class="logo-kode muncul" style="animation-delay:0.5s">
+                <i class="fa fa-code"></i>
+            </div>
 
-                <div class="bingkai p-6 muncul" style="animation-delay:0.2s">
-                    <h3 class="text-xl font-semibold mb-2">🛡️ Pengujian Keamanan</h3>
-                    <p class="text-slate-400 mb-4">Cara mendeteksi celah, menguji sistem, dan memperbaiki kelemahan</p>
-                    <a href="#" class="tombol-buka">Buka Materi <i class="fa fa-external-link"></i></a>
+            <!-- 4 KOTAK ANGKA STATISTIK BERJALAN -->
+            <div id="statistik" class="grid grid-cols-2 gap-5 mt-6">
+                <div class="kotak-stat kartu-3d muncul" style="animation-delay:0.6s">
+                    <h3 data-hitung="836">0+</h3>
+                    <p>Proyek Selesai</p>
                 </div>
-
-                <div class="bingkai p-6 muncul" style="animation-delay:0.3s">
-                    <h3 class="text-xl font-semibold mb-2">⚠️ Ancaman & Pencegahan</h3>
-                    <p class="text-slate-400 mb-4">Mengenal virus, peretasan, penipuan, dan cara menghindarinya</p>
-                    <a href="#" class="tombol-buka">Buka Materi <i class="fa fa-external-link"></i></a>
+                <div class="kotak-stat kartu-3d muncul" style="animation-delay:0.7s">
+                    <h3 data-hitung="250">0+</h3>
+                    <p>Keahlian Teknis</p>
                 </div>
-
-                <div class="bingkai p-6 muncul" style="animation-delay:0.4s">
-                    <h3 class="text-xl font-semibold mb-2">🔐 Sandi & Enkripsi</h3>
-                    <p class="text-slate-400 mb-4">Membuat kunci kuat, menyimpan aman, dan melindungi pesan</p>
-                    <a href="#" class="tombol-buka">Buka Materi <i class="fa fa-external-link"></i></a>
+                <div class="kotak-stat kartu-3d muncul" style="animation-delay:0.8s">
+                    <h3 data-hitung="193">0+</h3>
+                    <p>Apresiasi Resmi</p>
                 </div>
-
-                <div class="bingkai p-6 muncul" style="animation-delay:0.5s">
-                    <h3 class="text-xl font-semibold mb-2">📶 Jaringan Aman</h3>
-                    <p class="text-slate-400 mb-4">Menggunakan Wi-Fi publik dengan hati-hati dan pengaturan jaringan</p>
-                    <a href="#" class="tombol-buka">Buka Materi <i class="fa fa-external-link"></i></a>
-                </div>
-
-                <div class="bingkai p-6 muncul" style="animation-delay:0.6s">
-                    <h3 class="text-xl font-semibold mb-2">📢 Pengungkapan Bertanggung Jawab</h3>
-                    <p class="text-slate-400 mb-4">Cara melaporkan celah keamanan dengan sopan dan benar</p>
-                    <a href="#" class="tombol-buka">Buka Materi <i class="fa fa-external-link"></i></a>
+                <div class="kotak-stat kartu-3d muncul" style="animation-delay:0.9s">
+                    <h3 data-hitung="430">0+</h3>
+                    <p>Jam Belajar</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- AKTIFKAN ANIMASI -->
-    <script>
-        const amati = new IntersectionObserver((el) => {
-            el.forEach(e => { if(e.isIntersecting) e.target.classList.add('tampil'); });
-        }, { threshold: 0.1 });
-        document.querySelectorAll('.muncul').forEach(el => amati.observe(el));
-    </script>
-</body>
+    <!-- BAGIAN SALDO & DOMPET -->
+    <section id="aset" class="py-20 px-5">
+        <div class="container mx-auto max-w-5xl">
+            <h2 class="text-[clamp(1.8rem,5vw,2.5rem)] font-bold text-center mb-14 muncul">
+                <span class="teks-hidup">Dompet & Aset</span> Saya
+            </h2>
+
+            <!-- SALDO SEABANK & DANA BERJALAN -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-12">
+                <div class="bingkai-cahaya kartu-3d p-6 muncul">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl text-laut"><i class="fa fa-university"></i></span>
+                            <h3 class="text-xl font-semibold">SeaBank</h3>
+                        </div>
+                        <span class="text-sm bg-laut/20 text-laut px-3 py-1 rounded-full">Utama</span>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-2">Saldo Tersedia</p>
+                    <h2 class="text-3xl font-bold text-laut">Rp <span data-saldo="12587500">0</span></h2>
+                    <p class="text-xs text-slate-500 mt-3">Terakhir diperbarui: Hari ini</p>
+                </div>
+
+                <div class="bingkai-cahaya kartu-3d p-6 muncul" style="animation-delay:0.1s">
+                    <div class="flex justify-between items-center mb-4">
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl text-utama"><i class="fa fa-wallet"></i></span>
+                            <h3 class="text-xl font-semibold">DANA</h3>
+                        </div>
+                        <span class="text-sm bg-utama/20 text-utama px-3 py-1 rounded-full">Digital</span>
+                    </div>
+                    <p class="text-sm text-slate-400 mb-2">Saldo Tersedia</p>
+                    <h2 class="text-3xl font-bold text-utama">Rp <span data-saldo="3425000">0</span></h2>
+                    <p class="text-xs text-slate-500 mt-3">Terakhir diperbarui: Hari ini</p>
+                </div>
+            </div>
+
+            <!-- ASET SAHAM -->
+            <h3 class="text-xl font-semibold mb-6 text-biru-muda">📈 Aset Saham</h3>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-12">
+                <div class="bingkai-cahaya kartu-3d p-5 muncul" style="animation-delay:0.2s">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-xl text-biru-muda"><i class="fa fa-building"></i></span>
+                        <div>
+                            <h4 class="font-semibold">BBCA</h4>
+                            <p class="text-xs text-slate-400">Bank Central Asia</p>
+                        </div>
+                    </div>
+                    <p class="text-lg font-bold">Rp 9.875</p>
+                    <p class="text-sm text-naik flex items-center gap-1"><i class="fa fa-arrow-up"></i> +1,25%</p>
+                    <p class="text-xs text-slate-500 mt-2">Jumlah: 120 Lembar</p>
+                </div>
+
+                <div class="bingkai-cahaya kartu-3d p-5 muncul" style="animation-delay:0.3s">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-xl text-biru-muda"><i class="fa fa-shopping-bag"></i></span>
+                        <div>
+                            <h4 class="font-semibold">MTRA</h4>
+                            <p class="text-xs text-slate-400">Mitra Adiperkasa</p>
+                        </div>
+                    </div>
+                    <p class="text-lg font-bold">Rp 1.420</p>
+                    <p class="text-sm text-turun flex items-center gap-1"><i class="fa fa-arrow-down"></i> -0,84%</p>
+                    <p class="text-xs text-slate-500 mt-2">Jumlah: 500 Lembar</p>
+                </div>
+
+                <div class="bingkai-cahaya kartu-3d p-5 muncul" style="animation-delay:0.4s">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-xl text-biru-muda"><i class="fa fa-store"></i></span>
+                        <div>
+                            <h4 class="font-semibold">BUKA</h4>
+                            <p class="text-xs text-slate-400">Bukalapak</p>
+                        </div>
+                    </div>
+                    <p class="text-lg font-bold">Rp 418</p>
+                    <p class="text-sm text-naik flex items-center gap-1"><i class="fa fa-arrow-up"></i> +2,45%</p>
+                    <p class="text-xs text-slate-500 mt-2">Jumlah: 1.200 Lembar</p>
+                </div>
+            </div>
+
+            <!-- ASET CRYPTO DENGAN IKON ASLI -->
+            <h3 class="text-xl font-semibold mb-6 text-biru-muda">🪙 Aset Kripto</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+                <div class="bingkai-cahaya kartu-3d p-5 muncul" style="animation-delay:0.5s">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-xl ikon-btc"><i class="fa fa-btc"></i></span>
+                        <div>
+                            <h4 class="font-semibold">Bitcoin</h4>
+                            <p class="text-xs text-slate-400">BTC / IDR</p>
+                        </div>
+                    </div>
+                    <p class="text-lg font-bold">Rp 1.025.000.000</p>
+                    <p class="text-sm text-naik flex items-center gap-1"><i class="fa fa-arrow-up"></i> +3,12%</p>
+                    <p class="text-xs text-slate-500 mt-2">Memiliki: 0,05 BTC</p>
+                </div>
+
+                <div class="bingkai-cahaya kartu-3d p-5 muncul" style="animation-delay:0.6s">
+                    <div class="flex items-center gap-3 mb-3">
+                        <span class="text-xl ikon-eth"><i class="fa fa-ethereum"></i></span>
+                        <div>
+                            <h4 class="font-semibold">Ethereum</h4>
+                            <p class="text-xs text-slate-400">ETH / IDR</p>
+                        </div>
+                    </div>
+                    <p class="text-lg font-bold">Rp 41.500.000</p>
+                    <p class="text-sm text-turun flex items-center gap-1"><i class="fa fa-arrow-down"></i> -1,05%</p>
+                    <p class="text-xs text-slate-500 mt-2">Memiliki: 0,25 ETH</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Kontak -->
-    <section id="kontak" class="py-20 bg-gelap-2/40">
-        <div class="container mx-auto px-4">
-            <h2 class="text-[clamp(1.6rem,3vw,2.2rem)] font-bold text-terang text-center mb-12 muncul-jalan">Ayo <span class="teks-dinamis">Bergerak Bersama</span></h2>
-            <div class="max-w-xl mx-auto kartu-hidup bingkai-nyala p-8 muncul-jalan">
-                <div class="space-y-5">
-                    <div class="flex items-center gap-4 hover:translate-x-3 transition-transform">
-                        <div class="w-12 h-12 rounded-full bg-utama/20 flex items-center justify-center ikon-denyut"><i class="fa fa-whatsapp text-utama"></i></div>
+    <!-- KONTAK -->
+    <section id="kontak" class="py-20 px-5 bg-biru-tua/30">
+        <div class="container mx-auto max-w-2xl text-center">
+            <h2 class="text-2xl font-bold mb-6 muncul">Ingin Bekerja Sama?</h2>
+            <p class="text-slate-400 mb-8 muncul" style="animation-delay:0.1s">Siap membangun proyek hebat bersama Anda!</p>
+            <div class="bingkai-cahaya kartu-3d p-6 muncul" style="animation-delay:0.2s">
+                <div class="space-y-4 text-left">
+                    <div class="flex items-center gap-4">
+                        <span class="text-xl text-green-500"><i class="fa fa-whatsapp"></i></span>
                         <span>0856-9217-4059</span>
                     </div>
-                    <div class="flex items-center gap-4 hover:translate-x-3 transition-transform">
-                        <div class="w-12 h-12 rounded-full bg-sekunder/20 flex items-center justify-center ikon-denyut"><i class="fa fa-envelope text-sekunder"></i></div>
-                        <span>muziadriyan@email.com</span>
-                    </div>
-                    <div class="flex items-center gap-4 hover:translate-x-3 transition-transform">
-                        <div class="w-12 h-12 rounded-full bg-aksen/20 flex items-center justify-center ikon-denyut"><i class="fa fa-github text-aksen"></i></div>
+                    <div class="flex items-center gap-4">
+                        <span class="text-xl text-utama"><i class="fa fa-github"></i></span>
                         <a href="https://github.com/zii4you" target="_blank" class="hover:underline">github.com/zii4you</a>
                     </div>
                 </div>
@@ -656,47 +355,79 @@
         </div>
     </section>
 
-    <!-- Kaki -->
-    <footer class="py-8 border-t border-utama/30 text-center">
-        <p class="text-slate-500">© 2026 Digital ZYY • Semua Bergerak Menuju Kemajuan 🚀</p>
+    <!-- HAK CIPTA -->
+    <footer class="py-6 text-center text-slate-500 text-sm">
+        © 2026 Digital ZYY • Muzi Adriyan. Semua Dilindungi.
     </footer>
 
-    <!-- Script Animasi -->
+    <!-- SCRIPT ANIMASI LENGKAP -->
     <script>
-        // Menu HP
-        const tombolMenu = document.getElementById('tombolMenu');
-        const menuHp = document.getElementById('menuHp');
-        tombolMenu.addEventListener('click', () => menuHp.classList.toggle('hidden'));
-        menuHp.querySelectorAll('a').forEach(link => link.addEventListener('click', () => menuHp.classList.add('hidden')));
-
-        // Muncul saat digulir
-        const pengamat = new IntersectionObserver((elemen) => {
-            elemen.forEach(e => { if(e.isIntersecting) e.target.classList.add('tampil'); });
+        // MUNCUL SAAT DIGULIR
+        const amati = new IntersectionObserver((el) => {
+            el.forEach(e => { if(e.isIntersecting) e.target.classList.add('tampil'); });
         }, { threshold: 0.1 });
-        document.querySelectorAll('.muncul-jalan').forEach(el => pengamat.observe(el));
+        document.querySelectorAll('.muncul').forEach(el => amati.observe(el));
 
-        // Angka Berjalan Otomatis
-        const hitungAngka = document.querySelectorAll('[data-hitung]');
-        const mulaiHitung = (el) => {
-            const tujuan = parseInt(el.dataset.hitung);
+        // ANGKA STATISTIK BERJALAN
+        const angkaHitung = (el) => {
+            const akhir = parseInt(el.dataset.hitung);
             const durasi = 2000;
-            const langkah = tujuan / (durasi / 16);
+            const langkah = akhir / (durasi / 16);
             let sekarang = 0;
             const jalan = () => {
                 sekarang += langkah;
-                if(sekarang < tujuan) {
-                    el.innerText = Math.floor(sekarang);
+                if(sekarang < akhir) {
+                    el.innerText = Math.floor(sekarang) + '+';
                     requestAnimationFrame(jalan);
                 } else {
-                    el.innerText = tujuan + '+';
+                    el.innerText = akhir + '+';
                 }
             };
             jalan();
         };
         const pengamatAngka = new IntersectionObserver((e) => {
-            e.forEach(item => { if(item.isIntersecting) mulaiHitung(item.target); });
+            e.forEach(item => { if(item.isIntersecting) angkaHitung(item.target); });
         }, { threshold: 0.5 });
-        hitungAngka.forEach(el => pengamatAngka.observe(el));
+        document.querySelectorAll('[data-hitung]').forEach(el => pengamatAngka.observe(el));
+
+        // ANGKA SALDO BERJALAN
+        const saldoHitung = (el) => {
+            const akhir = parseInt(el.dataset.saldo);
+            const durasi = 2500;
+            const langkah = akhir / (durasi / 16);
+            let sekarang = 0;
+            const jalan = () => {
+                sekarang += langkah;
+                if(sekarang < akhir) {
+                    el.innerText = Math.floor(sekarang).toLocaleString('id-ID');
+                    requestAnimationFrame(jalan);
+                } else {
+                    el.innerText = akhir.toLocaleString('id-ID');
+                }
+            };
+            jalan();
+        };
+        const pengamatSaldo = new IntersectionObserver((e) => {
+            e.forEach(item => { if(item.isIntersecting) saldoHitung(item.target); });
+        }, { threshold: 0.5 });
+        document.querySelectorAll('[data-saldo]').forEach(el => pengamatSaldo.observe(el));
+
+        // KARTU 3D IKUTI GERAKAN MOUSE
+        document.querySelectorAll('.kartu-3d').forEach(kartu => {
+            kartu.addEventListener('mousemove', (e) => {
+                const rect = kartu.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const tengahX = rect.width / 2;
+                const tengahY = rect.height / 2;
+                const putarX = ((y - tengahY) / tengahY) * -5;
+                const putarY = ((x - tengahX) / tengahX) * 5;
+                kartu.style.transform = `rotateX(${putarX}deg) rotateY(${putarY}deg) translateZ(25px)`;
+            });
+            kartu.addEventListener('mouseleave', () => {
+                kartu.style.transform = 'rotateX(0deg) rotateY(0deg) translateZ(10px)';
+            });
+        });
     </script>
 </body>
 </html>
