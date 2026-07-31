@@ -1,93 +1,106 @@
-// Initialize Icons
-lucide.createIcons();
-
-// Hide Loading Screen with Transition
-window.addEventListener('load', () => {
-  setTimeout(() => {
-    const loadingScreen = document.getElementById('loading-screen');
-    loadingScreen.style.opacity = '0';
-    setTimeout(() => loadingScreen.style.display = 'none', 1000);
-    
-    // Trigger Counters
-    startCounters();
-  }, 3000);
+// --- 1. LENIS SMOOTH SCROLL ---
+const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true
 });
 
-// Custom Neon Cursor Motion
-const cursor = document.querySelector('.neon-cursor');
-document.addEventListener('mousemove', (e) => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
-});
-
-// Counter Animation
-function startCounters() {
-  const counters = document.querySelectorAll('.counter');
-  counters.forEach(counter => {
-    const target = +counter.getAttribute('data-target');
-    let count = 0;
-    const speed = target / 100;
-
-    const updateCount = () => {
-      count += speed;
-      if (count < target) {
-        counter.innerText = Math.ceil(count);
-        setTimeout(updateCount, 20);
-      } else {
-        counter.innerText = target;
-      }
-    };
-    updateCount();
-  });
+function raf(time) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
 }
+requestAnimationFrame(raf);
 
-// Live Typing Simulation for Terminal
-const codeSnippet = `> Initializing Cyber Security Protocols...
-> Connecting to Global Node Array... [SUCCESS]
-> Fetching Blockchain Asset Balances...
-> System Status: ALL SYSTEMS OPERATIONAL (60 FPS)`;
 
-let charIndex = 0;
-function typeCode() {
-  if (charIndex < codeSnippet.length) {
-    document.getElementById("typed-code").innerHTML += codeSnippet.charAt(charIndex);
-    charIndex++;
-    setTimeout(typeCode, 30);
-  }
-}
-setTimeout(typeCode, 3500);
-
-// Basic 3D Scene Setup (Three.js Earth / Particle Core)
+// --- 2. THREE.JS CYBER BACKGROUND ---
+const canvas = document.getElementById('bg-3d');
 const scene = new THREE.Scene();
+
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('cyber-bg'), alpha: true });
-
-renderer.setSize(window.innerWidth, window.innerHeight);
-renderer.setPixelRatio(window.devicePixelRatio);
-
-// Sphere Object (Digital Earth Core)
-const geometry = new THREE.SphereGeometry(2, 32, 32);
-const material = new THREE.MeshBasicMaterial({ 
-  color: 0x00f3ff, 
-  wireframe: true 
-});
-const sphere = new THREE.Mesh(geometry, material);
-scene.add(sphere);
-
 camera.position.z = 5;
 
-// Animation Loop for 60FPS Performance
-function animate() {
-  requestAnimationFrame(animate);
-  sphere.rotation.x += 0.003;
-  sphere.rotation.y += 0.005;
-  renderer.render(scene, camera);
-}
-animate();
+const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-// Window Resize Handling
-window.addEventListener('resize', () => {
-  camera.aspect = window.innerWidth / window.innerHeight;
-  camera.updateProjectionMatrix();
-  renderer.setSize(window.innerWidth, window.innerHeight);
+// Partikel Starfield & Neural Field
+const particlesCount = 1500;
+const posArray = new Float32Array(particlesCount * 3);
+
+for(let i = 0; i < particlesCount * 3; i++) {
+    posArray[i] = (Math.random() - 0.5) * 15;
+}
+
+const particlesGeometry = new THREE.BufferGeometry();
+particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+const particlesMaterial = new THREE.PointsMaterial({
+    size: 0.02,
+    color: 0x00f0ff,
+    transparent: true,
+    opacity: 0.8
 });
+
+const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+scene.add(particlesMesh);
+
+// Interactive Parallax Mouse
+let mouseX = 0;
+let mouseY = 0;
+
+window.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth) - 0.5;
+    mouseY = (e.clientY / window.innerHeight) - 0.5;
+});
+
+// Render Loop
+const clock = new THREE.Clock();
+
+function animate3D() {
+    const elapsedTime = clock.getElapsedTime();
+
+    particlesMesh.rotation.y = elapsedTime * 0.05;
+    particlesMesh.rotation.x = -mouseY * 0.2;
+    particlesMesh.rotation.y += mouseX * 0.2;
+
+    renderer.render(scene, camera);
+    requestAnimationFrame(animate3D);
+}
+animate3D();
+
+// Resize Handle
+window.addEventListener('resize', () => {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+});
+
+
+// --- 3. LOADING SCREEN ANIMATION ---
+window.addEventListener('load', () => {
+    const loaderBar = document.getElementById('loader-bar');
+    const loaderText = document.getElementById('loader-text');
+    const loader = document.getElementById('loader');
+
+    loaderBar.style.width = '100%';
+    loaderText.innerText = 'Welcome to the Future.';
+
+    setTimeout(() => {
+        gsap.to(loader, {
+            opacity: 0,
+            duration: 0.8,
+            onComplete: () => loader.style.display = 'none'
+        });
+    }, 800);
+});
+
+
+// --- 4. FORM INTERACTION ---
+const form = document.getElementById('contact-form');
+if(form) {
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Signal Received. Transmission Confirmed!');
+        form.reset();
+    });
+}
