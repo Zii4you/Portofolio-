@@ -1,16 +1,18 @@
-// 1. CINEMATIC LOADING SCREEN SCRIPT
-window.addEventListener('load', () => {
+// 1. CINEMATIC LOADING SCREEN SCRIPT (Diperbaiki agar langsung jalan)
+function startLoading() {
     const loadingBar = document.getElementById('loading-bar');
     const loadingText = document.getElementById('loading-text');
     const loadingScreen = document.getElementById('loading-screen');
     
+    if (!loadingBar || !loadingScreen) return;
+
     let progress = 0;
     const interval = setInterval(() => {
-        progress += Math.floor(Math.random() * 15) + 5;
+        progress += Math.floor(Math.random() * 12) + 6;
         if (progress > 100) progress = 100;
         
         loadingBar.style.width = progress + '%';
-        loadingText.innerText = progress + '%';
+        if (loadingText) loadingText.innerText = progress + '%';
         
         if (progress === 100) {
             clearInterval(interval);
@@ -19,28 +21,37 @@ window.addEventListener('load', () => {
                 setTimeout(() => {
                     loadingScreen.style.display = 'none';
                     initAIAssistant(); // Panggil AI Assistant setelah loading selesai
-                }, 1000);
+                }, 800);
             }, 300);
         }
-    }, 80);
-});
+    }, 60);
+}
 
-// 2. NEON CURSOR TRAIL
+// Jalankan loading langsung saat DOM siap (tidak perlu menunggu gambar eksternal)
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', startLoading);
+} else {
+    startLoading();
+}
+
+// 2. NEON CURSOR TRAIL (Hanya aktif di desktop/perangkat dengan mouse)
 const cursorDot = document.getElementById('cursor-dot');
 const cursorOutline = document.getElementById('cursor-outline');
 
-window.addEventListener('mousemove', (e) => {
-    const posX = e.clientX;
-    const posY = e.clientY;
+if (cursorDot && cursorOutline) {
+    window.addEventListener('mousemove', (e) => {
+        const posX = e.clientX;
+        const posY = e.clientY;
 
-    cursorDot.style.left = `${posX}px`;
-    cursorDot.style.top = `${posY}px`;
+        cursorDot.style.left = `${posX}px`;
+        cursorDot.style.top = `${posY}px`;
 
-    cursorOutline.animate({
-        left: `${posX}px`,
-        top: `${posY}px`
-    }, { duration: 200, fill: "forwards" });
-});
+        cursorOutline.animate({
+            left: `${posX}px`,
+            top: `${posY}px`
+        }, { duration: 200, fill: "forwards" });
+    });
+}
 
 // 3. AI HOLOGRAM ASSISTANT TYPING EFFECT
 const aiMessages = [
@@ -52,11 +63,12 @@ const aiMessages = [
 
 function initAIAssistant() {
     const aiTyping = document.getElementById('ai-typing');
+    if (!aiTyping) return;
+
     let msgIndex = 0;
     let charIndex = 0;
 
     function typeNextChar() {
-        if (!aiTyping) return;
         const currentMsg = aiMessages[msgIndex];
         
         if (charIndex < currentMsg.length) {
@@ -82,63 +94,64 @@ function toggleAI() {
 
 // 4. MATRIX / PARTICLE CANVAS BACKGROUND
 const canvas = document.getElementById('bg-canvas');
-const ctx = canvas.getContext('2d');
+if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let particles = [];
 
-let width, height;
-let particles = [];
-
-function resize() {
-    width = canvas.width = window.innerWidth;
-    height = canvas.height = window.innerHeight;
-}
-
-window.addEventListener('resize', resize);
-resize();
-
-class Particle {
-    constructor() {
-        this.reset();
+    function resize() {
+        width = canvas.width = window.innerWidth;
+        height = canvas.height = window.innerHeight;
     }
 
-    reset() {
-        this.x = Math.random() * width;
-        this.y = Math.random() * height;
-        this.vx = (Math.random() - 0.5) * 0.4;
-        this.vy = (Math.random() - 0.5) * 0.4;
-        this.radius = Math.random() * 1.5;
-        this.alpha = Math.random() * 0.5 + 0.2;
-    }
+    window.addEventListener('resize', resize);
+    resize();
 
-    update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
+    class Particle {
+        constructor() {
             this.reset();
+        }
+
+        reset() {
+            this.x = Math.random() * width;
+            this.y = Math.random() * height;
+            this.vx = (Math.random() - 0.5) * 0.4;
+            this.vy = (Math.random() - 0.5) * 0.4;
+            this.radius = Math.random() * 1.5;
+            this.alpha = Math.random() * 0.5 + 0.2;
+        }
+
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+
+            if (this.x < 0 || this.x > width || this.y < 0 || this.y > height) {
+                this.reset();
+            }
+        }
+
+        draw() {
+            ctx.beginPath();
+            ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(0, 240, 255, ${this.alpha})`;
+            ctx.fill();
         }
     }
 
-    draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(0, 240, 255, ${this.alpha})`;
-        ctx.fill();
+    for (let i = 0; i < 40; i++) {
+        particles.push(new Particle());
     }
-}
 
-for (let i = 0; i < 60; i++) {
-    particles.push(new Particle());
+    function animate() {
+        ctx.clearRect(0, 0, width, height);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animate);
+    }
+    animate();
 }
-
-function animate() {
-    ctx.clearRect(0, 0, width, height);
-    particles.forEach(p => {
-        p.update();
-        p.draw();
-    });
-    requestAnimationFrame(animate);
-}
-animate();
 
 // 5. LIVE TERMINAL SIMULATOR
 const terminalStream = document.getElementById('terminal-code-stream');
@@ -197,7 +210,7 @@ function animateCounters() {
     });
 }
 
-// Intersection Observer
+// Intersection Observer untuk animasi counter
 const observerOptions = { threshold: 0.2 };
 const assetsSection = document.getElementById('assets');
 
