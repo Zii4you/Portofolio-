@@ -1,0 +1,41 @@
+/* Custom Animations & Styles */
+
+/* Glassmorphism Effect */
+.glass-card {
+    background: rgba(11, 15, 25, 0.6);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* RGB Animated Ring */
+@keyframes spin-gradient {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.rgb-ring {
+    position: relative;
+    background: linear-gradient(0deg, #00f0ff, #7000ff, #ffd700, #00f0ff);
+    background-size: 300% 300%;
+    animation: spin-gradient 4s linear infinite;
+}
+
+/* Glow Text Effect */
+.glow-text {
+    text-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(112, 0, 255, 0.3);
+}
+
+/* Scrollbar Customization */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #030712;
+}
+::-webkit-scrollbar-thumb {
+    background: #1f293d;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #00f0ff;
+}
