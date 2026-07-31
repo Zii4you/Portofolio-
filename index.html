@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Portofolio Ultra Premium | Cyber Futuristic</title>
-    <meta name="description" content="Portofolio Cyber Futuristic interaktif dengan tampilan modern dan edukasi teknologi.">
+    <title>AI Cyber Lab | Digital Command Center</title>
+    <meta name="description" content="Ultra Premium Cyber Futuristic Command Center & Portfolio">
     
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
@@ -13,11 +13,12 @@
                 extend: {
                     colors: {
                         cyber: {
-                            black: '#030712',
-                            dark: '#0b0f19',
+                            black: '#020617',
+                            dark: '#080e1e',
                             blue: '#00f0ff',
                             purple: '#7000ff',
                             gold: '#ffd700',
+                            green: '#00ff66'
                         }
                     }
                 }
@@ -28,198 +29,231 @@
     <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="stylesheet" href="style.css">
 </head>
-<body class="bg-cyber-black text-white font-sans overflow-x-hidden relative">
+<body class="bg-cyber-black text-white font-sans overflow-x-hidden relative cursor-none">
 
-    <canvas id="bg-canvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"></canvas>
-    
+    <div id="cursor-dot" class="fixed w-2 h-2 bg-cyber-blue rounded-full pointer-events-none z-50 transition-transform duration-75"></div>
+    <div id="cursor-outline" class="fixed w-8 h-8 border border-cyber-blue/60 rounded-full pointer-events-none z-50 transition-all duration-300 -translate-x-3 -translate-y-3"></div>
+
+    <div id="loading-screen" class="fixed inset-0 bg-cyber-black z-[100] flex flex-col items-center justify-center transition-opacity duration-1000">
+        <div class="relative flex items-center justify-center mb-8">
+            <div class="w-24 h-24 rounded-full border-2 border-cyber-blue/20 animate-ping"></div>
+            <div class="w-16 h-16 rounded-full border-t-2 border-cyber-blue animate-spin absolute"></div>
+            <i data-lucide="cpu" class="w-8 h-8 text-cyber-blue absolute animate-pulse"></i>
+        </div>
+        <h2 class="text-xl md:text-2xl font-mono font-bold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue via-cyber-purple to-cyber-gold glitch-text mb-2">
+            INITIALIZING SYSTEM...
+        </h2>
+        <p class="text-xs font-mono text-gray-500 mb-6">Welcome to the Future of Digital Innovation</p>
+        
+        <div class="w-64 h-1.5 bg-gray-900 rounded-full overflow-hidden border border-white/10 relative">
+            <div id="loading-bar" class="h-full w-0 bg-gradient-to-r from-cyber-blue via-cyber-purple to-cyber-gold shadow-[0_0_15px_#00f0ff] transition-all duration-300"></div>
+        </div>
+        <span id="loading-text" class="text-xs font-mono text-cyber-blue mt-2">0%</span>
+    </div>
+
+    <canvas id="bg-canvas" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none opacity-40"></canvas>
+
     <div id="spotlight" class="pointer-events-none fixed inset-0 z-30 transition-duration-300"></div>
 
-    <header class="fixed top-0 w-full z-50 backdrop-blur-md bg-cyber-dark/40 border-b border-white/10">
+    <div id="ai-assistant" class="fixed bottom-6 right-6 z-40 max-w-xs w-full glass-card border border-cyber-blue/30 p-4 rounded-2xl shadow-[0_0_30px_rgba(0,240,255,0.2)] floating-element">
+        <div class="flex items-start gap-3">
+            <div class="relative shrink-0">
+                <div class="w-10 h-10 rounded-full bg-cyber-blue/20 border border-cyber-blue flex items-center justify-center shadow-[0_0_10px_#00f0ff]">
+                    <i data-lucide="bot" class="w-5 h-5 text-cyber-blue animate-pulse"></i>
+                </div>
+                <span class="absolute top-0 right-0 w-2.5 h-2.5 bg-cyber-green rounded-full shadow-[0_0_5px_#00ff66]"></span>
+            </div>
+            <div class="flex-1">
+                <div class="flex justify-between items-center mb-1">
+                    <span class="text-xs font-mono font-bold text-cyber-blue tracking-wider">A.I. SYSTEM ASSISTANT</span>
+                    <button onclick="toggleAI()" class="text-gray-500 hover:text-white"><i data-lucide="x" class="w-4 h-4"></i></button>
+                </div>
+                <p id="ai-typing" class="text-xs text-gray-300 font-mono leading-relaxed min-h-[36px]"></p>
+            </div>
+        </div>
+        <div class="scanline"></div>
+    </div>
+
+    <header class="fixed top-0 w-full z-50 backdrop-blur-xl bg-cyber-dark/60 border-b border-white/10">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="#" class="text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-cyber-purple glow-text">
-                NEXUS<span class="text-cyber-gold">.IO</span>
+            <a href="#" class="text-xl md:text-2xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-cyber-purple glow-text flex items-center gap-2">
+                <i data-lucide="shield" class="w-6 h-6 text-cyber-blue"></i> NEXUS<span class="text-cyber-gold">.LAB</span>
             </a>
             
-            <nav class="hidden md:flex space-x-8 text-sm font-medium">
-                <a href="#home" class="hover:text-cyber-blue transition">Home</a>
-                <a href="#about" class="hover:text-cyber-blue transition">About</a>
+            <nav class="hidden md:flex space-x-6 text-xs font-mono tracking-widest uppercase">
+                <a href="#command-center" class="hover:text-cyber-blue transition">Command Center</a>
                 <a href="#assets" class="hover:text-cyber-blue transition">Assets</a>
-                <a href="#learning" class="hover:text-cyber-blue transition">Tech Center</a>
-                <a href="#security" class="hover:text-cyber-blue transition">Digital Security</a>
-                <a href="#skills" class="hover:text-cyber-blue transition">Skills</a>
-                <a href="#github" class="hover:text-cyber-blue transition">GitHub</a>
+                <a href="#terminal" class="hover:text-cyber-blue transition">Terminal</a>
+                <a href="#learning" class="hover:text-cyber-blue transition">Academy</a>
+                <a href="#security" class="hover:text-cyber-blue transition">Security Lab</a>
             </nav>
 
-            <a href="#contact" class="px-5 py-2 rounded-full border border-cyber-blue text-cyber-blue hover:bg-cyber-blue/10 transition duration-300 shadow-[0_0_15px_rgba(0,240,255,0.3)]">
-                Contact
+            <a href="#contact" class="px-4 py-2 rounded-lg text-xs font-mono border border-cyber-blue text-cyber-blue hover:bg-cyber-blue/10 transition duration-300 shadow-[0_0_15px_rgba(0,240,255,0.3)] flex items-center gap-2">
+                <span class="w-2 h-2 rounded-full bg-cyber-green animate-ping"></span> ONLINE
             </a>
         </div>
     </header>
 
-    <section id="home" class="min-h-screen flex items-center justify-center pt-24 pb-12 px-6">
-        <div class="max-w-6xl w-full grid md:grid-cols-2 gap-12 items-center">
+    <section id="command-center" class="min-h-screen pt-28 pb-16 px-6 max-w-7xl mx-auto flex flex-col justify-center">
+        
+        <div class="grid lg:grid-cols-12 gap-8 items-center mb-12">
             
-            <div class="flex justify-center relative">
-                <div class="relative w-64 h-64 md:w-80 md:h-80 rounded-full p-1 rgb-ring flex items-center justify-center shadow-[0_0_50px_rgba(112,0,255,0.4)]">
+            <div class="lg:col-span-4 flex justify-center relative">
+                <div class="relative w-64 h-64 md:w-72 md:h-72 rounded-full p-1 rgb-ring flex items-center justify-center shadow-[0_0_50px_rgba(112,0,255,0.4)]">
                     <div class="w-full h-full rounded-full overflow-hidden bg-cyber-dark p-2 relative z-10">
-                        <img src="assets/images/profile.jpg" alt="Profile" class="w-full h-full object-cover rounded-full filter contrast-125" onerror="this.src='https://via.placeholder.com/300/0b0f19/00f0ff?text=Cyber+Avatar'">
+                        <img src="assets/images/profile.jpg" alt="Profile" class="w-full h-full object-cover rounded-full filter contrast-125" onerror="this.src='https://via.placeholder.com/300/0b0f19/00f0ff?text=AI+CORE'">
                         <div class="absolute inset-0 bg-gradient-to-t from-cyber-purple/40 to-transparent pointer-events-none"></div>
                     </div>
                 </div>
             </div>
 
-            <div class="space-y-6 text-center md:text-left">
-                <span class="px-4 py-1.5 rounded-full text-xs font-semibold uppercase tracking-widest bg-cyber-blue/10 text-cyber-blue border border-cyber-blue/30 inline-block">
-                    Pelajar • Technology Enthusiast • Web Developer
-                </span>
+            <div class="lg:col-span-8 space-y-6 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono bg-cyber-blue/10 text-cyber-blue border border-cyber-blue/30">
+                    <i data-lucide="radio" class="w-3.5 h-3.5 animate-pulse"></i> COMMAND CENTER ACTIVE
+                </div>
                 <h1 class="text-4xl md:text-6xl font-extrabold tracking-tight leading-tight">
-                    Eksplorasi Masa Depan <br>
+                    AI Cyber Lab & <br>
                     <span class="text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue via-cyber-purple to-cyber-gold">
-                        Teknologi & Keamanan
+                        Digital Innovation Hub
                     </span>
                 </h1>
-                <p class="text-gray-400 text-base leading-relaxed">
-                    Berfokus pada pengembangan web modern, pemahaman keamanan digital dasar, serta konsisten mempelajari inovasi teknologi masa depan.
+                <p class="text-gray-400 text-sm md:text-base leading-relaxed max-w-2xl">
+                    Pusat kendali eksperimen teknologi modern, pengawasan aset kripto/digital, pemetaaan keamanan cyber, dan pembelajaran pengkodean tingkat lanjut.
                 </p>
 
-                <div class="flex flex-wrap gap-4 justify-center md:justify-start pt-2">
-                    <a href="#learning" class="px-6 py-3 rounded-xl bg-gradient-to-r from-cyber-blue to-cyber-purple font-semibold hover:opacity-90 transition duration-300 shadow-[0_0_20px_rgba(0,240,255,0.4)]">
-                        Lihat Portofolio
+                <div class="flex flex-wrap gap-4 justify-center lg:justify-start pt-2">
+                    <a href="#terminal" class="px-6 py-3 rounded-xl bg-gradient-to-r from-cyber-blue to-cyber-purple font-mono text-xs font-bold hover:opacity-90 transition shadow-[0_0_20px_rgba(0,240,255,0.4)] flex items-center gap-2">
+                        <i data-lucide="terminal" class="w-4 h-4"></i> LAUNCH TERMINAL
                     </a>
-                    <a href="https://github.com" target="_blank" class="px-6 py-3 rounded-xl glass-card border border-white/20 font-semibold hover:bg-white/10 transition duration-300 flex items-center gap-2">
-                        <i data-lucide="github" class="w-5 h-5"></i> GitHub
-                    </a>
-                    <a href="#contact" class="px-6 py-3 rounded-xl border border-cyber-gold/50 text-cyber-gold font-semibold hover:bg-cyber-gold/10 transition duration-300">
-                        Hubungi Saya
+                    <a href="https://github.com" target="_blank" class="px-6 py-3 rounded-xl glass-card border border-white/20 font-mono text-xs font-bold hover:bg-white/10 transition flex items-center gap-2">
+                        <i data-lucide="github" class="w-4 h-4"></i> GITHUB HUB
                     </a>
                 </div>
             </div>
+        </div>
 
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+            <div class="glass-card p-4 rounded-xl border border-white/10 relative">
+                <span class="text-[10px] font-mono text-gray-500 block mb-1">SYSTEM STATUS</span>
+                <span class="text-sm font-bold font-mono text-cyber-green flex items-center gap-1.5">
+                    <span class="w-2 h-2 rounded-full bg-cyber-green animate-pulse"></span> OPTIMAL
+                </span>
+            </div>
+
+            <div class="glass-card p-4 rounded-xl border border-white/10 relative">
+                <span class="text-[10px] font-mono text-gray-500 block mb-1">AI CORE</span>
+                <span class="text-sm font-bold font-mono text-cyber-blue flex items-center gap-1.5">
+                    <i data-lucide="cpu" class="w-3.5 h-3.5"></i> ONLINE v3.5
+                </span>
+            </div>
+
+            <div class="glass-card p-4 rounded-xl border border-white/10 relative">
+                <span class="text-[10px] font-mono text-gray-500 block mb-1">SECURITY STATUS</span>
+                <span class="text-sm font-bold font-mono text-cyber-gold flex items-center gap-1.5">
+                    <i data-lucide="shield-check" class="w-3.5 h-3.5"></i> PROTECTED
+                </span>
+            </div>
+
+            <div class="glass-card p-4 rounded-xl border border-white/10 relative">
+                <span class="text-[10px] font-mono text-gray-500 block mb-1">TOTAL PROJECTS</span>
+                <span class="text-lg font-bold font-mono text-white stat-counter" data-target="24">0</span>
+            </div>
+
+            <div class="glass-card p-4 rounded-xl border border-white/10 relative">
+                <span class="text-[10px] font-mono text-gray-500 block mb-1">GITHUB REPO</span>
+                <span class="text-lg font-bold font-mono text-white stat-counter" data-target="15">0</span>
+            </div>
+
+            <div class="glass-card p-4 rounded-xl border border-white/10 relative">
+                <span class="text-[10px] font-mono text-gray-500 block mb-1">VISITORS</span>
+                <span class="text-lg font-bold font-mono text-cyber-purple stat-counter" data-target="1420">0</span>
+            </div>
         </div>
     </section>
 
-    <section class="py-10 border-y border-white/5 bg-cyber-dark/30">
-        <div class="max-w-6xl mx-auto px-6">
-            <h3 class="text-xs uppercase tracking-widest text-gray-500 mb-6 text-center">Ripstory Highlights</h3>
-            <div class="flex justify-center items-center gap-6 overflow-x-auto py-2">
-                <div class="flex flex-col items-center gap-2 cursor-pointer group">
-                    <div class="w-16 h-16 rounded-full p-[2px] bg-gradient-to-tr from-cyber-blue to-cyber-purple animate-pulse group-hover:scale-110 transition duration-300">
-                        <div class="w-full h-full bg-cyber-black rounded-full p-1">
-                            <div class="w-full h-full bg-cyber-blue/20 rounded-full flex items-center justify-center">
-                                <i data-lucide="code" class="w-6 h-6 text-cyber-blue"></i>
-                            </div>
-                        </div>
+    <section id="terminal" class="py-16 px-6 bg-cyber-dark/40 border-y border-white/5">
+        <div class="max-w-4xl mx-auto">
+            <div class="glass-card rounded-2xl border border-cyber-blue/30 overflow-hidden shadow-[0_0_40px_rgba(0,240,255,0.15)]">
+                <div class="bg-slate-950/80 px-4 py-3 border-b border-white/10 flex items-center justify-between">
+                    <div class="flex items-center gap-2">
+                        <span class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>
+                        <span class="w-3 h-3 rounded-full bg-yellow-500 inline-block"></span>
+                        <span class="w-3 h-3 rounded-full bg-green-500 inline-block"></span>
+                        <span class="text-xs font-mono text-gray-400 ml-2">nexus-terminal -- bash</span>
                     </div>
-                    <span class="text-xs text-gray-400">Coding</span>
+                    <span class="text-[10px] font-mono text-cyber-blue">LIVE MATRIX FEED</span>
                 </div>
-                <div class="flex flex-col items-center gap-2 cursor-pointer group">
-                    <div class="w-16 h-16 rounded-full p-[2px] bg-gradient-to-tr from-cyber-purple to-cyber-gold animate-pulse group-hover:scale-110 transition duration-300">
-                        <div class="w-full h-full bg-cyber-black rounded-full p-1">
-                            <div class="w-full h-full bg-cyber-purple/20 rounded-full flex items-center justify-center">
-                                <i data-lucide="shield-check" class="w-6 h-6 text-cyber-purple"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <span class="text-xs text-gray-400">Security</span>
-                </div>
-                <div class="flex flex-col items-center gap-2 cursor-pointer group">
-                    <div class="w-16 h-16 rounded-full p-[2px] bg-gradient-to-tr from-cyber-gold to-cyber-blue animate-pulse group-hover:scale-110 transition duration-300">
-                        <div class="w-full h-full bg-cyber-black rounded-full p-1">
-                            <div class="w-full h-full bg-cyber-gold/20 rounded-full flex items-center justify-center">
-                                <i data-lucide="cpu" class="w-6 h-6 text-cyber-gold"></i>
-                            </div>
-                        </div>
-                    </div>
-                    <span class="text-xs text-gray-400">Hardware</span>
+                <div class="p-6 font-mono text-xs md:text-sm space-y-3 min-h-[260px] bg-black/80">
+                    <p class="text-gray-500">// Executing neural network diagnostics...</p>
+                    <p class="text-cyber-green">> SYSTEM.INIT_COMPLETE</p>
+                    <p class="text-cyber-blue">> LOADING MODULES: [HTML5, TAILWIND, JS_NEURAL, CYBER_SEC]</p>
+                    <div id="terminal-code-stream" class="text-gray-300 leading-relaxed font-mono"></div>
+                    <p class="text-cyber-gold animate-pulse flex items-center gap-1">
+                        root@nexus-lab:~# <span class="w-2 h-4 bg-cyber-gold inline-block"></span>
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
     <section id="assets" class="py-20 px-6">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-white">
-                Dashboard Aset Digital
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-3 text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-cyber-purple">
+                Digital Asset Center
             </h2>
-            <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
+            <p class="text-center text-xs font-mono text-gray-400 mb-12">LIVE ASSET & PORTFOLIO VALUATION MONITOR</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
                 
-                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-blue/50 transition duration-500 hover:-translate-y-2 relative overflow-hidden group">
+                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-blue/50 transition duration-500 hover:-translate-y-2 relative group">
                     <div class="flex justify-between items-center mb-2">
                         <i data-lucide="wallet" class="w-8 h-8 text-cyber-blue"></i>
-                        <span class="text-xs text-cyber-blue font-mono">ACTIVE</span>
+                        <span class="text-[10px] font-mono text-cyber-blue bg-cyber-blue/10 px-2 py-0.5 rounded">FIAT</span>
                     </div>
-                    <h3 class="font-semibold text-lg">SeaBank</h3>
-                    <p class="text-xs text-gray-400 mt-0.5">Digital Banking</p>
+                    <h3 class="font-semibold text-base">SeaBank</h3>
+                    <p class="text-xs text-gray-400">Digital Banking</p>
                     <div class="mt-4">
-                        <span class="text-xs text-gray-400 block">Saldo</span>
-                        <span class="text-xl font-bold font-mono text-cyber-blue balance-counter" data-target="2500000">Rp 0</span>
-                    </div>
-                    <div class="w-full bg-gray-800 h-1.5 rounded-full mt-4 overflow-hidden">
-                        <div class="bg-cyber-blue h-full w-[85%] rounded-full shadow-[0_0_10px_#00f0ff]"></div>
+                        <span class="text-[10px] font-mono text-gray-500 block">Saldo FIAT</span>
+                        <span class="text-lg font-bold font-mono text-cyber-blue balance-counter" data-target="2500000">Rp 0</span>
                     </div>
                 </div>
 
-                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-blue/50 transition duration-500 hover:-translate-y-2 relative overflow-hidden group">
+                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-blue/50 transition duration-500 hover:-translate-y-2 relative group">
                     <div class="flex justify-between items-center mb-2">
-                        <i data-lucide="smartphone" class="w-8 h-8 text-cyber-blue"></i>
-                        <span class="text-xs text-cyber-blue font-mono">ACTIVE</span>
+                        <i data-lucide="building-2" class="w-8 h-8 text-cyber-blue"></i>
+                        <span class="text-[10px] font-mono text-cyber-blue bg-cyber-blue/10 px-2 py-0.5 rounded">BANKING</span>
                     </div>
-                    <h3 class="font-semibold text-lg">DANA</h3>
-                    <p class="text-xs text-gray-400 mt-0.5">E-Wallet</p>
+                    <h3 class="font-semibold text-base">Bank BCA</h3>
+                    <p class="text-xs text-gray-400">Conventional Account</p>
                     <div class="mt-4">
-                        <span class="text-xs text-gray-400 block">Saldo</span>
-                        <span class="text-xl font-bold font-mono text-cyber-blue balance-counter" data-target="750000">Rp 0</span>
-                    </div>
-                    <div class="w-full bg-gray-800 h-1.5 rounded-full mt-4 overflow-hidden">
-                        <div class="bg-cyber-blue h-full w-[90%] rounded-full shadow-[0_0_10px_#00f0ff]"></div>
+                        <span class="text-[10px] font-mono text-gray-500 block">Saldo FIAT</span>
+                        <span class="text-lg font-bold font-mono text-cyber-blue balance-counter" data-target="5000000">Rp 0</span>
                     </div>
                 </div>
 
-                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-blue/50 transition duration-500 hover:-translate-y-2 relative overflow-hidden group">
+                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-gold/50 transition duration-500 hover:-translate-y-2 relative group">
                     <div class="flex justify-between items-center mb-2">
-                        <i data-lucide="credit-card" class="w-8 h-8 text-cyber-blue"></i>
-                        <span class="text-xs text-cyber-blue font-mono">ACTIVE</span>
+                        <i data-lucide="coins" class="w-8 h-8 text-cyber-gold"></i>
+                        <span class="text-[10px] font-mono text-cyber-gold bg-cyber-gold/10 px-2 py-0.5 rounded">WEB3</span>
                     </div>
-                    <h3 class="font-semibold text-lg">Bank BCA</h3>
-                    <p class="text-xs text-gray-400 mt-0.5">Conventional Bank</p>
+                    <h3 class="font-semibold text-base">Bitcoin (BTC)</h3>
+                    <p class="text-xs text-gray-400">Crypto Asset</p>
                     <div class="mt-4">
-                        <span class="text-xs text-gray-400 block">Saldo</span>
-                        <span class="text-xl font-bold font-mono text-cyber-blue balance-counter" data-target="5000000">Rp 0</span>
-                    </div>
-                    <div class="w-full bg-gray-800 h-1.5 rounded-full mt-4 overflow-hidden">
-                        <div class="bg-cyber-blue h-full w-[75%] rounded-full shadow-[0_0_10px_#00f0ff]"></div>
+                        <span class="text-[10px] font-mono text-gray-500 block">Estimasi Valuasi</span>
+                        <span class="text-lg font-bold font-mono text-cyber-gold balance-counter" data-target="18500000">Rp 0</span>
                     </div>
                 </div>
 
-                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-purple/50 transition duration-500 hover:-translate-y-2 relative overflow-hidden group">
+                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-purple/50 transition duration-500 hover:-translate-y-2 relative group">
                     <div class="flex justify-between items-center mb-2">
-                        <i data-lucide="coins" class="w-8 h-8 text-cyber-purple"></i>
-                        <span class="text-xs text-cyber-purple font-mono">WEB3</span>
+                        <i data-lucide="cpu" class="w-8 h-8 text-cyber-purple"></i>
+                        <span class="text-[10px] font-mono text-cyber-purple bg-cyber-purple/10 px-2 py-0.5 rounded">WEB3</span>
                     </div>
-                    <h3 class="font-semibold text-lg">Crypto</h3>
-                    <p class="text-xs text-gray-400 mt-0.5">Digital Currency</p>
+                    <h3 class="font-semibold text-base">Ethereum (ETH)</h3>
+                    <p class="text-xs text-gray-400">Smart Contracts</p>
                     <div class="mt-4">
-                        <span class="text-xs text-gray-400 block">Estimasi Valuasi</span>
-                        <span class="text-xl font-bold font-mono text-cyber-purple balance-counter" data-target="12500000">Rp 0</span>
-                    </div>
-                    <div class="w-full bg-gray-800 h-1.5 rounded-full mt-4 overflow-hidden">
-                        <div class="bg-cyber-purple h-full w-[60%] rounded-full shadow-[0_0_10px_#7000ff]"></div>
-                    </div>
-                </div>
-
-                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-gold/50 transition duration-500 hover:-translate-y-2 relative overflow-hidden group">
-                    <div class="flex justify-between items-center mb-2">
-                        <i data-lucide="github" class="w-8 h-8 text-cyber-gold"></i>
-                        <span class="text-xs text-cyber-gold font-mono">CODE</span>
-                    </div>
-                    <h3 class="font-semibold text-lg">GitHub</h3>
-                    <p class="text-xs text-gray-400 mt-0.5">Repositories</p>
-                    <div class="mt-4">
-                        <span class="text-xs text-gray-400 block">Total Repositori</span>
-                        <span class="text-xl font-bold font-mono text-cyber-gold repo-counter" data-target="12">0 Repo</span>
-                    </div>
-                    <div class="w-full bg-gray-800 h-1.5 rounded-full mt-4 overflow-hidden">
-                        <div class="bg-cyber-gold h-full w-[95%] rounded-full shadow-[0_0_10px_#ffd700]"></div>
+                        <span class="text-[10px] font-mono text-gray-500 block">Estimasi Valuasi</span>
+                        <span class="text-lg font-bold font-mono text-cyber-purple balance-counter" data-target="9200000">Rp 0</span>
                     </div>
                 </div>
 
@@ -227,28 +261,31 @@
         </div>
     </section>
 
-    <section id="learning" class="py-20 px-6 bg-cyber-dark/40">
-        <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-4 text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue via-cyber-purple to-cyber-gold">
-                Pusat Belajar Teknologi
+    <section id="learning" class="py-20 px-6 bg-cyber-dark/40 border-t border-white/5">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-3 text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue via-cyber-purple to-cyber-gold">
+                Technology Academy
             </h2>
-            <p class="text-center text-gray-400 mb-12 max-w-xl mx-auto">Materi dasar yang dipelajari dan dikembangkan secara berkelanjutan.</p>
-            
-            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <p class="text-center text-xs font-mono text-gray-400 mb-12">MODUL PEMBELAJARAN & PENGEMBANGAN DIRI</p>
+
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
                 <script>
-                    const topics = [
-                        'Dasar HTML', 'Dasar CSS', 'JavaScript', 'Tailwind CSS',
-                        'GitHub', 'Git Version Control', 'UI/UX Design', 'Responsive Web',
-                        'API Dasar', 'Dasar Pemrograman', 'Cloud Computing', 'Digital Literacy'
+                    const academyTopics = [
+                        'HTML5 Standard', 'CSS3 Architecture', 'JavaScript ES6+', 'Tailwind CSS',
+                        'Git & Versioning', 'GitHub Actions', 'UI/UX Principles', 'Responsive Design',
+                        'REST API Integration', 'Cloud Computing', 'Cyber Security', 'Linux Fundamentals',
+                        'Database SQL/NoSQL', 'Networking Basic', 'AI Core Basics'
                     ];
-                    document.write(topics.map(topic => `
-                        <div class="glass-card p-5 rounded-xl border border-white/10 hover:border-cyber-blue transition duration-300 flex items-center gap-4 hover:scale-105 cursor-pointer">
-                            <div class="p-3 rounded-lg bg-cyber-blue/10 text-cyber-blue">
-                                <i data-lucide="terminal" class="w-6 h-6"></i>
+                    document.write(academyTopics.map(topic => `
+                        <div class="glass-card p-4 rounded-xl border border-white/10 hover:border-cyber-blue transition duration-300 flex flex-col justify-between hover:scale-105 cursor-pointer">
+                            <div class="flex items-center gap-3 mb-3">
+                                <div class="p-2 rounded-lg bg-cyber-blue/10 text-cyber-blue">
+                                    <i data-lucide="book-open" class="w-5 h-5"></i>
+                                </div>
+                                <h4 class="font-medium text-xs text-gray-200">${topic}</h4>
                             </div>
-                            <div>
-                                <h4 class="font-medium text-sm">${topic}</h4>
-                                <span class="text-[10px] text-gray-500">Learning Path</span>
+                            <div class="w-full bg-gray-800 h-1 rounded-full overflow-hidden">
+                                <div class="bg-cyber-blue h-full w-[80%] rounded-full"></div>
                             </div>
                         </div>
                     `).join(''));
@@ -259,91 +296,49 @@
 
     <section id="security" class="py-20 px-6">
         <div class="max-w-6xl mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-12 text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-cyber-purple">
-                Digital Security Basic
+            <h2 class="text-3xl font-bold text-center mb-3 text-transparent bg-clip-text bg-gradient-to-r from-cyber-blue to-cyber-purple">
+                Cyber Security Lab
             </h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-blue transition">
-                    <i data-lucide="key" class="w-10 h-10 text-cyber-blue mb-4"></i>
-                    <h3 class="text-xl font-bold mb-2">Password Kuat & 2FA</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Gunakan kombinasi karakter acak dan aktifkan Authentication Dua-Faktor (2FA) di setiap platform untuk perlindungan ekstra.
-                    </p>
-                </div>
-                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-blue transition">
-                    <i data-lucide="shield-alert" class="w-10 h-10 text-cyber-purple mb-4"></i>
-                    <h3 class="text-xl font-bold mb-2">Waspada Phishing</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Selalu periksa URL situs web dan pengirim email. Jangan pernah memberikan kredensial login pada tautan yang mencurigakan.
-                    </p>
-                </div>
-                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-blue transition">
-                    <i data-lucide="wifi-off" class="w-10 h-10 text-cyber-gold mb-4"></i>
-                    <h3 class="text-xl font-bold mb-2">Keamanan Wi-Fi & Privasi</h3>
-                    <p class="text-gray-400 text-sm leading-relaxed">
-                        Hindari bertransaksi di Wi-Fi publik tanpa VPN. Lakukan backup data secara berkala dan atur privasi di media sosial.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+            <p class="text-center text-xs font-mono text-gray-400 mb-12">EDUKASI PENJAGAAN KEAMANAN DIGITAL MASA DEPAN</p>
 
-    <section id="skills" class="py-20 px-6 bg-cyber-dark/30">
-        <div class="max-w-4xl mx-auto">
-            <h2 class="text-3xl font-bold text-center mb-12">Kemampuan Teknis</h2>
-            <div class="space-y-6">
-                <div>
-                    <div class="flex justify-between mb-2">
-                        <span class="font-semibold text-sm">HTML & CSS</span>
-                        <span class="text-cyber-blue text-sm">90%</span>
-                    </div>
-                    <div class="w-full bg-gray-800 h-2 rounded-full">
-                        <div class="bg-cyber-blue h-full rounded-full w-[90%] shadow-[0_0_10px_#00f0ff]"></div>
-                    </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-blue transition">
+                    <i data-lucide="key" class="w-8 h-8 text-cyber-blue mb-4"></i>
+                    <h3 class="text-lg font-bold mb-2">Password Security & 2FA</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">
+                        Kombinasi password acak ditambah protokol autentikasi dua faktor (2FA) mencegah mayoritas serangan brute-force.
+                    </p>
                 </div>
-                <div>
-                    <div class="flex justify-between mb-2">
-                        <span class="font-semibold text-sm">JavaScript</span>
-                        <span class="text-cyber-purple text-sm">75%</span>
-                    </div>
-                    <div class="w-full bg-gray-800 h-2 rounded-full">
-                        <div class="bg-cyber-purple h-full rounded-full w-[75%] shadow-[0_0_10px_#7000ff]"></div>
-                    </div>
+                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-purple transition">
+                    <i data-lucide="shield-alert" class="w-8 h-8 text-cyber-purple mb-4"></i>
+                    <h3 class="text-lg font-bold mb-2">Anti-Phishing Shield</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">
+                        Verifikasi Domain Name & Header Email sebelum mengklik URL atau memberikan otorisasi akun sensitif.
+                    </p>
                 </div>
-                <div>
-                    <div class="flex justify-between mb-2">
-                        <span class="font-semibold text-sm">Tailwind CSS</span>
-                        <span class="text-cyber-blue text-sm">85%</span>
-                    </div>
-                    <div class="w-full bg-gray-800 h-2 rounded-full">
-                        <div class="bg-cyber-blue h-full rounded-full w-[85%] shadow-[0_0_10px_#00f0ff]"></div>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex justify-between mb-2">
-                        <span class="font-semibold text-sm">Cyber Security Basic</span>
-                        <span class="text-cyber-gold text-sm">70%</span>
-                    </div>
-                    <div class="w-full bg-gray-800 h-2 rounded-full">
-                        <div class="bg-cyber-gold h-full rounded-full w-[70%] shadow-[0_0_10px_#ffd700]"></div>
-                    </div>
+                <div class="glass-card p-6 rounded-2xl border border-white/10 hover:border-cyber-gold transition">
+                    <i data-lucide="wifi-off" class="w-8 h-8 text-cyber-gold mb-4"></i>
+                    <h3 class="text-lg font-bold mb-2">Wi-Fi & Data Encryption</h3>
+                    <p class="text-gray-400 text-xs leading-relaxed">
+                        Enkripsi data jaringan dengan VPN ketika berada di jaringan publik untuk mengamankan komunikasi data dari pembajakan.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
 
     <footer id="contact" class="border-t border-white/10 py-12 px-6 bg-cyber-black">
-        <div class="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
             <div>
-                <a href="#" class="text-xl font-bold text-cyber-blue">NEXUS.IO</a>
-                <p class="text-xs text-gray-500 mt-1">Built with HTML, Tailwind CSS & JavaScript</p>
+                <a href="#" class="text-xl font-bold text-cyber-blue font-mono">NEXUS.LAB</a>
+                <p class="text-xs text-gray-500 mt-1 font-mono">Command Center Built with Pure Web Technologies</p>
             </div>
             <div class="flex gap-6 text-gray-400">
                 <a href="https://github.com" class="hover:text-cyber-blue"><i data-lucide="github"></i></a>
                 <a href="mailto:example@email.com" class="hover:text-cyber-blue"><i data-lucide="mail"></i></a>
                 <a href="https://instagram.com" class="hover:text-cyber-blue"><i data-lucide="instagram"></i></a>
             </div>
-            <p class="text-xs text-gray-600">&copy; 2026 Portofolio Ultra Premium. All rights reserved.</p>
+            <p class="text-xs text-gray-600 font-mono">&copy; 2026 AI Cyber Lab. All rights reserved.</p>
         </div>
     </footer>
 
