@@ -1,28 +1,322 @@
-@keyframes spinSlow {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+/* ==========================================================================
+   CYBER FUTURISTIC DESIGN SYSTEM - 2026 CORE TOKENS
+   ========================================================================== */
+
+:root {
+    /* Color Palette */
+    --bg-dark: #030712;
+    --bg-dark-surface: rgba(15, 23, 42, 0.65);
+    --border-glass: rgba(255, 255, 255, 0.12);
+    --border-neon: rgba(56, 189, 248, 0.4);
+    
+    --accent-cyan: #38bdf8;
+    --accent-neon-blue: #00f0ff;
+    --accent-purple: #a855f7;
+    --accent-aurora: #00ffcc;
+
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+    --text-dim: #64748b;
+
+    /* Fonts */
+    --font-heading: 'Orbitron', sans-serif;
+    --font-sub: 'Rajdhani', sans-serif;
+    --font-body: 'Space Grotesk', sans-serif;
+
+    /* FX & Transitions */
+    --transition-fast: 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    --transition-smooth: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    --blur-glass: blur(16px);
 }
 
-.animate-spin-slow {
-    animation: spinSlow 20s linear infinite;
+/* Base Resets */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-/* Glassmorphism custom enhancements */
+html {
+    scroll-behavior: smooth;
+    background-color: var(--bg-dark);
+    color: var(--text-main);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+}
+
+body {
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* ==========================================================================
+   WEBGL CANVAS & HUD OVERLAY
+   ========================================================================== */
+
+#webgl-canvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: -1;
+    pointer-events: none;
+}
+
+.cyber-hud-overlay {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 10;
+    padding: 1.5rem;
+    font-family: var(--font-sub);
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    letter-spacing: 2px;
+}
+
+.hud-corner {
+    position: absolute;
+}
+.hud-corner.top-left { top: 1.5rem; left: 1.5rem; }
+.hud-corner.top-right { top: 1.5rem; right: 1.5rem; }
+.hud-corner.bottom-left { bottom: 1.5rem; left: 1.5rem; }
+.hud-corner.bottom-right { bottom: 1.5rem; right: 1.5rem; }
+
+/* ==========================================================================
+   CUSTOM CURSOR SYSTEM
+   ========================================================================== */
+
+.cursor-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent-neon-blue);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s ease;
+}
+
+.cursor-glow {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--accent-cyan);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
+    transition: width 0.3s ease, height 0.3s ease, background 0.3s ease;
+}
+
+/* ==========================================================================
+   GLASSMORPHISM COMPONENTS
+   ========================================================================== */
+
 .glass-card {
+    background: var(--bg-dark-surface);
+    backdrop-filter: var(--blur-glass);
+    -webkit-backdrop-filter: var(--blur-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: 16px;
+    padding: 2.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: border-color var(--transition-fast), transform var(--transition-fast);
+}
+
+.glass-card:hover {
+    border-color: var(--border-neon);
+    transform: translateY(-4px);
+}
+
+.neo-glass {
     box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
 }
 
-/* Custom scrollbar */
-::-webkit-scrollbar {
+/* ==========================================================================
+   NAVBAR & HEADER
+   ========================================================================== */
+
+.cyber-navbar {
+    position: fixed;
+    top: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 1200px;
+    z-index: 100;
+    background: rgba(3, 7, 18, 0.7);
+    backdrop-filter: var(--blur-glass);
+    border: 1px solid var(--border-glass);
+    border-radius: 100px;
+    padding: 0.75rem 2rem;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+}
+
+.logo-glitch {
+    font-family: var(--font-heading);
+    font-weight: 900;
+    font-size: 1.25rem;
+    color: var(--text-main);
+    letter-spacing: 2px;
+}
+
+.logo-sub {
+    font-family: var(--font-sub);
+    font-size: 0.65rem;
+    color: var(--accent-cyan);
+}
+
+.nav-list {
+    display: flex;
+    list-style: none;
+    gap: 2rem;
+}
+
+.nav-link {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-family: var(--font-sub);
+    font-weight: 600;
+    font-size: 0.9rem;
+    transition: color var(--transition-fast);
+}
+
+.nav-link:hover, .nav-link.active {
+    color: var(--accent-neon-blue);
+}
+
+.nav-num {
+    color: var(--accent-purple);
+    margin-right: 4px;
+}
+
+/* ==========================================================================
+   HERO SECTION
+   ========================================================================== */
+
+.hero-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 0 1.5rem;
+    position: relative;
+}
+
+.cyber-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    background: rgba(56, 189, 248, 0.1);
+    border: 1px solid var(--accent-cyan);
+    margin-bottom: 1.5rem;
+}
+
+.badge-dot {
     width: 8px;
+    height: 8px;
+    background: var(--accent-aurora);
+    border-radius: 50%;
+    box-shadow: 0 0 10px var(--accent-aurora);
 }
-::-webkit-scrollbar-track {
-    background: #020617;
+
+.badge-text {
+    font-family: var(--font-sub);
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    color: var(--accent-cyan);
 }
-::-webkit-scrollbar-thumb {
-    background: #1e293b;
-    border-radius: 4px;
+
+.hero-title {
+    font-family: var(--font-heading);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    line-height: 1.1;
+    font-weight: 900;
+    margin-bottom: 1.5rem;
 }
-::-webkit-scrollbar-thumb:hover {
-    background: #00f0ff;
+
+.text-gradient-aurora {
+    background: linear-gradient(135deg, var(--accent-neon-blue), var(--accent-purple), var(--accent-aurora));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero-description {
+    max-width: 650px;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
+}
+
+.hero-actions {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.btn-primary-neon {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--accent-cyan);
+    color: var(--bg-dark);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    box-shadow: 0 0 20px rgba(56, 189, 248, 0.4);
+    transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.btn-primary-neon:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 35px rgba(56, 189, 248, 0.7);
+}
+
+.btn-secondary-glass {
+    display: inline-flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--border-glass);
+    color: var(--text-main);
+    font-family: var(--font-heading);
+    font-weight: 700;
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    text-decoration: none;
+    backdrop-filter: var(--blur-glass);
+    transition: border-color var(--transition-fast);
+}
+
+.btn-secondary-glass:hover {
+    border-color: var(--accent-neon-blue);
+}
+
+/* Responsive UI Adjustments */
+@media (max-width: 768px) {
+    .nav-menu { display: none; }
+    .hero-actions { flex-direction: column; width: 100%; }
+    .btn-primary-neon, .btn-secondary-glass { justify-content: center; }
 }
