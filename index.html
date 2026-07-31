@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="id" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portofolio – Digital ZYY</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        utama: '#2563eb',
+                        gelap: '#0f172a',
+                        'gelap-2': '#1e293b',
+                        terang: '#f1f5f9',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .teks-gradasi {
+                background-clip: text;
+                -webkit-background-clip: text;
+                color: transparent;
+                background-image: linear-gradient(90deg, #60a5fa, #2563eb);
+            }
+            .kartu-efek {
+                @apply bg-gelap-2 rounded-xl p-5 border border-slate-700 hover:border-utama hover:-translate-y-1 transition-all duration-300;
+            }
+            .tombol {
+                @apply px-5 py-2.5 rounded-lg font-medium transition-all duration-300;
+            }
+            .tombol-utama {
+                @apply bg-utama text-white hover:bg-blue-700 shadow-lg shadow-blue-600/20;
+            }
+            .tombol-kedua {
+                @apply border border-utama text-utama hover:bg-utama hover:text-white;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gelap text-slate-300">
+    <!-- Navigasi -->
+    <nav class="fixed w-full top-0 z-50 bg-gelap/80 backdrop-blur-md border-b border-slate-800">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="text-xl font-bold text-terang">Digital<span class="text-utama">ZYY</span></a>
+            <div class="hidden md:flex gap-6">
+                <a href="#beranda" class="hover:text-utama transition-colors">Beranda</a>
+                <a href="#tentang" class="hover:text-utama transition-colors">Tentang</a>
+                <a href="#keahlian" class="hover:text-utama transition-colors">Keahlian</a>
+                <a href="#proyek" class="hover:text-utama transition-colors">Proyek</a>
+                <a href="#kontak" class="hover:text-utama transition-colors">Kontak</a>
+            </div>
+            <button class="md:hidden text-2xl" id="tombolMenu">
+                <i class="fa fa-bars"></i>
+            </button>
+        </div>
+        <!-- Menu HP -->
+        <div class="hidden md:hidden bg-gelap border-b border-slate-800" id="menuHp">
+            <div class="container mx-auto px-4 py-3 flex flex-col gap-3">
+                <a href="#beranda" class="py-2 hover:text-utama">Beranda</a>
+                <a href="#tentang" class="py-2 hover:text-utama">Tentang</a>
+                <a href="#keahlian" class="py-2 hover:text-utama">Keahlian</a>
+                <a href="#proyek" class="py-2 hover:text-utama">Proyek</a>
+                <a href="#kontak" class="py-2 hover:text-utama">Kontak</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Beranda -->
+    <section id="beranda" class="min-h-screen flex items-center pt-20 pb-10">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center gap-10">
+                <div class="flex-1 text-center md:text-left">
+                    <h4 class="text-utama font-medium mb-3">Halo, Saya</h4>
+                    <h1 class="text-[clamp(2.5rem,5vw,4rem)] font-bold text-terang mb-4">Muzi Adriyan</h1>
+                    <h2 class="text-[clamp(1.3rem,3vw,2rem)] font-semibold mb-6 teks-gradasi">Pembuat Website & Desainer UI/UX</h2>
+                    <p class="text-slate-400 mb-8 max-w-xl">Membangun situs web modern, aman, dan tampilan menarik. Juga berkontribusi di bidang keamanan sistem digital internasional.</p>
+                    <div class="flex flex-wrap justify-center md:justify-start gap-4">
+                        <a href="#proyek" class="tombol tombol-utama">Lihat Karya</a>
+                        <a href="#kontak" class="tombol tombol-kedua">Hubungi Saya</a>
+                    </div>
+                </div>
+                <div class="flex-1 flex justify-center">
+                    <div class="w-64 h-64 md:w-80 md:h-80 rounded-full bg-utama/10 border-2 border-utama flex items-center justify-center">
+                        <div class="w-56 h-56 md:w-72 md:h-72 rounded-full bg-gelap-2 flex items-center justify-center text-6xl text-utama">
+                            <i class="fa fa-code"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tentang -->
+    <section id="tentang" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-terang text-center mb-12">Tentang <span class="text-utama">Saya</span></h2>
+            <div class="max-w-3xl mx-auto kartu-efek">
+                <p class="mb-4">Saya pengembang web dan desainer antarmuka dari Bekasi. Fokus pada pembuatan situs yang cepat, mudah dipakai, dan aman.</p>
+                <p class="mb-4">Selain membuat layanan digital, saya juga aktif meneliti keamanan sistem teknologi dan pernah mendapatkan apresiasi resmi dari perusahaan teknologi internasional.</p>
+                <p>Saya suka berbagi ilmu teknologi agar anak muda lain juga bisa berkarya dari daerah masing-masing.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Keahlian -->
+    <section id="keahlian" class="py-16 bg-gelap-2/30">
+        <div class="container mx-auto px-4">
+            <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-terang text-center mb-12">Keahlian <span class="text-utama">Saya</span></h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="kartu-efek text-center">
+                    <i class="fa fa-code text-4xl text-utama mb-4"></i>
+                    <h3 class="text-xl font-semibold text-terang mb-2">Pembuatan Website</h3>
+                    <p class="text-slate-400">HTML, CSS, Tailwind, desain responsif siap GitHub</p>
+                </div>
+                <div class="kartu-efek text-center">
+                    <i class="fa fa-paint-brush text-4xl text-utama mb-4"></i>
+                    <h3 class="text-xl font-semibold text-terang mb-2">Desain UI/UX</h3>
+                    <p class="text-slate-400">Tampilan rapi, nyaman dipakai semua perangkat</p>
+                </div>
+                <div class="kartu-efek text-center">
+                    <i class="fa fa-shield text-4xl text-utama mb-4"></i>
+                    <h3 class="text-xl font-semibold text-terang mb-2">Keamanan Digital</h3>
+                    <p class="text-slate-400">Penilaian celah dan penguatan sistem</p>
+                </div>
+                <div class="kartu-efek text-center">
+                    <i class="fa fa-github text-4xl text-utama mb-4"></i>
+                    <h3 class="text-xl font-semibold text-terang mb-2">GitHub & Hosting</h3>
+                    <p class="text-slate-400">Publikasi gratis lewat GitHub Pages</p>
+                </div>
+                <div class="kartu-efek text-center">
+                    <i class="fa fa-mobile text-4xl text-utama mb-4"></i>
+                    <h3 class="text-xl font-semibold text-terang mb-2">Tampilan Mobile</h3>
+                    <p class="text-slate-400">Sesuai layar HP dan tablet</p>
+                </div>
+                <div class="kartu-efek text-center">
+                    <i class="fa fa-bullhorn text-4xl text-utama mb-4"></i>
+                    <h3 class="text-xl font-semibold text-terang mb-2">Edukasi Teknologi</h3>
+                    <p class="text-slate-400">Berbagi panduan dan langkah mudah</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Proyek -->
+    <section id="proyek" class="py-16">
+        <div class="container mx-auto px-4">
+            <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-terang text-center mb-12">Proyek <span class="text-utama">Terbaru</span></h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="kartu-efek">
+                    <h3 class="text-xl font-semibold text-terang mb-2">Layanan Digital ZYY</h3>
+                    <p class="text-slate-400 mb-4">Situs profil layanan pembuatan web dan desain</p>
+                    <a href="#" class="text-utama hover:underline">Lihat Proyek →</a>
+                </div>
+                <div class="kartu-efek">
+                    <h3 class="text-xl font-semibold text-terang mb-2">Situs Edukasi Teknologi</h3>
+                    <p class="text-slate-400 mb-4">Dokumentasi panduan GitHub, HTML, keamanan</p>
+                    <a href="#" class="text-utama hover:underline">Lihat Proyek →</a>
+                </div>
+                <div class="kartu-efek">
+                    <h3 class="text-xl font-semibold text-terang mb-2">Halaman Simulasi</h3>
+                    <p class="text-slate-400 mb-4">Tampilan antarmuka latihan dengan Tailwind</p>
+                    <a href="#" class="text-utama hover:underline">Lihat Proyek →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kontak -->
+    <section id="kontak" class="py-16 bg-gelap-2/30">
+        <div class="container mx-auto px-4">
+            <h2 class="text-[clamp(1.5rem,3vw,2rem)] font-bold text-terang text-center mb-12">Hubungi <span class="text-utama">Saya</span></h2>
+            <div class="max-w-xl mx-auto kartu-efek">
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <i class="fa fa-whatsapp text-utama text-xl"></i>
+                        <span>0856-9217-4059</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="fa fa-envelope text-utama text-xl"></i>
+                        <span>muzi.adriyan@email.com</span>
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <i class="fa fa-github text-utama text-xl"></i>
+                        <a href="https://github.com/zii4you" target="_blank" class="hover:underline">github.com/zii4you</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Kaki -->
+    <footer class="py-6 border-t border-slate-800 text-center text-slate-500 text-sm">
+        <div class="container mx-auto px-4">
+            <p>© 2026 Digital ZYY. Semua hak dilindungi.</p>
+        </div>
+    </footer>
+
+    <!-- Script Menu HP -->
+    <script>
+        const tombolMenu = document.getElementById('tombolMenu');
+        const menuHp = document.getElementById('menuHp');
+        tombolMenu.addEventListener('click', () => {
+            menuHp.classList.toggle('hidden');
+        });
+        // Tutup menu setelah klik
+        menuHp.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuHp.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
