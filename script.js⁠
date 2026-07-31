@@ -1,38 +1,75 @@
-// JavaScript Engine - 60 FPS Canvas Particles & Interactivity
+// JavaScript Engine - Cyber Futuristic Portfolio 2026
+// Optimized with Auto-Fallback Safety
 
 document.addEventListener('DOMContentLoaded', () => {
+  // 1. Jalankan Loading Screen dengan Safety Catch
   initLoadingScreen();
-  initCanvasBackground();
-  initTypingEffect();
-  initMouseSpotlight();
-  initCounters();
+
+  // 2. Inisialisasi Fitur Visual Lainnya
+  try {
+    initCanvasBackground();
+    initTypingEffect();
+    initMouseSpotlight();
+    initCounters();
+  } catch (err) {
+    console.warn("Peringatan Fitur Visual:", err);
+  }
 });
 
-/* ================= 1. LOADING SCREEN ================= */
+/* ================= 1. LOADING SCREEN (SAFE VERSION) ================= */
 function initLoadingScreen() {
   const loadingBar = document.getElementById('loading-bar');
   const loadingText = document.getElementById('loading-text');
   const loadingScreen = document.getElementById('loading-screen');
+
+  // Pengecekan Keberadaan Elemen DOM
+  if (!loadingBar || !loadingText || !loadingScreen) {
+    console.error("Elemen Loading Screen tidak ditemukan!");
+    if (loadingScreen) loadingScreen.style.display = 'none';
+    return;
+  }
+
   let progress = 0;
 
+  // Fungsi internal untuk menutup loading screen dengan animasi halus
+  function dismissLoading() {
+    loadingScreen.style.opacity = '0';
+    setTimeout(() => {
+      loadingScreen.style.display = 'none';
+    }, 700);
+  }
+
+  // Animasi Progress Bar
   const interval = setInterval(() => {
-    progress += Math.floor(Math.random() * 12) + 5;
+    progress += Math.floor(Math.random() * 15) + 5;
+
     if (progress >= 100) {
       progress = 100;
       clearInterval(interval);
-      setTimeout(() => {
-        loadingScreen.style.opacity = '0';
-        setTimeout(() => loadingScreen.style.display = 'none', 700);
-      }, 300);
+      setTimeout(dismissLoading, 300);
     }
+
     loadingBar.style.width = `${progress}%`;
     loadingText.textContent = `${progress}%`;
-  }, 120);
+  }, 100);
+
+  // FALLBACK SAFETY: Paksa hilangkan loading screen jika melebihi 3.5 detik
+  // Ini mencegah website tersangkut jika koneksi internet/CDN lambat.
+  setTimeout(() => {
+    if (loadingScreen.style.display !== 'none') {
+      clearInterval(interval);
+      loadingBar.style.width = '100%';
+      loadingText.textContent = '100%';
+      setTimeout(dismissLoading, 200);
+    }
+  }, 3500);
 }
 
-/* ================= 2. CANVAS PARTICLE SYSTEM ================= */
+/* ================= 2. CANVAS PARTICLE SYSTEM (60 FPS) ================= */
 function initCanvasBackground() {
   const canvas = document.getElementById('bg-canvas');
+  if (!canvas) return;
+
   const ctx = canvas.getContext('2d');
 
   function resize() {
@@ -43,15 +80,15 @@ function initCanvasBackground() {
   window.addEventListener('resize', resize);
 
   const particles = [];
-  const particleCount = Math.min(Math.floor(window.innerWidth / 15), 80);
+  const particleCount = Math.min(Math.floor(window.innerWidth / 15), 60);
 
   for (let i = 0; i < particleCount; i++) {
     particles.push({
       x: Math.random() * canvas.width,
       y: Math.random() * canvas.height,
       radius: Math.random() * 2 + 0.5,
-      vx: (Math.random() - 0.5) * 0.5,
-      vy: (Math.random() - 0.5) * 0.5,
+      vx: (Math.random() - 0.5) * 0.4,
+      vy: (Math.random() - 0.5) * 0.4,
       alpha: Math.random() * 0.5 + 0.2
     });
   }
@@ -82,6 +119,8 @@ function initCanvasBackground() {
 /* ================= 3. TYPING EFFECT ================= */
 function initTypingEffect() {
   const target = document.getElementById('typing-text');
+  if (!target) return;
+
   const roles = [
     'Pelajar & Tech Enthusiast',
     'Web Developer',
@@ -102,7 +141,7 @@ function initTypingEffect() {
       charIndex++;
     }
 
-    let delay = isDeleting ? 50 : 100;
+    let delay = isDeleting ? 40 : 80;
 
     if (!isDeleting && charIndex === current.length) {
       delay = 2000;
@@ -110,7 +149,7 @@ function initTypingEffect() {
     } else if (isDeleting && charIndex === 0) {
       isDeleting = false;
       roleIndex = (roleIndex + 1) % roles.length;
-      delay = 500;
+      delay = 400;
     }
 
     setTimeout(type, delay);
@@ -121,6 +160,8 @@ function initTypingEffect() {
 /* ================= 4. MOUSE SPOTLIGHT ================= */
 function initMouseSpotlight() {
   const spotlight = document.querySelector('.mouse-spotlight');
+  if (!spotlight) return;
+
   window.addEventListener('mousemove', (e) => {
     spotlight.style.left = `${e.clientX}px`;
     spotlight.style.top = `${e.clientY}px`;
@@ -130,13 +171,15 @@ function initMouseSpotlight() {
 /* ================= 5. ANIMATED COUNTERS ================= */
 function initCounters() {
   const counters = document.querySelectorAll('.counter');
+  if (!counters.length) return;
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         const counter = entry.target;
         const target = +counter.getAttribute('data-target');
         let count = 0;
-        const speed = target / 50;
+        const speed = Math.max(1, target / 40);
 
         const update = () => {
           count += speed;
@@ -151,29 +194,36 @@ function initCounters() {
         observer.unobserve(counter);
       }
     });
-  }, { threshold: 0.5 });
+  }, { threshold: 0.3 });
 
   counters.forEach(c => observer.observe(c));
 }
 
 /* ================= 6. RIPSTORY MODAL ================= */
 function openStory(title, content) {
-  document.getElementById('story-title').innerText = title;
-  document.getElementById('story-body').innerText = content;
+  const titleEl = document.getElementById('story-title');
+  const bodyEl = document.getElementById('story-body');
   const modal = document.getElementById('story-modal');
-  modal.classList.remove('hidden');
-  modal.classList.add('flex');
+
+  if (titleEl && bodyEl && modal) {
+    titleEl.innerText = title;
+    bodyEl.innerText = content;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
+  }
 }
 
 function closeStory() {
   const modal = document.getElementById('story-modal');
-  modal.classList.add('hidden');
-  modal.classList.remove('flex');
+  if (modal) {
+    modal.classList.add('hidden');
+    modal.classList.remove('flex');
+  }
 }
 
 /* ================= 7. FORM HANDLER ================= */
 function handleForm(e) {
   e.preventDefault();
-  alert('Pesan Anda berhasil dikirim! Terima kasih telah menghubungi.');
+  alert('Pesan Anda berhasil terkirim! Terima kasih.');
   e.target.reset();
 }
