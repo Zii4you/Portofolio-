@@ -1,226 +1,179 @@
-/* ==============================================
-   SKRIP UTAMA & ANIMASI
-   ============================================== */
+// JavaScript Engine - 60 FPS Canvas Particles & Interactivity
 
-// Inisialisasi Dasar
-AOS.init({
-    duration: 800,
-    once: true,
-    offset: 100,
-    easing: 'ease-out-cubic'
+document.addEventListener('DOMContentLoaded', () => {
+  initLoadingScreen();
+  initCanvasBackground();
+  initTypingEffect();
+  initMouseSpotlight();
+  initCounters();
 });
 
-// Scroll Halus Lenis
-const lenis = new Lenis({
-    duration: 1.2,
-    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smooth: true,
-    smoothTouch: true
-});
+/* ================= 1. LOADING SCREEN ================= */
+function initLoadingScreen() {
+  const loadingBar = document.getElementById('loading-bar');
+  const loadingText = document.getElementById('loading-text');
+  const loadingScreen = document.getElementById('loading-screen');
+  let progress = 0;
 
-function raf(time) {
-    lenis.raf(time);
-    requestAnimationFrame(raf);
-}
-requestAnimationFrame(raf);
-
-// Layar Loading Sinematik
-const pesanMuat = [
-    'Menginisialisasi Cyber Lab...',
-    'Memuat Aset Digital...',
-    'Menghubungkan Inti AI...',
-    'Mengaktifkan Keamanan...',
-    'Selamat Datang di Masa Depan ✨'
-];
-let indeksPesan = 0;
-let persenMuat = 0;
-
-const prosesMuat = setInterval(() => {
-    persenMuat += Math.floor(Math.random() * 12) + 3;
-    if (persenMuat >= 100) {
-        persenMuat = 100;
-        clearInterval(prosesMuat);
-        setTimeout(() => {
-            document.getElementById('layarMuat').classList.add('selesai');
-        }, 800);
+  const interval = setInterval(() => {
+    progress += Math.floor(Math.random() * 12) + 5;
+    if (progress >= 100) {
+      progress = 100;
+      clearInterval(interval);
+      setTimeout(() => {
+        loadingScreen.style.opacity = '0';
+        setTimeout(() => loadingScreen.style.display = 'none', 700);
+      }, 300);
     }
-    if (persenMuat >= 20 && indeksPesan === 0) {
-        document.getElementById('teksMuat').textContent = pesanMuat[1];
-        indeksPesan++;
-    }
-    if (persenMuat >= 40 && indeksPesan === 1) {
-        document.getElementById('teksMuat').textContent = pesanMuat[2];
-        indeksPesan++;
-    }
-    if (persenMuat >= 60 && indeksPesan === 2) {
-        document.getElementById('teksMuat').textContent = pesanMuat[3];
-        indeksPesan++;
-    }
-    if (persenMuat >= 85 && indeksPesan === 3) {
-        document.getElementById('teksMuat').textContent = pesanMuat[4];
-        indeksPesan++;
-    }
-    document.getElementById('barMuat').style.width = `${persenMuat}%`;
-}, 150);
-
-// Efek Mengetik
-new Typed('#teksKetik', {
-    strings: ['Pengembang Web', 'Desainer UI/UX', 'Peneliti Keamanan Digital', 'Pelajar Teknologi'],
-    typeSpeed: 100,
-    backSpeed: 60,
-    backDelay: 2000,
-    loop: true
-});
-
-// Latar Belakang 3D Galaksi
-const kanvas3d = document.getElementById('latar3d');
-const pengatur = new THREE.WebGLRenderer({
-    canvas: kanvas3d,
-    alpha: true,
-    antialias: true,
-    powerPreference: 'high-performance'
-});
-pengatur.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-pengatur.setSize(window.innerWidth, window.innerHeight);
-
-const adegan = new THREE.Scene();
-const kamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
-kamera.position.z = 180;
-
-// Membuat Partikel Bintang
-const geometriBintang = new THREE.BufferGeometry();
-const jumlahBintang = 8000;
-const posisiBintang = new Float32Array(jumlahBintang * 3);
-
-for (let i = 0; i < jumlahBintang * 3; i++) {
-    posisiBintang[i] = (Math.random() - 0.5) * 1200;
+    loadingBar.style.width = `${progress}%`;
+    loadingText.textContent = `${progress}%`;
+  }, 120);
 }
 
-geometriBintang.setAttribute('position', new THREE.BufferAttribute(posisiBintang, 3));
-const bahanBintang = new THREE.PointsMaterial({
-    color: 0x00E5FF,
-    size: 1.1,
-    transparent: true,
-    opacity: 0.6
-});
-const bintang = new THREE.Points(geometriBintang, bahanBintang);
-adegan.add(bintang);
+/* ================= 2. CANVAS PARTICLE SYSTEM ================= */
+function initCanvasBackground() {
+  const canvas = document.getElementById('bg-canvas');
+  const ctx = canvas.getContext('2d');
 
-// Animasi Latar 3D
-function putarLatar() {
-    requestAnimationFrame(putarLatar);
-    bintang.rotation.y += 0.0003;
-    bintang.rotation.x += 0.0001;
-    pengatur.render(adegan, kamera);
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const particles = [];
+  const particleCount = Math.min(Math.floor(window.innerWidth / 15), 80);
+
+  for (let i = 0; i < particleCount; i++) {
+    particles.push({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      radius: Math.random() * 2 + 0.5,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: (Math.random() - 0.5) * 0.5,
+      alpha: Math.random() * 0.5 + 0.2
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    particles.forEach(p => {
+      p.x += p.vx;
+      p.y += p.vy;
+
+      if (p.x < 0) p.x = canvas.width;
+      if (p.x > canvas.width) p.x = 0;
+      if (p.y < 0) p.y = canvas.height;
+      if (p.y > canvas.height) p.y = 0;
+
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(0, 240, 255, ${p.alpha})`;
+      ctx.fill();
+    });
+
+    requestAnimationFrame(animate);
+  }
+  animate();
 }
-putarLatar();
 
-// Sesuaikan Ukuran Saat Jendela Berubah
-window.addEventListener('resize', () => {
-    kamera.aspect = window.innerWidth / window.innerHeight;
-    kamera.updateProjectionMatrix();
-    pengatur.setSize(window.innerWidth, window.innerHeight);
-});
+/* ================= 3. TYPING EFFECT ================= */
+function initTypingEffect() {
+  const target = document.getElementById('typing-text');
+  const roles = [
+    'Pelajar & Tech Enthusiast',
+    'Web Developer',
+    'UI/UX Designer',
+    'Cyber Security Learner'
+  ];
+  let roleIndex = 0;
+  let charIndex = 0;
+  let isDeleting = false;
 
-// Kursor Khusus
-const kursorUtama = document.getElementById('kursorUtama');
-const kursorTrail = document.getElementById('kursorTrail');
-let xKursor = 0, yKursor = 0, xTrail = 0, yTrail = 0;
-
-window.addEventListener('mousemove', (e) => {
-    xKursor = e.clientX;
-    yKursor = e.clientY;
-});
-
-gsap.ticker.add(() => {
-    xTrail += (xKursor - xTrail) * 0.12;
-    yTrail += (yKursor - yTrail) * 0.12;
-    
-    kursorUtama.style.left = `${xKursor - 10}px`;
-    kursorUtama.style.top = `${yKursor - 10}px`;
-    kursorTrail.style.left = `${xTrail - 6}px`;
-    kursorTrail.style.top = `${yTrail - 6}px`;
-    kursorTrail.style.opacity = '0.4';
-});
-
-// Perbesar Kursor Saat Menyentuh Tombol
-document.querySelectorAll('a, button').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-        kursorUtama.style.width = '30px';
-        kursorUtama.style.height = '30px';
-        kursorUtama.style.marginLeft = '-10px';
-        kursorUtama.style.marginTop = '-10px';
-    });
-    el.addEventListener('mouseleave', () => {
-        kursorUtama.style.width = '20px';
-        kursorUtama.style.height = '20px';
-        kursorUtama.style.marginLeft = '0';
-        kursorUtama.style.marginTop = '0';
-    });
-});
-
-// Animasi Bilah Kemajuan
-const pengamatKemajuan = new IntersectionObserver((entri) => {
-    entri.forEach(item => {
-        if (item.isIntersecting) {
-            const target = item.target;
-            const nilai = target.dataset.progress;
-            target.style.width = `${nilai}%`;
-            target.style.transition = 'width 1.5s ease-out';
-        }
-    });
-}, { threshold: 0.5 });
-
-document.querySelectorAll('[data-progress]').forEach(el => {
-    pengamatKemajuan.observe(el);
-});
-
-// Tombol Kembali ke Atas
-const tombolAtas = document.getElementById('tombolAtas');
-window.addEventListener('scroll', () => {
-    if (window.scrollY > 500) {
-        tombolAtas.classList.remove('opacity-0', 'invisible');
-        tombolAtas.classList.add('opacity-100', 'visible');
+  function type() {
+    const current = roles[roleIndex];
+    if (isDeleting) {
+      target.textContent = current.substring(0, charIndex - 1);
+      charIndex--;
     } else {
-        tombolAtas.classList.add('opacity-0', 'invisible');
-        tombolAtas.classList.remove('opacity-100', 'visible');
+      target.textContent = current.substring(0, charIndex + 1);
+      charIndex++;
     }
-});
 
-tombolAtas.addEventListener('click', () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-});
+    let delay = isDeleting ? 50 : 100;
 
-// Navbar Aktif Saat Digulir
-const bagian = document.querySelectorAll('section');
-const tautanNav = document.querySelectorAll('.nav-link');
+    if (!isDeleting && charIndex === current.length) {
+      delay = 2000;
+      isDeleting = true;
+    } else if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      roleIndex = (roleIndex + 1) % roles.length;
+      delay = 500;
+    }
 
-window.addEventListener('scroll', () => {
-    let posisiSaatIni = window.scrollY + 100;
-    bagian.forEach(bag => {
-        const atasBagian = bag.offsetTop;
-        const tinggiBagian = bag.offsetHeight;
-        const idBagian = bag.getAttribute('id');
-        
-        if (posisiSaatIni >= atasBagian && posisiSaatIni < atasBagian + tinggiBagian) {
-            tautanNav.forEach(taut => taut.classList.remove('active'));
-            document.querySelector(`.nav-link[href="#${idBagian}"]`).classList.add('active');
-        }
+    setTimeout(type, delay);
+  }
+  type();
+}
+
+/* ================= 4. MOUSE SPOTLIGHT ================= */
+function initMouseSpotlight() {
+  const spotlight = document.querySelector('.mouse-spotlight');
+  window.addEventListener('mousemove', (e) => {
+    spotlight.style.left = `${e.clientX}px`;
+    spotlight.style.top = `${e.clientY}px`;
+  });
+}
+
+/* ================= 5. ANIMATED COUNTERS ================= */
+function initCounters() {
+  const counters = document.querySelectorAll('.counter');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const counter = entry.target;
+        const target = +counter.getAttribute('data-target');
+        let count = 0;
+        const speed = target / 50;
+
+        const update = () => {
+          count += speed;
+          if (count < target) {
+            counter.innerText = Math.ceil(count).toLocaleString();
+            setTimeout(update, 30);
+          } else {
+            counter.innerText = target.toLocaleString();
+          }
+        };
+        update();
+        observer.unobserve(counter);
+      }
     });
-});
+  }, { threshold: 0.5 });
 
-// Inisialisasi Efek Miring Kartu
-VanillaTilt.init(document.querySelectorAll("[data-tilt]"), {
-    max: 8,
-    speed: 300,
-    glare: true,
-    "max-glare": 0.12,
-    scale: 1.02
-});
+  counters.forEach(c => observer.observe(c));
+}
 
-// Kirim Form Kontak
-document.getElementById('formKontak').addEventListener('submit', (e) => {
-    e.preventDefault();
-    alert('Pesan berhasil dikirim! Terima kasih telah menghubungi saya.');
-    e.target.reset();
-});
+/* ================= 6. RIPSTORY MODAL ================= */
+function openStory(title, content) {
+  document.getElementById('story-title').innerText = title;
+  document.getElementById('story-body').innerText = content;
+  const modal = document.getElementById('story-modal');
+  modal.classList.remove('hidden');
+  modal.classList.add('flex');
+}
+
+function closeStory() {
+  const modal = document.getElementById('story-modal');
+  modal.classList.add('hidden');
+  modal.classList.remove('flex');
+}
+
+/* ================= 7. FORM HANDLER ================= */
+function handleForm(e) {
+  e.preventDefault();
+  alert('Pesan Anda berhasil dikirim! Terima kasih telah menghubungi.');
+  e.target.reset();
+}
