@@ -1,122 +1,261 @@
 <!DOCTYPE html>
-<html lang="id" class="dark scroll-smooth">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber Lab 2026 | Portfolio & Command Center</title>
-    <meta name="description" content="Ultra-premium Cyber Futuristic Portfolio Built with Three.js, GSAP & Tailwind CSS">
-    
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        navy: { deep: '#020617', dark: '#0b0f19' },
-                        electric: '#00f0ff',
-                        neonPurple: '#a855f7',
-                        goldAccent: '#f59e0b'
-                    },
-                    fontFamily: {
-                        sans: ['Space Grotesk', 'sans-serif'],
-                        mono: ['Fira Code', 'monospace']
-                    }
-                }
-            }
-        }
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <title>ALEX VANCE // QUANTUM LABS & CYBER ARCHITECT 2026</title>
+    <meta name="title" content="ALEX VANCE // QUANTUM LABS & CYBER ARCHITECT 2026">
+    <meta name="description" content="Ultra-premium cyber futuristic portfolio showcasing AI, Quantum Computing, and Next-Gen Web Technologies. Built with Three.js, GSAP, and WebGL.">
+    <meta name="keywords" content="Frontend Engineer, Three.js Developer, Creative Technologist, WebGL, AI Core, Cyberpunk UI">
+    <meta name="author" content="Alex Vance">
+    <meta name="theme-color" content="#030712">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://alexvance.cyber/">
+    <meta property="og:title" content="ALEX VANCE // QUANTUM LABS & CYBER ARCHITECT 2026">
+    <meta property="og:description" content="Ultra-premium cyber futuristic portfolio showcasing AI, Quantum Computing, and Next-Gen Web Technologies.">
+    <meta property="og:image" content="https://alexvance.cyber/assets/images/og-cover.png">
+
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://alexvance.cyber/">
+    <meta property="twitter:title" content="ALEX VANCE // QUANTUM LABS & CYBER ARCHITECT 2026">
+    <meta property="twitter:description" content="Ultra-premium cyber futuristic portfolio showcasing AI, Quantum Computing, and Next-Gen Web Technologies.">
+    <meta property="twitter:image" content="https://alexvance.cyber/assets/images/og-cover.png">
+
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Alex Vance",
+      "jobTitle": "Senior Cyber Architect & WebGL Engineer",
+      "url": "https://alexvance.cyber",
+      "sameAs": [
+        "https://github.com/",
+        "https://linkedin.com/",
+        "https://twitter.com/"
+      ],
+      "knowsAbout": ["Three.js", "WebGL", "Artificial Intelligence", "Frontend Engineering", "Cybersecurity"]
+    }
     </script>
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Space+Grotesk:wght@300;400;600;700&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.18/dist/lenis.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Rajdhani:wght@300;500;600;700&family=Space+Grotesk:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     
     <link rel="stylesheet" href="style.css">
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://unpkg.com/lenis@1.1.18/dist/lenis.min.js"></script>
 </head>
-<body class="bg-navy-deep text-slate-100 font-sans antialiased overflow-x-hidden selection:bg-electric selection:text-black">
+<body>
 
-    <canvas id="bg-3d" class="fixed top-0 left-0 w-full h-full -z-10 pointer-events-none"></canvas>
+    <canvas id="webgl-canvas" aria-hidden="true"></canvas>
 
-    <div id="loader" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-navy-deep transition-opacity duration-700">
-        <div class="relative flex items-center justify-center w-32 h-32 mb-6">
-            <div class="absolute inset-0 rounded-full border-2 border-t-electric border-r-neonPurple border-b-transparent border-l-transparent animate-spin"></div>
-            <span class="text-2xl font-bold font-mono text-electric animate-pulse">CYBER</span>
-        </div>
-        <div class="w-64 h-1.5 bg-slate-800 rounded-full overflow-hidden mb-4 border border-slate-700">
-            <div id="loader-bar" class="w-0 h-full bg-gradient-to-r from-electric via-neonPurple to-goldAccent transition-all duration-300"></div>
-        </div>
-        <p id="loader-text" class="font-mono text-xs text-slate-400 tracking-wider">Initializing Cyber Core...</p>
+    <div class="cursor-dot" data-cursor-dot aria-hidden="true"></div>
+    <div class="cursor-glow" data-cursor-glow aria-hidden="true"></div>
+
+    <div class="cyber-hud-overlay" aria-hidden="true">
+        <div class="hud-corner top-left">SYSTEM_ONLINE // V4.0.2</div>
+        <div class="hud-corner top-right">LOC: 0x88F_QUANTUM_CORE</div>
+        <div class="hud-corner bottom-left">FPS: <span id="fps-counter">60</span></div>
+        <div class="hud-corner bottom-right">SEC_LEVEL: MAXIMUM</div>
+        <div class="hud-line-horizontal"></div>
     </div>
 
-    <header class="fixed top-0 left-0 w-full z-40 px-6 py-4 transition-all duration-300 backdrop-blur-md bg-navy-dark/40 border-b border-slate-800/50">
-        <div class="max-w-7xl mx-auto flex items-center justify-between">
-            <a href="#home" class="text-xl font-bold font-mono tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-electric via-white to-neonPurple hover:opacity-80 transition">
-                &lt;LAB/&gt;
+    <header class="cyber-navbar" role="banner">
+        <div class="nav-container">
+            <a href="#hero" class="nav-logo" aria-label="Alex Vance Home">
+                <span class="logo-glitch" data-text="AV_CORE">AV_CORE</span>
+                <span class="logo-sub">2026.LABS</span>
             </a>
 
-            <nav class="hidden md:flex items-center gap-8 font-mono text-xs uppercase tracking-wider text-slate-300">
-                <a href="#home" class="nav-link hover:text-electric transition-colors">Home</a>
-                <a href="#about" class="nav-link hover:text-electric transition-colors">About</a>
-                <a href="#dashboard" class="nav-link hover:text-electric transition-colors">Assets</a>
-                <a href="#learning" class="nav-link hover:text-electric transition-colors">Tech Center</a>
-                <a href="#security" class="nav-link hover:text-electric transition-colors">Security</a>
-                <a href="#skills" class="nav-link hover:text-electric transition-colors">Skills</a>
-                <a href="#portfolio" class="nav-link hover:text-electric transition-colors">Portfolio</a>
-                <a href="#contact" class="nav-link hover:text-electric transition-colors">Contact</a>
+            <nav class="nav-menu" role="navigation" aria-label="Main Navigation">
+                <ul class="nav-list">
+                    <li><a href="#hero" class="nav-link active" data-magnetic><span class="nav-num">01.</span>CORE</a></li>
+                    <li><a href="#about" class="nav-link" data-magnetic><span class="nav-num">02.</span>SPECIFICATION</a></li>
+                    <li><a href="#projects" class="nav-link" data-magnetic><span class="nav-num">03.</span>LAB_PROJECTS</a></li>
+                    <li><a href="#skills" class="nav-link" data-magnetic><span class="nav-num">04.</span>SYSTEMS</a></li>
+                    <li><a href="#contact" class="nav-link" data-magnetic><span class="nav-num">05.</span>TRANSMIT</a></li>
+                </ul>
             </nav>
 
-            <a href="#contact" class="hidden sm:inline-block px-4 py-2 rounded-lg border border-electric/40 text-electric font-mono text-xs hover:bg-electric/10 transition hover:shadow-[0_0_15px_rgba(0,240,255,0.3)]">
-                Connect
-            </a>
+            <button class="menu-toggle" aria-label="Toggle Menu" aria-expanded="false">
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </button>
         </div>
     </header>
 
-    <main class="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-20 space-y-32">
+    <main id="main-content" role="main">
 
-        <section id="home" class="min-h-[80vh] flex flex-col md:flex-row items-center justify-between gap-12">
-            <div class="flex-1 space-y-6">
-                <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-electric/30 bg-electric/5 backdrop-blur-md">
-                    <span class="w-2 h-2 rounded-full bg-electric animate-ping"></span>
-                    <span class="font-mono text-xs text-electric tracking-wide uppercase">System Online • 2026 Core</span>
+        <section id="hero" class="hero-section" aria-label="Hero Section">
+            <div class="hero-content">
+                <div class="cyber-badge" data-gsap="fade-up">
+                    <span class="badge-dot"></span>
+                    <span class="badge-text">QUANTUM COMPUTING & AI LABS</span>
                 </div>
-                <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight leading-tight">
-                    Futuristic <span class="text-transparent bg-clip-text bg-gradient-to-r from-electric via-neonPurple to-goldAccent">Digital Creator</span> & Security Enthusiast.
+                
+                <h1 class="hero-title" data-gsap="split-text">
+                    CYBER ARCHITECT <br>
+                    <span class="text-gradient-aurora">&amp; WEBGL ENGINEER</span>
                 </h1>
-                <p class="text-slate-400 max-w-xl text-sm sm:text-base leading-relaxed">
-                    Pelajar, Web Developer, dan UI/UX Designer yang berfokus pada pengalaman web 3D interaktif, keamanan digital dasar, serta pengembangan ekosistem modern yang terintegrasi.
+
+                <p class="hero-description" data-gsap="fade-up">
+                    Membangun antarmuka generasi berikutnya dengan performa sinematik, integrasi kecerdasan buatan, dan simulasi grafis 3D ruang angkasa tingkat tinggi.
                 </p>
-                <div class="flex flex-wrap items-center gap-4 pt-4">
-                    <a href="#portfolio" class="px-6 py-3 rounded-lg bg-electric text-black font-semibold text-sm hover:shadow-[0_0_25px_rgba(0,240,255,0.6)] transition-all">
-                        Lihat Portofolio
+
+                <div class="hero-actions" data-gsap="fade-up">
+                    <a href="#projects" class="btn-primary-neon" data-magnetic>
+                        <span class="btn-text">EXPLORE LABS</span>
+                        <span class="btn-icon"><i class="fa-solid fa-arrow-right-long"></i></span>
                     </a>
-                    <a href="https://github.com" target="_blank" class="px-6 py-3 rounded-lg border border-slate-700 bg-slate-900/60 backdrop-blur-md text-sm hover:border-slate-500 transition">
-                        GitHub Profile
+                    <a href="#contact" class="btn-secondary-glass" data-magnetic>
+                        <span class="btn-text">INITIALIZE LINK</span>
                     </a>
                 </div>
             </div>
 
-            <div class="relative flex items-center justify-center">
-                <div class="relative w-64 h-64 sm:w-80 sm:h-80 rounded-full p-1 bg-gradient-to-tr from-electric via-neonPurple to-goldAccent animate-spin-slow">
-                    <div class="w-full h-full bg-navy-deep rounded-full overflow-hidden p-2 flex items-center justify-center">
-                        <div class="w-full h-full bg-slate-800 rounded-full flex items-center justify-center text-4xl font-mono text-electric font-bold border border-electric/30">
-                            ZII
-                        </div>
-                    </div>
+            <div class="hero-scroll-indicator" aria-hidden="true">
+                <div class="mouse-icon">
+                    <div class="wheel"></div>
                 </div>
-                <div class="absolute -inset-4 rounded-full border border-electric/20 animate-pulse pointer-events-none"></div>
+                <span>SCROLL TO SYSTEM</span>
             </div>
         </section>
 
-        <section id="dashboard" class="space-y-8">
-            <div>
-                <h2 class="text-2xl font-bold font-mono text-electric tracking-wide">&gt; DIGITAL_ASSETS_DASHBOARD</h2>
-                <p class="text-xs font-mono text-slate-400">Integrated Financial & Developer Gateways</p>
+        <section id="about" class="section-padding" aria-label="About Section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">[ SYSTEM_SPECIFICATION ]</span>
+                    <h2 class="section-title">ENGINEERING THE UNSEEN</h2>
+                </div>
+
+                <div class="grid-2col gap-lg">
+                    <div class="glass-card neo-glass" data-tilt>
+                        <div class="card-glow"></div>
+                        <h3 class="card-title"><i class="fa-solid fa-microchip text-neon"></i> Architecture</h3>
+                        <p class="card-text">
+                            Berfokus pada pengembangan antarmuka tingkat tinggi dengan optimasi 60 FPS. Menghubungkan algoritma kecerdasan buatan, rendering shader kustom, dan komposisi 3D modern.
+                        </p>
+                        <ul class="spec-list">
+                            <li><span class="spec-key">Performance:</span> <span class="spec-val">100 Lighthouse Benchmark</span></li>
+                            <li><span class="spec-key">Rendering:</span> <span class="spec-val">Three.js / WebGL / Shaders</span></li>
+                            <li><span class="spec-key">Animation:</span> <span class="spec-val">GSAP ScrollTrigger / Lenis</span></li>
+                        </ul>
+                    </div>
+
+                    <div class="glass-card neo-glass" data-tilt>
+                        <div class="card-glow"></div>
+                        <h3 class="card-title"><i class="fa-solid fa-shield-halved text-neon"></i> Cyber Protocols</h3>
+                        <p class="card-text">
+                            Menjamin keamanan data, aksesibilitas tingkat tinggi (WCAG AAA), dan optimasi modular yang memungkinkan skalabilitas aplikasi skala global.
+                        </p>
+                        <ul class="spec-list">
+                            <li><span class="spec-key">Security:</span> <span class="spec-val">Zero-Trust Frontend Stack</span></li>
+                            <li><span class="spec-key">Accessibility:</span> <span class="spec-val">ARIA / Full Keyboard Nav</span></li>
+                            <li><span class="spec-key">SEO:</span> <span class="spec-val">Semantic Schema / Open Graph</span></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div class="glass-card p-6 rounded-2
+        </section>
+
+        <section id="projects" class="section-padding" aria-label="Projects Section">
+            <div class="container">
+                <div class="section-header">
+                    <span class="section-tag">[ DEPLOYED_PROJECTS ]</span>
+                    <h2 class="section-title">QUANTUM LAB ARCHIVES</h2>
+                </div>
+
+                <div class="projects-grid">
+                    <article class="project-card glass-card">
+                        <div class="project-image-container">
+                            <div class="project-overlay"></div>
+                            <div class="project-tag-floating">AI / WEBGL</div>
+                            <div class="project-placeholder-visual art-1"></div>
+                        </div>
+                        <div class="project-details">
+                            <h3 class="project-title">NEURAL_CORE v2.0</h3>
+                            <p class="project-desc">Simulasi visualisasi jaringan saraf tiruan berbasis shader fragmen dengan respon interaksi real-time.</p>
+                            <div class="tech-stack">
+                                <span>Three.js</span>
+                                <span>GLSL</span>
+                                <span>GSAP</span>
+                            </div>
+                            <a href="#" class="project-link" aria-label="View NEURAL_CORE v2.0">LAUNCHNODE <i class="fa-solid fa-up-right-from-square"></i></a>
+                        </div>
+                    </article>
+
+                    <article class="project-card glass-card">
+                        <div class="project-image-container">
+                            <div class="project-overlay"></div>
+                            <div class="project-tag-floating">AEROSPACE</div>
+                            <div class="project-placeholder-visual art-2"></div>
+                        </div>
+                        <div class="project-details">
+                            <h3 class="project-title">ORBITAL_HUD_SYSTEM</h3>
+                            <p class="project-desc">Dashboard perintah stasiun ruang angkasa dengan visualisasi telemetry satelit real-time.</p>
+                            <div class="tech-stack">
+                                <span>TypeScript</span>
+                                <span>Canvas2D</span>
+                                <span>WebSockets</span>
+                            </div>
+                            <a href="#" class="project-link" aria-label="View ORBITAL_HUD_SYSTEM">LAUNCHNODE <i class="fa-solid fa-up-right-from-square"></i></a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section id="contact" class="section-padding" aria-label="Contact Section">
+            <div class="container">
+                <div class="contact-box glass-card neo-glass">
+                    <div class="section-header center">
+                        <span class="section-tag">[ SECURE_TRANSMISSION ]</span>
+                        <h2 class="section-title">INITIALIZE FREQUENCY</h2>
+                        <p>Siap untuk membangun proyek teknologi masa depan? Transmisikan pesan Anda melalui enkripsi langsung di bawah ini.</p>
+                    </div>
+
+                    <form id="contact-form" class="cyber-form" novalidate>
+                        <div class="form-group">
+                            <label for="name">IDENTIFIER / NAME</label>
+                            <input type="text" id="name" name="name" required placeholder="e.g. Commander Shepard">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">FREQUENCY / EMAIL</label>
+                            <input type="email" id="email" name="email" required placeholder="e.g. user@quantum.labs">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">TRANSMISSION DATA</label>
+                            <textarea id="message" name="message" rows="5" required placeholder="Tuliskan detail proyek atau pesan Anda..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-primary-neon full-width" data-magnetic>
+                            <span class="btn-text">TRANSMIT DATA</span>
+                            <span class="btn-icon"><i class="fa-solid fa-paper-plane"></i></span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="cyber-footer" role="contentinfo">
+        <div class="container footer-content">
+            <p>&copy; 2026 ALEX VANCE. ALL RIGHTS RESERVED // QUANTUM LABS ARCHITECTURE.</p>
+            <div class="social-links">
+                <a href="#" aria-label="Github Profile"><i class="fa-brands fa-github"></i></a>
+                <a href="#" aria-label="LinkedIn Profile"><i class="fa-brands fa-linkedin"></i></a>
+                <a href="#" aria-label="X/Twitter Profile"><i class="fa-brands fa-x-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+
+    <script src="script.js"></script>
+</body>
+</html>
