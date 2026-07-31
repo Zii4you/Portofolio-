@@ -1,10 +1,10 @@
-/* Custom Animations & Styles */
+/* Custom Styles for Command Center & Futuristic UI */
 
 /* Glassmorphism Effect */
 .glass-card {
-    background: rgba(11, 15, 25, 0.6);
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    background: rgba(8, 14, 30, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
 }
 
 /* RGB Animated Ring */
@@ -20,6 +20,27 @@
     animation: spin-gradient 4s linear infinite;
 }
 
+/* Scanline Effect */
+.scanline {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: linear-gradient(to bottom, transparent 50%, rgba(0, 240, 255, 0.05) 51%);
+    background-size: 100% 4px;
+    pointer-events: none;
+    border-radius: 1rem;
+}
+
+/* Glitch Animation */
+@keyframes glitch {
+    0% { text-shadow: 2px 0 #00f0ff, -2px 0 #7000ff; }
+    50% { text-shadow: -2px 0 #00f0ff, 2px 0 #7000ff; }
+    100% { text-shadow: 2px 0 #00f0ff, -2px 0 #7000ff; }
+}
+
+.glitch-text {
+    animation: glitch 1.5s infinite alternate;
+}
+
 /* Glow Text Effect */
 .glow-text {
     text-shadow: 0 0 10px rgba(0, 240, 255, 0.5), 0 0 20px rgba(112, 0, 255, 0.3);
@@ -27,14 +48,14 @@
 
 /* Scrollbar Customization */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 ::-webkit-scrollbar-track {
-    background: #030712;
+    background: #020617;
 }
 ::-webkit-scrollbar-thumb {
-    background: #1f293d;
-    border-radius: 4px;
+    background: #1e293b;
+    border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
     background: #00f0ff;
